@@ -21,9 +21,9 @@ You can reach us at the email `cs2103t_w14_4@comp.nus.edu.sg`
 
 ### Keiko
 
-<img src="images/keiko.png" width="200px">
+<img src="images/keikofloren.png" width="200px">
 
-[[github](https://github.com/keiko)]
+[[github](https://github.com/keikofloren)]
 
 * Role: Team Lead
 
