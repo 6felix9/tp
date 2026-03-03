@@ -41,7 +41,7 @@ You can reach us at the email `cs2103t_w14_4@comp.nus.edu.sg`
 
 <img src="images/vincentjulijanto.png" width="200px">
 
-[[github](http://github.com/jhttps://github.com/VincentJulijanto)]
+[[github](http://github.com/VincentJulijanto)]
 
 * Role: Code Quality
 * Responsibilities: Looks after code quality, ensure adherence to coding standards.
