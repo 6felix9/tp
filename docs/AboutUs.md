@@ -37,17 +37,14 @@ You can reach us at the email `cs2103t_w14_4@comp.nus.edu.sg`
 
 * Role: Testing
 
----
+### Vincent Gavriel Julijanto
 
-### Vincent
+<img src="images/vincentjulijanto.png" width="200px">
 
-<img src="images/vincent.png" width="200px">
-
-[[github](https://github.com/vincent)]
+[[github](http://github.com/VincentJulijanto)]
 
 * Role: Code Quality
-
----
+* Responsibilities: Looks after code quality, ensure adherence to coding standards.
 
 ### Kacey
 
