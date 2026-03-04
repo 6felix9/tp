@@ -360,21 +360,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
+* **Athlete**: An athlete whose profile and training records are managed in Pacebook
+* **Athlete list**: The on-screen list showing all athletes currently stored in the app
+* **Athlete profile**: The stored set of an athlete’s personal details (e.g., name, age, phone, address, start date)
+* **CLI**: Command Line Interface, where the user controls the app by typing commands instead of using buttons/menus
+* **Coach**: The main user of Pacebook who manages athletes and tracks their progress
+* **Command**: A text instruction typed by the user to perform an action in the app (e.g., add, edit, delete)
+* **Command box**: The input field where the user types commands to interact with Pacebook
+* **Error Message**: Refers to the feedback shown to the user when a command fails or input is invalid
+* **GUI**: Graphical User Interface, where the user interacts with the app through visual components (panels, lists, buttons)
+* **Invalid Command**: Refers to a command entered by the user that the app does not recognise or cannot parse correctly
+* **Keyboard-First usage**: Refers to the app design where major features can be accessed primarily through typing instead of mouse interaction
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others 
-* **Athlete**: A person whose profile and training records are managed in Pacebook 
-* **Coach**: The main user of Pacebook who manages athletes and tracks their progress 
-* **Athlete profile**: The stored set of an athlete’s personal details (e.g., name, age, phone, address, start date) 
-* **Training record**: A stored entry that captures details of an athlete’s training session or performance data over time 
-* **Performance metric**: A measurable value recorded to track an athlete’s progress (e.g., timing, distance, reps, notes) 
-* **Command**: A text instruction typed by the user to perform an action in the app (e.g., add, edit, delete) 
-* **Command box**: The input field where the user types commands to interact with Pacebook 
-* **CLI**: Command Line Interface, where the user controls the app by typing commands instead of using buttons/menus 
-* **GUI**: Graphical User Interface, where the user interacts with the app through visual components (panels, lists, buttons) 
-* **Athlete list**: The on-screen list showing all athletes currently stored in the app 
-* **Message display**: The area of the UI that shows feedback or results after a command is executed 
-* **Start date**: The date an athlete begins training under the coach, stored as part of the athlete’s profile 
+* **Message display**: The area of the UI that shows feedback or results after a command is executed
 * **NFR**: Non-Functional Requirement, a requirement describing how the system should behave (e.g., performance, usability) rather than what features it provides
+* **Offline**: Refers to the app being fully usable without an internet connection or remote server
+* **Performance metric**: A measurable value recorded to track an athlete’s progress (e.g., timing, distance, reps, notes)
+* **Private contact detail**: A contact detail that is not meant to be shared with others, like phone numbers, home addresses, and other sensitive personal information
+* **Start date**: The date an athlete begins training under the coach, stored as part of the athlete’s profile
+* **Training record**: A stored entry that captures details of an athlete’s training session or performance data over time
 
 --------------------------------------------------------------------------------------------------------------------
 
