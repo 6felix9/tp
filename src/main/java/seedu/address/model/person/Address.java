@@ -12,8 +12,9 @@ public class Address {
     public static final String MESSAGE_CONSTRAINTS = "Address must be 1 to 120 characters long and must not be blank.";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * The address must be between 1 and 120 characters long
+     * and contain at least one non-whitespace character.
+     * This prevents blank inputs such as "" or "   " from being valid.
      */
     public static final String VALIDATION_REGEX = "^(?=.*\\S).{1,120}$";
 
@@ -31,7 +32,7 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if a given string is a valid address.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX) && !test.contains("\\n");

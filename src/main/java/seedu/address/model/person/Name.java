@@ -14,8 +14,9 @@ public class Name {
                     + "and may only contain letters, spaces, and apostrophes.";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * Names must be between 1 and 100 characters long,
+     * contain at least one letter, and may only contain
+     * letters, spaces, and apostrophes.
      */
     public static final String VALIDATION_REGEX = "^(?=.{1,100}$)(?=.*[A-Za-z])[A-Za-z' ]+$";
 

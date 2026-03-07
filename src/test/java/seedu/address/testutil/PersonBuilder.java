@@ -67,6 +67,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Age} of the {@code Person} that we are building.
+     */
     public PersonBuilder withAge(String age) {
         this.age = new Age(age);
         return this;
@@ -104,6 +107,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code StartDate} of the {@code Person} that we are building.
+     */
     public PersonBuilder withStartDate(String startDate) {
         this.startDate = new StartDate(startDate);
         return this;
