@@ -10,6 +10,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.RunTiming;
 
 /**
  * Views a person identified using their displayed index from the address book.
@@ -30,7 +31,7 @@ public class ViewAthleteCommand extends Command {
             + "Email:     %4$s\n"
             + "Address:   %5$s\n"
             + "StartDate: %6$s\n"
-            + "Tags:      %7$s";
+            + "Tags:      %7$s\n";
 
     private final Index targetIndex;
 
@@ -48,18 +49,41 @@ public class ViewAthleteCommand extends Command {
         }
 
         Person athlete = lastShownList.get(targetIndex.getZeroBased());
+
         String tags = athlete.getTags().stream()
                 .map(tag -> "[" + tag.tagName + "]")
                 .reduce("", (a, b) -> a + " " + b)
                 .strip();
-        return new CommandResult(String.format(MESSAGE_VIEW_ATHLETE_SUCCESS,
+
+        String baseDetails = String.format(MESSAGE_VIEW_ATHLETE_SUCCESS,
                 athlete.getName(),
                 athlete.getAge(),
                 athlete.getPhone(),
                 athlete.getEmail(),
                 athlete.getAddress(),
                 athlete.getStartDate(),
-                tags.isEmpty() ? "-" : tags));
+                tags.isEmpty() ? "-" : tags);
+
+        StringBuilder result = new StringBuilder(baseDetails);
+
+        List<RunTiming> timings = athlete.getRunTimings();
+
+        result.append("\nRun Timings:\n");
+
+        if (timings.isEmpty()) {
+            result.append("  No run timings recorded.\n");
+        } else {
+            int i = 1;
+            for (RunTiming timing : timings) {
+                result.append("  ")
+                        .append(i++)
+                        .append(". ")
+                        .append(timing)
+                        .append("\n");
+            }
+        }
+
+        return new CommandResult(result.toString());
     }
 
     @Override
