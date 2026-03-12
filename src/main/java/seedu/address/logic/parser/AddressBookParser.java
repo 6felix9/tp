@@ -19,7 +19,6 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ViewAthleteCommand;
-import seedu.address.logic.parser.AddTimingCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**

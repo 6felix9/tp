@@ -60,7 +60,6 @@ public class AddTimingCommand extends Command {
      * @param model The model which the command should operate on.
      * @return A {@code CommandResult} containing the result message to display to the user.
      * @throws CommandException If the specified index does not correspond to a valid athlete
-     * in the currently displayed list.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
