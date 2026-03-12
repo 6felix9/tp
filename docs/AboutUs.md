@@ -3,57 +3,53 @@ layout: page
 title: About Us
 ---
 
-We are a team based in the [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg).
+We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the email `cs2103t_w14_4@comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Tze Foong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/6felix9.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/6felix9)]
 
-* Role: Project Advisor
+* Role: Documentation
 
-### Jane Doe
+---
 
-<img src="images/johndoe.png" width="200px">
+### Keiko
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+<img src="images/keikofloren.png" width="200px">
+
+[[github](https://github.com/keikofloren)]
 
 * Role: Team Lead
-* Responsibilities: UI
 
-### Johnny Doe
+---
 
-<img src="images/johndoe.png" width="200px">
+### Alexander
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+<img src="images/alexgeraldhandoko.png" width="200px">
 
-* Role: Developer
-* Responsibilities: Data
+[[github](https://github.com/alexgeraldhandoko)]
 
-### Jean Doe
+* Role: Testing
 
-<img src="images/johndoe.png" width="200px">
+### Vincent Gavriel Julijanto
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+<img src="images/vincentjulijanto.png" width="200px">
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+[[github](http://github.com/VincentJulijanto)]
 
-### James Doe
+* Role: Code Quality
+* Responsibilities: Looks after code quality, ensure adherence to coding standards.
 
-<img src="images/johndoe.png" width="200px">
+### Kacey
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+<img src="images/kacey-i-y.png" width="200px">
 
-* Role: Developer
-* Responsibilities: UI
+[[github](https://github.com/kacey-i-y)]
+
+* Role: Deliverables and Deadlines

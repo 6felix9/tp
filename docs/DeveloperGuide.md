@@ -313,45 +313,225 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+**UC1 - Add Athlete Profile**
 
-**Use case: Delete a person**
+System: Pacebook
+Use case: UC1 - Add Athlete Profile
+Actor: Coach
 
-**MSS**
+MSS:
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. Coach inputs details of athlete to be added: `addathlete n/John Tan a/17 p/91234567 ad/NUS Hall d/02-10-2026`
+2. Pacebook validates all fields (name, age, phone, address, start date) and checks that the phone number is unique.
+3. Pacebook saves the athlete profile to the data file.
+4. Pacebook displays success message with added athlete details in the message box: Added athlete: John Tan (Age: 17, Phone: 91234567, Address: NUS Hall, Start: 02-10-2026)
+5. Athlete details are now visible in the main window.
+Use case ends.
 
-    Use case ends.
+Extensions:
 
-**Extensions**
+1a. Pacebook detects invalid athlete details.
+   1a1. Pacebook displays an error message indicating the validation error(s).
+   1a2. Coach enters new data.
+   Steps 1a1-1a2 are repeated until the data entered are correct.
+   Use case resumes from step 2.
 
-* 2a. The list is empty.
+1b. Pacebook detects that the phone number already exists.
+   1b1. Pacebook displays an error message indicating the duplicate phone number.
+   1b2. Coach enters new data.
+   Steps 1b1-1b2 are repeated until the data entered are correct.
+   Use case resumes from step 2.
 
-  Use case ends.
+**UC2 - View Athlete Profile And Personal Bests**
 
-* 3a. The given index is invalid.
+System: Pacebook
+Use case: UC2 - View Athlete Profile And Personal Bests
+Actor: Coach
 
-    * 3a1. AddressBook shows an error message.
+MSS:
 
-      Use case resumes at step 2.
+1. Coach inputs the athlete index to view: `viewathlete 1`
+2. Pacebook retrieves the athlete profile corresponding to the index.
+3. Pacebook displays the athlete's profile (name, age, phone, address, start date) in the message box.
+4. Pacebook displays personal bests by distance (best time + date), or shows "No training records yet" if there are none.
+Use case ends.
 
-*{More to be added}*
+Extensions:
+
+1a. Pacebook detects an invalid athlete index.
+   1a1. Pacebook displays an error message indicating the index error.
+   1a2. Coach enters new index.
+   Steps 1a1-1a2 are repeated until the index entered is correct.
+   Use case resumes from step 2.
+
+**UC3 - Find Athlete By Keyword**
+
+System: Pacebook
+Use case: UC3 - Find Athlete By Keyword
+Actor: Coach
+
+MSS:
+
+1. Coach specifies keyword(s) to find athletes: `find 9123`
+2. Pacebook displays success message and number of matching athletes found in the message box.
+3. Pacebook displays all athlete entries which match the specified keyword(s) within the main window.
+Use case ends.
+
+Extensions:
+
+1a. Pacebook detects invalid find parameters.
+   1a1. Pacebook displays an error message indicating the parameter error(s).
+   1a2. Coach enters new data.
+   Steps 1a1-1a2 are repeated until the data entered are correct.
+   Use case resumes from step 2.
+
+2a. No matching athlete entries found.
+   2a1. Pacebook displays a message indicating no matching results found and no athletes will be listed in the main window.
+   Use case ends.
+
+**UC4 - Delete Athlete Profile**
+
+System: Pacebook
+Use case: UC4 - Delete Athlete Profile
+Actor: Coach
+
+MSS:
+
+1. Coach inputs the athlete to be deleted: `deleteathlete 2`
+2. Pacebook validates the index exists.
+3. Pacebook removes the athlete profile and all associated timing records.
+4. Pacebook saves the updated data file.
+5. Pacebook displays success message and deleted athlete's details in the message box.
+6. Updated athlete list is now visible in the main window. Deleted athlete is no longer visible.
+Use case ends.
+
+Extensions:
+
+1a. Pacebook detects an invalid athlete index.
+   1a1. Pacebook displays an error message indicating the index error.
+   1a2. Coach enters new index.
+   Steps 1a1-1a2 are repeated until the index entered is correct.
+   Use case resumes from step 2.
+
+**UC5 - Remove Athlete Profile After Reviewing Historical Data**
+
+System: Pacebook
+Use case: UC5 - Remove Athlete Profile After Reviewing Historical Data
+Actor: Coach
+
+MSS:
+
+1. Coach uses the viewathlete command to review the athlete's full training history before removal: `viewathlete 2`
+2. Pacebook displays the athlete's full profile and training history.
+3. Coach uses the deleteathlete command to remove the profile: `deleteathlete 2`
+4. Pacebook removes the athlete from the active squad list.
+5. Pacebook displays success message and deleted athlete's details in the message box.
+6. Updated athlete list is now visible in the main window.
+Use case ends.
+
+Extensions:
+
+1a. Pacebook detects an invalid athlete index for viewing.
+   1a1. Pacebook displays an error message indicating the index error.
+   1a2. Coach enters new index.
+   Steps 1a1-1a2 are repeated until the index entered is correct.
+   Use case resumes from step 2.
+
+3a. Pacebook detects an invalid athlete index for deletion.
+   3a1. Pacebook displays an error message indicating the index error.
+   3a2. Coach enters new index.
+   Steps 3a1-3a2 are repeated until the index entered is correct.
+   Use case resumes from step 4.
+
+**UC6 - Add Run Timing Record**
+
+System: Pacebook
+Use case: UC6 - Add Run Timing Record
+Actor: Coach
+
+MSS:
+
+1. Coach inputs athlete index, distance, minutes, and seconds: `addtiming 1 dist/2.4 min/10 sec/30`
+2. Pacebook validates the index exists, the distance is valid, minutes/seconds are valid, and total time > 0.
+3. Pacebook adds the timing record to the athlete's profile.
+4. Pacebook updates the athlete's personal best for that distance if the new timing is the best.
+5. Pacebook displays success message in the message box, e.g.: Added timing for John Tan: 2.4km in 10min 30s
+6. If personal best changed, Pacebook also shows: New personal best for 2.4km: 10min 30s
+Use case ends.
+
+Extensions:
+
+1a. Pacebook detects invalid timing details (invalid index, distance, minutes, seconds, or total time ≤ 0).
+   1a1. Pacebook displays an error message indicating the validation error(s).
+   1a2. Coach enters new data.
+   Steps 1a1-1a2 are repeated until the data entered are correct.
+   Use case resumes from step 2.
+
+**UC7 - Delete Run Timing Record**
+
+System: Pacebook
+Use case: UC7 - Delete Run Timing Record
+Actor: Coach
+
+MSS:
+
+1. Coach inputs the athlete index and timing record index to be deleted: `deletetiming 1 3`
+2. Pacebook validates the athlete index exists and the timing record index exists for that athlete.
+3. Pacebook deletes the selected timing record.
+4. Pacebook recalculates the personal best for that distance if the deleted record affected it.
+5. Pacebook saves the updated data file.
+6. Pacebook displays success message and deleted timing details in the message box, e.g.: Deleted timing for John Tan: 2.4km in 10min 30s
+7. If personal best changed, Pacebook also shows: New personal best for 2.4km: 10min 45s
+8. Updated athlete list is now visible in the main window.
+Use case ends.
+
+Extensions:
+
+1a. Pacebook detects an invalid athlete index or timing record index.
+   1a1. Pacebook displays an error message indicating the index error(s).
+   1a2. Coach enters new index(es).
+   Steps 1a1-1a2 are repeated until the index(es) entered are correct.
+   Use case resumes from step 2.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+2.  Should be able to hold up to 1000 athletes without a noticeable sluggishness in performance for typical usage.
+3.  Should only be designed for a single user to run the application locally on their own OS.
+4.  User data should be stored locally in a human editable text file.
+5.  Should work without requiring an installer.
+6.  Should function fully offline and not depend on any remote server.
+7.  GUI should work well for standard screen resolutions 1920x1080 and higher and for screen scales 100% and 125%, and usable for resolutions 1280x720 and higher and for screen scales 150%.
+8.  Should be packageable into a single JAR file.
+9.  File size should not exceed 100MB.
+10. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+11. Should support keyboard-first usage with all major features being accessible without using the mouse.
+12. Should respond quickly for common commands (e.g. `addathlete`, `viewathlete`), completing within ~1s.
+13. Should not crash on invalid input and instead handle invalid commands by showing an error message and continuing normally.
+14. If saving fails, changes are not recorded and no partial or corrupted data file is produced.
+15. If the data file is corrupted or contains invalid entries, the app should fail gracefully (e.g., skip corrupted entries and continue running) and show a clear warning.
 
 ### Glossary
 
+* **Athlete**: An athlete whose profile and training records are managed in Pacebook
+* **Athlete list**: The on-screen list showing all athletes currently stored in the app
+* **Athlete profile**: The stored set of an athlete’s personal details (e.g., name, age, phone, address, start date)
+* **CLI**: Command Line Interface, where the user controls the app by typing commands instead of using buttons/menus
+* **Coach**: The main user of Pacebook who manages athletes and tracks their progress
+* **Command**: A text instruction typed by the user to perform an action in the app (e.g., add, edit, delete)
+* **Command box**: The input field where the user types commands to interact with Pacebook
+* **Error Message**: Refers to the feedback shown to the user when a command fails or input is invalid
+* **GUI**: Graphical User Interface, where the user interacts with the app through visual components (panels, lists, buttons)
+* **Invalid Command**: Refers to a command entered by the user that the app does not recognise or cannot parse correctly
+* **Keyboard-First usage**: Refers to the app design where major features can be accessed primarily through typing instead of mouse interaction
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Message display**: The area of the UI that shows feedback or results after a command is executed
+* **NFR**: Non-Functional Requirement, a requirement describing how the system should behave (e.g., performance, usability) rather than what features it provides
+* **Offline**: Refers to the app being fully usable without an internet connection or remote server
+* **Performance metric**: A measurable value recorded to track an athlete’s progress (e.g., timing, distance, reps, notes)
+* **Private contact detail**: A contact detail that is not meant to be shared with others, like phone numbers, home addresses, and other sensitive personal information
+* **Start date**: The date an athlete begins training under the coach, stored as part of the athlete’s profile
+* **Training record**: A stored entry that captures details of an athlete’s training session or performance data over time
 
 --------------------------------------------------------------------------------------------------------------------
 

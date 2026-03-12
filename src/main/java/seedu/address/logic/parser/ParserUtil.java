@@ -10,9 +10,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.StartDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -48,6 +50,21 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String age} into an {@code Age}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code age} is invalid.
+     */
+    public static Age parseAge(String age) throws ParseException {
+        requireNonNull(age);
+        String trimmedAge = age.trim();
+        if (!Age.isValidAge(trimmedAge)) {
+            throw new ParseException(Age.MESSAGE_CONSTRAINTS);
+        }
+        return new Age(trimmedAge);
     }
 
     /**
@@ -93,6 +110,21 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String startDate} into a {@code StartDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code startDate} is invalid.
+     */
+    public static StartDate parseStartDate(String startDate) throws ParseException {
+        requireNonNull(startDate);
+        String trimmedStartDate = startDate.trim();
+        if (!StartDate.isValidStartDate(trimmedStartDate)) {
+            throw new ParseException(StartDate.MESSAGE_CONSTRAINTS);
+        }
+        return new StartDate(trimmedStartDate);
     }
 
     /**
