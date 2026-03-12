@@ -32,24 +32,33 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String startDate;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
-    /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
-     */
+    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedRunTiming> timings = new ArrayList<>();
+
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("age") String age,
-                             @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-                             @JsonProperty("address") String address, @JsonProperty("startDate") String startDate,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(
+            @JsonProperty("name") String name,
+            @JsonProperty("age") String age,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("address") String address,
+            @JsonProperty("startDate") String startDate,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+
         this.name = name;
         this.age = age;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.startDate = startDate;
+
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+
+        if (timings != null) {
+            this.timings.addAll(timings);
         }
     }
 
@@ -63,17 +72,21 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         startDate = source.getStartDate().value;
+
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
+
+        timings.addAll(source.getRunTimings().stream()
+                .map(JsonAdaptedRunTiming::new)
                 .collect(Collectors.toList()));
     }
 
     /**
      * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
@@ -134,7 +147,8 @@ class JsonAdaptedPerson {
         final StartDate modelStartDate = new StartDate(startDate);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelAge, modelPhone, modelEmail, modelAddress, modelStartDate, modelTags);
-    }
 
+        return new Person(modelName, modelAge, modelPhone, modelEmail,
+                modelAddress, modelStartDate, modelTags);
+    }
 }
