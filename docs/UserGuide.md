@@ -5,6 +5,11 @@ title: User Guide
 
 ## Pacebook
 
+At its core, Pacebook helps running coaches like you to manage your runners’ contacts effectively. But it's also much 
+more than that. It helps you keep track of runners’ data, such as their timings, training sessions, and emergency 
+contacts. It also allows you to find your athletes easily and monitor their improvements over time. So, whether you are 
+a private coach or training a professional running club, let Pacebook match your pace.
+
 Pacebook is a **desktop application designed for running coaches to manage runners, training plans, and essential contact information efficiently**. It is optimized for use via a **Command Line Interface (CLI)**, enabling fast interaction while still providing a simple graphical interface.
 
 Unlike generic contact management tools, Pacebook is tailored specifically for **training environments**, where quick access to structured runner data is critical for planning and execution.
