@@ -135,6 +135,10 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public boolean hasRunTimings() {
+        return !runTimings.isEmpty();
+    }
+
     /**
      * Returns an immutable list of recorded run timings.
      *
@@ -192,7 +196,7 @@ public class Person {
      *
      * @return the fastest timing in seconds.
      */
-    private double getBestTime() {
+    public double getBestTime() {
         double bestTime = Double.MAX_VALUE;
         for (RunTiming time : runTimings) {
             if (bestTime > time.getTotalSeconds()) {

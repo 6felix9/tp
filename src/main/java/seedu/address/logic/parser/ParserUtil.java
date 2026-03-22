@@ -8,6 +8,9 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortCommand.SortField;
+import seedu.address.logic.commands.SortCommand.SortOrder;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
@@ -152,5 +155,31 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    public static SortField parseBy(String sortField) throws ParseException {
+        requireNonNull(sortField);
+        String trimmedSortField = sortField.trim().toLowerCase();
+        switch (trimmedSortField) {
+            case "name":
+                return SortCommand.SortField.NAME;
+            case "pb":
+                return SortCommand.SortField.PB;
+            default:
+                throw new ParseException(SortCommand.MESSAGE_USAGE);
+        }
+    }
+
+    public static SortOrder parseOrder(String sortOrder) throws ParseException {
+        requireNonNull(sortOrder);
+        String trimmedSortOrder = sortOrder.trim().toLowerCase();
+        switch (trimmedSortOrder) {
+            case "asc":
+                return SortCommand.SortOrder.ASC;
+            case "desc":
+                return SortCommand.SortOrder.DESC;
+            default:
+                throw new ParseException(SortCommand.MESSAGE_USAGE);
+        }
     }
 }
