@@ -15,9 +15,12 @@ Class UserPrefs
 Class UniquePersonList
 Class Person
 Class Address
+Class Age
 Class Email
 Class Name
 Class Phone
+Class RunTiming
+Class StartDate
 Class Tag
 
 Class I #FFFFFF
@@ -38,17 +41,24 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
 Person *--> Name
+Person *--> Age
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> StartDate
 Person *--> "*" Tag
+Person *--> "*" RunTiming
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
+Name -[hidden]right-> Age
+Age -[hidden]right-> Phone
 Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
+Email -[hidden]right-> StartDate
+StartDate -[hidden]right-> Tag
+Tag -[hidden]right-> RunTiming
 
 ModelManager --> "~* filtered" Person
 @enduml
