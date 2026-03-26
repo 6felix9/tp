@@ -1,0 +1,70 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":ViewAthleteCommandParser" as ViewAthleteCommandParser LOGIC_COLOR
+participant "v:ViewAthleteCommand" as ViewAthleteCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("viewathlete 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("viewathlete 1")
+activate AddressBookParser
+
+create ViewAthleteCommandParser
+AddressBookParser -> ViewAthleteCommandParser
+activate ViewAthleteCommandParser
+
+ViewAthleteCommandParser --> AddressBookParser
+deactivate ViewAthleteCommandParser
+
+AddressBookParser -> ViewAthleteCommandParser : parse("1")
+activate ViewAthleteCommandParser
+
+create ViewAthleteCommand
+ViewAthleteCommandParser -> ViewAthleteCommand
+activate ViewAthleteCommand
+
+ViewAthleteCommand --> ViewAthleteCommandParser :
+deactivate ViewAthleteCommand
+
+ViewAthleteCommandParser --> AddressBookParser : v
+deactivate ViewAthleteCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ViewAthleteCommandParser -[hidden]-> AddressBookParser
+destroy ViewAthleteCommandParser
+
+AddressBookParser --> LogicManager : v
+deactivate AddressBookParser
+
+LogicManager -> ViewAthleteCommand : execute(m)
+activate ViewAthleteCommand
+
+ViewAthleteCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model --> ViewAthleteCommand : lastShownList
+deactivate Model
+
+create CommandResult
+ViewAthleteCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ViewAthleteCommand
+deactivate CommandResult
+
+ViewAthleteCommand --> LogicManager : r
+deactivate ViewAthleteCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

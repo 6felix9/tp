@@ -243,6 +243,57 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### View Athlete feature
+
+#### Implementation
+
+The `viewathlete` command allows a coach to view the full profile and all run timings for a specific athlete identified by their index in the currently displayed list.
+
+It is implemented via two classes:
+* `ViewAthleteCommand` — extends `Command` and performs the retrieval and formatting logic.
+* `ViewAthleteCommandParser` — implements `Parser<ViewAthleteCommand>` and parses the user-supplied index.
+
+The sequence diagram below shows how the components interact for the command `viewathlete 1`:
+
+![Interactions Inside the Logic Component for the `viewathlete 1` Command](images/ViewAthleteSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ViewAthleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+</div>
+
+**Step-by-step execution:**
+
+1. The user enters `viewathlete 1`. `LogicManager` passes the full input to `AddressBookParser`.
+2. `AddressBookParser` matches the `viewathlete` keyword and creates a `ViewAthleteCommandParser`, then calls `parse("1")` on it.
+3. `ViewAthleteCommandParser` delegates to `ParserUtil.parseIndex("1")` to obtain a one-based `Index`. A `ViewAthleteCommand` is constructed with this `Index` and returned.
+4. `LogicManager` calls `ViewAthleteCommand#execute(model)`.
+5. `ViewAthleteCommand` retrieves the current filtered list via `model.getFilteredPersonList()`. If the zero-based index is out of range, a `CommandException` is thrown with `Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX`.
+6. The target `Person` object is retrieved and its fields (name, age, phone, email, address, start date, tags) are formatted into a header string.
+7. The athlete's run timings list is retrieved via `Person#getRunTimings()`. Each `RunTiming` is appended using `RunTiming#getPrintFormat()`. If the list is empty, the string `"No run timings recorded."` is appended instead.
+8. A `CommandResult` encapsulating the complete formatted string is returned to `LogicManager` and displayed in the result box.
+
+**The command does not modify the model.** It is a read-only operation and does not call any mutating `Model` methods. As a result, no state change occurs and the address book data file is not rewritten after this command.
+
+#### Design considerations
+
+**Aspect: Where the display formatting logic lives**
+
+* **Alternative 1 (current choice):** Formatting is performed inside `ViewAthleteCommand#execute()`.
+  * Pros: Self-contained; no additional classes or coupling needed for a display-only command.
+  * Cons: The command class handles both data retrieval and string formatting, mixing two responsibilities.
+
+* **Alternative 2:** Delegate formatting to a dedicated formatter class or to the `Person` model.
+  * Pros: Cleaner separation of concerns; formatting logic is reusable if other commands need the same output.
+  * Cons: Extra indirection and added complexity for what is currently a single use case.
+
+**Aspect: Error handling for invalid index**
+
+* **Alternative 1 (current choice):** Validate the index against the filtered list size and throw `CommandException` immediately.
+  * Pros: Consistent with how other index-based commands (e.g., `deleteathlete`) handle invalid indices.
+  * Cons: None significant.
+
+* **Alternative 2:** Return a `CommandResult` with an error message instead of throwing.
+  * Pros: Avoids exception use for a predictable input error.
+  * Cons: Inconsistent with the rest of the command framework which uses `CommandException` for user input errors.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -560,6 +611,21 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
+
+### Viewing an athlete
+
+1. Viewing an athlete while all athletes are being shown
+
+   1. Prerequisites: List all athletes using the `list` command. At least one athlete in the list.
+
+   1. Test case: `viewathlete 1`<br>
+      Expected: Details of the first athlete are shown in the result display, including name, age, phone, email, address, start date, tags, and all recorded run timings (or `No run timings recorded.` if none exist).
+
+   1. Test case: `viewathlete 0`<br>
+      Expected: No athlete is shown. Error message indicating invalid command format is displayed.
+
+   1. Other incorrect viewathlete commands to try: `viewathlete`, `viewathlete x` (where x is larger than the list size)<br>
+      Expected: `viewathlete` with no argument shows an invalid command format error. `viewathlete x` with an out-of-range index shows an invalid index error.
 
 ### Deleting a person
 
