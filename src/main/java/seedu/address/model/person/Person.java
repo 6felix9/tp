@@ -116,7 +116,9 @@ public class Person {
         return address;
     }
 
-    public EmergencyContact getEmergencyContact() { return emergencyContact; }
+    public EmergencyContact getEmergencyContact() { 
+        return emergencyContact; 
+    }
 
     /**
      * Returns the person's start date.
