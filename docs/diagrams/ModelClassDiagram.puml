@@ -27,6 +27,10 @@ Package Model as ModelPackage <<Rectangle>> {
     Class StartDate
     Class Tag
 
+    Class NameContainsKeywordsPredicate
+    Class PhoneContainsKeywordsPredicate
+    Class TagContainsKeywordsPredicate
+
     Class I #FFFFFF
 }
 
@@ -65,4 +69,8 @@ StartDate -[hidden]right-> Tag
 Tag -[hidden]right-> RunTiming
 
 ModelManager --> "~* filtered" Person
+
+NameContainsKeywordsPredicate ..> Person
+PhoneContainsKeywordsPredicate ..> Person
+TagContainsKeywordsPredicate ..> Person
 @enduml
