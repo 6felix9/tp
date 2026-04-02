@@ -8,7 +8,8 @@
     "address" : "123, Jurong West Ave 6, #08-111",
     "emergencyContact" : "John 91234567",
     "startDate": "01/01/2001",
-    "tags" : [ "friends" ]
+    "tags" : [ "friends" ],
+    "availableDays": ["Mon"]
   }, {
     "name" : "Benson Meier",
     "age" : "21",
@@ -17,7 +18,8 @@
     "address" : "311, Clementi Ave 2, #02-25",
     "emergencyContact" : "Mom 98765432",
     "startDate": "02/02/2002",
-    "tags" : [ "owesMoney", "friends" ]
+    "tags" : [ "owesMoney", "friends" ],
+    "availableDays": ["Tue"]
   }, {
     "name" : "Carl Kurz",
     "age" : "45",
@@ -26,7 +28,8 @@
     "address" : "wall street",
     "emergencyContact" : "N/A",
     "startDate": "03/03/2003",
-    "tags" : [ ]
+    "tags" : [ ],
+    "availableDays": ["Wed"]
   }, {
     "name" : "Daniel Meier",
     "age" : "35",
@@ -35,7 +38,8 @@
     "address" : "10th street",
     "emergencyContact" : "N/A",
     "startDate": "04/04/2004",
-    "tags" : [ "friends" ]
+    "tags" : [ "friends" ],
+    "availableDays": ["Thu"]
   }, {
     "name" : "Elle Meyer",
     "age" : "23",

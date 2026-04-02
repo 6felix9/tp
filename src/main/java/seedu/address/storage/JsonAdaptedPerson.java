@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.RunTiming;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,6 +38,7 @@ class JsonAdaptedPerson {
     private final String startDate;
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedAvailableDay> availableDays = new ArrayList<>();
     private final List<JsonAdaptedRunTiming> timings = new ArrayList<>();
 
     @JsonCreator
@@ -49,6 +51,7 @@ class JsonAdaptedPerson {
             @JsonProperty("emergencyContact") String emergencyContact,
             @JsonProperty("startDate") String startDate,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("availableDays") List<JsonAdaptedAvailableDay> availableDays,
             @JsonProperty("timings") List<JsonAdaptedRunTiming> timings) {
         this.name = name;
         this.age = age;
@@ -60,6 +63,10 @@ class JsonAdaptedPerson {
 
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+
+        if (availableDays != null) {
+            this.availableDays.addAll(availableDays);
         }
 
         if (timings != null) {
@@ -83,6 +90,11 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
 
+        availableDays.addAll(source.getAvailableDays().stream()
+                        .map(JsonAdaptedAvailableDay::new)
+                        .collect(Collectors.toList()));
+
+
         timings.addAll(source.getRunTimings().stream()
                 .map(JsonAdaptedRunTiming::new)
                 .collect(Collectors.toList()));
@@ -96,6 +108,10 @@ class JsonAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+        final List<AvailableDay> personAvailableDays = new ArrayList<>();
+        for (JsonAdaptedAvailableDay availableDay : availableDays) {
+            personAvailableDays.add(availableDay.toModelType());
         }
 
         if (name == null) {
@@ -162,13 +178,15 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
+        final Set<AvailableDay> modelAvailableDays = new HashSet<>(personAvailableDays);
+
         final List<RunTiming> personTimings = new ArrayList<>();
         for (JsonAdaptedRunTiming timing : timings) {
             personTimings.add(timing.toModelType());
         }
 
         Person person = new Person(modelName, modelAge, modelPhone, modelEmail,
-                modelAddress, modelEmergencyContact, modelStartDate, modelTags);
+                modelAddress, modelEmergencyContact, modelStartDate, modelTags, modelAvailableDays);
         person.setRunTimings(personTimings);
         return person;
     }

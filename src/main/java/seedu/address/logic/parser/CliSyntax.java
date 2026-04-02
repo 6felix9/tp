@@ -19,5 +19,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_SEC = new Prefix("sec/");
     public static final Prefix PREFIX_BY = new Prefix("by/");
     public static final Prefix PREFIX_ORDER = new Prefix("order/");
+    public static final Prefix PREFIX_AVAILABLE_DAY = new Prefix("av/");
 
 }

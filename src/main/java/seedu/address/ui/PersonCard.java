@@ -45,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label startDate;
     @FXML
+    private Label availableDays;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -64,5 +66,9 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        availableDays.setText("Available: " + person.getAvailableDays().stream()
+                .map(day -> day.availableDay)
+                .sorted()
+                .collect(java.util.stream.Collectors.joining(", ")));
     }
 }

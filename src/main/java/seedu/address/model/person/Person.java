@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -46,6 +47,8 @@ public class Person {
     /** List of recorded 2.4km run timings for this athlete. */
     private final List<RunTiming> runTimings = new ArrayList<>();
 
+    private final Set<AvailableDay> availableDays = new HashSet<>();
+
     /**
      * Creates a {@code Person}.
      *
@@ -56,10 +59,13 @@ public class Person {
      * @param address The person's address.
      * @param startDate The person's start date.
      * @param tags Tags associated with the person.
+     * @param availableDays The days the person is available.
      */
     public Person(Name name, Age age, Phone phone, Email email, Address address,
-                  EmergencyContact emergencyContact, StartDate startDate, Set<Tag> tags) {
-        requireAllNonNull(name, age, phone, email, address, emergencyContact, startDate, tags);
+                  EmergencyContact emergencyContact, StartDate startDate, Set<Tag> tags,
+                  Set<AvailableDay> availableDays) {
+        requireAllNonNull(name, age, phone, email, address,
+                emergencyContact, startDate, tags, availableDays);
         this.name = name;
         this.age = age;
         this.phone = phone;
@@ -68,6 +74,7 @@ public class Person {
         this.emergencyContact = emergencyContact;
         this.startDate = startDate;
         this.tags.addAll(tags);
+        this.availableDays.addAll(availableDays);
         this.bestTime = Integer.MAX_VALUE;
     }
 
@@ -139,6 +146,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<AvailableDay> getAvailableDays() {
+        return Collections.unmodifiableSet(availableDays);
     }
 
     public boolean hasRunTimings() {
@@ -260,7 +271,8 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && emergencyContact.equals(otherPerson.emergencyContact)
                 && startDate.equals(otherPerson.startDate)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && availableDays.equals(otherPerson.availableDays);
     }
 
     @Override
@@ -285,6 +297,7 @@ public class Person {
                 .add("emergencyContact", emergencyContact)
                 .add("start date", startDate)
                 .add("tags", tags)
+                .add("availableDays", availableDays)
                 .toString();
     }
 

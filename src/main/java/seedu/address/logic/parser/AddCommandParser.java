@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABLE_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -23,6 +24,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 
@@ -40,7 +42,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
                         PREFIX_NAME, PREFIX_AGE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_EMERGENCY_CONTACT, PREFIX_START_DATE, PREFIX_TAG);
+                        PREFIX_EMERGENCY_CONTACT, PREFIX_START_DATE, PREFIX_TAG, PREFIX_AVAILABLE_DAY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_AGE, PREFIX_ADDRESS,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_START_DATE)
@@ -57,6 +59,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<AvailableDay> availableDays = ParserUtil.parseAvailableDays(argMultimap
+                .getAllValues(PREFIX_AVAILABLE_DAY));
         EmergencyContact emergencyContact;
 
         if (argMultimap.getValue(PREFIX_EMERGENCY_CONTACT).isPresent()) {
@@ -65,7 +69,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             emergencyContact = new EmergencyContact("N/A");
         }
 
-        Person person = new Person(name, age, phone, email, address, emergencyContact, startDate, tagList);
+        Person person = new Person(name, age, phone, email, address,
+                emergencyContact, startDate, tagList, availableDays);
 
         return new AddCommand(person);
     }

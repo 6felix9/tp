@@ -30,6 +30,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -109,9 +110,11 @@ public class EditCommand extends Command {
         EmergencyContact updatedEmergencyContact =
                 editPersonDescriptor.getEmergencyContact().orElse(personToEdit.getEmergencyContact());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<AvailableDay> updatedAvailableDays = editPersonDescriptor.getAvailableDays()
+                .orElse(personToEdit.getAvailableDays());
 
         return new Person(updatedName, updatedAge, updatedPhone, updatedEmail, updatedAddress, updatedEmergencyContact,
-                updatedStartDate, updatedTags);
+                updatedStartDate, updatedTags, updatedAvailableDays);
     }
 
     @Override
@@ -151,6 +154,7 @@ public class EditCommand extends Command {
         private StartDate startDate;
         private EmergencyContact emergencyContact;
         private Set<Tag> tags;
+        private Set<AvailableDay> availableDays;
 
         public EditPersonDescriptor() {}
 
@@ -167,13 +171,15 @@ public class EditCommand extends Command {
             setStartDate(toCopy.startDate);
             setEmergencyContact(toCopy.emergencyContact);
             setTags(toCopy.tags);
+            setAvailableDays(toCopy.availableDays);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, age, phone, email, address, startDate, emergencyContact, tags);
+            return CollectionUtil.isAnyNonNull(name, age, phone, email, address,
+                    startDate, emergencyContact, tags, availableDays);
         }
 
         public void setName(Name name) {
@@ -249,6 +255,14 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setAvailableDays(Set<AvailableDay> availableDays) {
+            this.availableDays = (availableDays != null) ? new HashSet<>(availableDays) : null;
+        }
+
+        public Optional<Set<AvailableDay>> getAvailableDays() {
+            return (availableDays != null) ? Optional.of(Collections.unmodifiableSet(availableDays)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -268,7 +282,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(startDate, otherEditPersonDescriptor.startDate)
                     && Objects.equals(emergencyContact, otherEditPersonDescriptor.emergencyContact)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(availableDays, otherEditPersonDescriptor.availableDays);
         }
 
         @Override
@@ -280,6 +295,7 @@ public class EditCommand extends Command {
                     .add("address", address)
                     .add("emergencyContact", emergencyContact)
                     .add("tags", tags)
+                    .add("availableDays", availableDays)
                     .toString();
         }
     }
