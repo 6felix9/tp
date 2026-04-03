@@ -16,7 +16,8 @@ public class HelpCommand extends Command {
     public static final String SHOWING_HELP_MESSAGE =
             "Commands summary:\n"
                     + "------------------------------------------------------\n"
-                    + "addathlete    n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [t/TAG]... [av/AVAILABLE_DAY]...\n"
+                    + "addathlete    n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE "
+                    + "[t/TAG]... [av/AVAILABLE_DAY]...\n"
                     + "addtiming     INDEX dist/DISTANCE min/MINUTES sec/SECONDS\n"
                     + "deleteathlete INDEX\n"
                     + "deletetiming  ATHLETE_INDEX TIMING_INDEX\n"
