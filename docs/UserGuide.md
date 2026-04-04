@@ -5,30 +5,18 @@ title: User Guide
 
 ## Pacebook
 
-At its core, Pacebook helps running coaches like you to manage your runners’ contacts effectively. But it's also much
+At its core, Pacebook helps running coaches like you to **manage your runners’ contacts effectively**. But it's also much
 more than that. It helps you keep track of runners’ data, such as their timings, training sessions, and emergency
 contacts. It also allows you to find your athletes easily and monitor their improvements over time.
-So, whether you manage a competitive squad or a casual running group, let Pacebook match your pace.
+So, whether you manage a competitive squad or a casual running group, **let Pacebook match your pace**.
 
+### What is Pacebook?
 Pacebook is a **desktop application designed for running coaches to manage runners, training plans,
-and essential contact information efficiently**. It is optimized for use via a **Command Line Interface (CLI)**, enabling fast interaction while still providing a simple graphical interface.
-
-Unlike generic contact management tools, Pacebook is tailored specifically for **training environments**,
-where quick access to structured runner data is critical for planning and execution.
+and essential contact information efficiently**. It is optimised for use via a **Command Line Interface (CLI)**, enabling fast interaction while still providing a simple graphical interface.
 
 ---
 ## Table of Contents
-
-- [Pacebook](#pacebook)
-- [Quick start](#quick-start)
-- [Target Users](#target-users)
-- [Assumptions About Users](#assumptions-about-users)
-- [User Needs Addressed](#user-needs-addressed)
-- [Features](#features)
-- [FAQ](#faq)
-- [Known issues](#known-issues)
-- [Command summary](#command-summary)
-
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -45,11 +33,20 @@ You do not need to know how to program — just install it once using the links 
    ```
    java -version
    ```
+   If Java has been installed properly, you will see the Java version will be printed.
+   If Java is not installed, you may see something like:
+   ```
+   'java' is not recognized as an internal or external command
+   ```
+   or
+   ```
+   command not found: java
+   ```
 </div>
    If you do not have Java installed, follow the installation guide for your operating system:
-    * **Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
-    * **Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-    * **Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
+    - **Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+    - **Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+    - **Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W14-4/tp/releases).
 
@@ -66,11 +63,11 @@ You do not need to know how to program — just install it once using the links 
 6. Type a command into the command box and press Enter to run it. For example, typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-    * `addathlete n/John Doe a/21 p/98765432 e/johnd@example.com ad/John street, block 123, #01-01 d/01/01/2001` : Adds an athlete named `John Doe` to Pacebook.
+  * `addathlete n/John Doe a/21 p/98765432 e/johnd@example.com ad/John street, block 123, #01-01 d/01/01/2001` : Adds an athlete named `John Doe` to Pacebook.
 
-    * `find n/Alex`: Finds an athlete named Alex
+  * `find n/Alex`: Finds an athlete named Alex.
 
-    * `exit` : Exits the app.
+  * `exit` : Exits the app.
 
 7. See the [Features](#features) section below for the full list of commands and how to use them.
 
@@ -78,37 +75,35 @@ You do not need to know how to program — just install it once using the links 
 
 ## Target Users
 
-Pacebook is designed for **running coaches aged 20–35** in Singapore who manage athlete rosters
-across training groups or competitive squads.
-
-### Run Club Coaches
-- Oversee a roster of multiple runners across training groups or teams
-- Plan and track group training sessions and fitness benchmarks
-- Need fast access to athlete data during and between sessions
+Pacebook is designed for **running coaches aged 20–35** in Singapore who.
+- Oversee a roster of **multiple runners** across training groups or teams.
+- Plan and track group **training sessions and fitness benchmarks**.
+- Need **fast access** to athlete data during and between sessions.
 
 ---
 
 ## Assumptions About Users
 
-Pacebook assumes that users:
+Pacebook is tailored towards running club coaches who are:
 
 ### Technical Assumptions
-- Comfortable with desktop applications and file management
-- Have used a command line or terminal before (e.g. navigating folders,
-  running scripts) — no programming knowledge required
+- Comfortable with desktop applications and file management.
+- Have used a **command line or terminal** before (e.g. navigating folders,
+  running scripts) — **no programming knowledge required**.
 - Comfortable with spreadsheet or administrative tools
-  (e.g. Microsoft Excel, Google Sheets) — command prefixes like n/
+  (e.g. Microsoft Excel, Google Sheets) — **command prefixes** like n/
   and p/ will feel similar to column headers.
 
 ### Domain Assumptions
-- Familiar with common running formats and distances
-  (e.g. 2.4km fitness tests, 10km runs, marathons, interval sessions)
-- Understand basic performance tracking concepts such as personal bests
+- Familiar with common running formats and distances.
+  (e.g. 2.4km fitness tests, 10km runs, marathons, interval sessions).
+- Understand basic performance tracking concepts such as personal bests.
 
 ### Usage Assumptions
-- Prefer speed and keyboard-driven workflows over point-and-click interfaces
-- Manage athlete data regularly, not just occasionally
-- Work primarily in a group club setting, managing multiple athletes simultaneously.
+- Prefer **speed and keyboard-driven workflows** over point-and-click interfaces.
+- Manage athlete data regularly.
+- Work primarily in a **group club setting**, managing multiple athletes simultaneously.
+
 ---
 
 ## User Needs Addressed
@@ -165,25 +160,27 @@ Format: `addathlete n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [t/TAG]
 
 Example:
 * A new sprinter joins your team A after the open trial session:
-    * `addathlete n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com 
+  * `addathlete n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com 
       ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
-* All compulsory fields (i.e. not in square brackets) must be provided.
-* `AGE` must be a number between 10-99
-* `PHONE_NUMBER` must be a valid Singapore phone number (i.e. 8 digits, starts with 8 or 9)
-* `EMAIL` must be a valid email, i.e. email@domain
-* Avoid using vague names such as `John` if you coach multiple athletes with similar names.
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
+- All compulsory fields (i.e. not in square brackets) must be provided.
+- `AGE` must be a number between 10-99.
+- `PHONE_NUMBER` must be a valid Singapore phone number (i.e. 8 digits, starts with 8 or 9).
+- `EMAIL` must be a valid email, i.e. email@domain.
+- Avoid using vague names such as `John` if you coach multiple athletes with similar names.
 </div>
 
-<div markdown="span" class="alert alert-warning">
-* Duplicate athletes may be rejected if an athlete with the same phone number already exists in Pacebook.
+<div markdown="block" class="alert alert-warning">
+Duplicate athletes may be rejected if an athlete with the same phone number already exists in Pacebook.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
+
 **Expected output:**
-* A success message confirming that the athlete has been added.
-* The athlete appears in the athlete list.
+- A success message confirming that the athlete has been added.
+- The athlete appears in the athlete list.
 </div>
 ---
 
@@ -196,13 +193,14 @@ Edits the athlete at the specified `INDEX`.
 
 Example:
 * Sarah updates her contact number before the new training block:
-    * `find n/Sarah Tan`
-    * `edit 1 p/98765432`
+  * `find n/Sarah Tan`
+  * `edit 1 p/98765432`
 * After promoting a runner to your competitive team mid-season:
-    * `find n/Marcus Lim`
-    * `edit 1 t/teamA t/competitive`
+  * `find n/Marcus Lim`
+  * `edit 1 t/teamA t/competitive`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * The index refers to the index number shown in the displayed athlete list.
 * The index **must be a positive number**: `1, 2, 3, …`
 * You must provide at least one field to edit.
@@ -211,13 +209,15 @@ Example:
 * You can remove all the athlete’s tags by typing `t/` without entering anything after it.
 </div>
 
-<div markdown="span" class="alert alert-warning">
+<div markdown="block" class="alert alert-warning">
+
 * Make sure you are editing the correct athlete index in displayed list, especially after using `find`.
 * Editing tags replaces all existing tags, not just one of them.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output:**
+
 * A success message showing the updated athlete details.
 </div>
 
@@ -235,13 +235,14 @@ Format: `find [n/KEYWORD] [p/PHONE_NUMBER] [t/TAG]… [av/AVAILABLE_DAY]…`
 
 Examples:
 * You need to contact all sprinters before Saturday's time trial:
-    * `find t/sprinter`
+  * `find t/sprinter`
 * You are filling a relay slot and need a teamA runner available on Tuesdays:
-    * `find t/teamA av/Tue`
+  * `find t/teamA av/Tue`
 * A parent calls in and you only remember the runner's first name:
-    * `find n/Sarah`
+  * `find n/Sarah`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * The search is case-insensitive. e.g. `n/hans` will match `n/Hans`
 * You must provide at least one field to search.
 * The order of the search criteria does not matter. e.g. `n/Jessy t/captain` will match `t/captain n/Jessy`
@@ -250,18 +251,20 @@ Examples:
   e.g. `n/Alex t/Marathoner` will return only the athlete with the names Alex and tag Marathoner
 </div>
 
-<div markdown="span" class="alert alert-info">
-* Use `list` to clear the search filter and display all the athletes in Pacebook.
+<div markdown="block" class="alert alert-info">
+Use `list` to clear the search filter and display all the athletes in Pacebook.
 </div>
 
-<div markdown="span" class="alert alert-warning">
+<div markdown="block" class="alert alert-warning">
+
 * `find` does not support searching by age, email, emergency contact, address, start date or timing record
 * If no athletes match, the list will be empty.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output:**
-* Only athletes matching the given keywords are shown.
+
+Only athletes matching the given keywords are shown.
 </div>
 
 ---
@@ -274,14 +277,16 @@ Format: `list`
 
 Example:
 * Pulling up the full roster to confirm who is registered as a trainee under you:
-    * `list`
+  * `list`
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
+
 * All athletes currently stored in Pacebook are displayed.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Use `list` before commands like `viewathlete`, `edit`, and `deleteathlete` if you want to confirm the current athlete indices.
 </div>
 
@@ -296,34 +301,37 @@ Format: `sort by/FIELD [order/ORDER]`
 Examples:
 * Before selecting runners for the inter-club competition, rank the
   team by their fastest 2.4km timing:
-    * `sort by/pb`
+  * `sort by/pb`
 * At the start of a new season for team A, get an alphabetical overview of the
   full roster for attendance-taking:
-    * `find t/teamA`
-    * `sort by/name`
+  * `find t/teamA`
+  * `sort by/name`
 * Identify who needs the most improvement before the next fitness test:
-    * `sort by/pb order/desc`
+  * `sort by/pb order/desc`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Supported fields:
-    * `name`
-    * `pb` (personal best run timing)
+  * `name`
+  * `pb` (personal best run timing)
 * Supported orders:
-    * `asc`
-    * `desc`
+  * `asc`
+  * `desc`
 * If `order/ORDER` is omitted, the default sort order is ascending.
 * Sorting is applied to the currently displayed athlete list.
 * For `pb`, athletes with no recorded timings will appear after athletes with recorded timings.
 </div>
 
-<div markdown="span" class="alert alert-warning">
+<div markdown="block" class="alert alert-warning">
+
 * `sort` only changes the display order of athletes. It does not modify any athlete data.
 * `pb` refers to the athlete’s personal best across all recorded distances.
 * If no athletes are currently displayed, the command will have no visible effect.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output:**
+
 * A success message confirming the field and order used for sorting.
 * The displayed athlete list is reordered accordingly.
 </div>
@@ -340,17 +348,19 @@ Format: `viewathlete INDEX`
 Example:
 * Before setting Marcus's target pace for the upcoming 10km race,
   review his full timing history:
-    * `find n/Marcus Lim`
-    * `viewathlete 1`
+  * `find n/Marcus Lim`
+  * `viewathlete 1`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * The INDEX refers to the index number shown in the displayed athlete list.
 * The INDEX must be a positive number: `1, 2, 3, …`
 * Use `viewathlete` after `find` to quickly inspect one athlete without scrolling through the full list.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
+
 * The selected athlete’s profile is shown.
 * Any stored run timings or training records for that athlete are shown below the profile details.
 </div>
@@ -366,15 +376,16 @@ Format: `addtiming INDEX dist/DISTANCE min/MINUTES sec/SECONDS`
 
 Examples:
 * After today's 2.4km fitness test, log Sarah's result:
-    * `find n/Sarah Tan`
-    * `addtiming 1 dist/2.4km min/11 sec/42`
+  * `find n/Sarah Tan`
+  * `addtiming 1 dist/2.4km min/11 sec/42`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Supported run distances:
-    * 400m
-    * 2.4km
-    * 10km
-    * 42km
+  * 400m
+  * 2.4km
+  * 10km
+  * 42km
 * The index refers to the index number shown in the displayed athlete list.
 * `INDEX` must be a positive number: `1, 2, 3, …`
 * `MINUTES` must be a non-negative number.
@@ -382,13 +393,15 @@ Examples:
 * The total timing must be greater than `0`.
 </div>
 
-<div markdown="span" class="alert alert-warning">
+<div markdown="block" class="alert alert-warning">
+
 * If you enter `min/0 sec/0`, the command will be rejected.
 * If the same athlete has multiple timing records, make sure you add the new record to the correct athlete profile.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
+
 * A success message confirming that the timing was added.
 * If the new timing is the athlete’s fastest timing so far, a **new personal best** message is also shown.
 </div>
@@ -404,22 +417,25 @@ Format: `deleteathlete INDEX`
 
 Example:
 * A runner has moved overseas and officially left the club:
-    * `find n/Jake Wong`
-    * `deleteathlete 1`
+  * `find n/Jake Wong`
+  * `deleteathlete 1`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * The index refers to the index number shown in the displayed athlete list.
 * The index **must be a positive number**: `1, 2, 3, …`
 </div>
 
-<div markdown="span" class="alert alert-warning">
-* This action removes the athlete and their associated training data from the app.
-  Please double-check the athlete index in the display list before deleting.
+<div markdown="block" class="alert alert-warning">
+
+This action removes the athlete and their associated training data from the app.
+Please double-check the athlete index in the display list before deleting.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
-* A success message confirming which athlete was deleted.
+
+A success message confirming which athlete was deleted.
 </div>
 
 ---
@@ -434,24 +450,27 @@ Format: `deletetiming ATHLETE_INDEX RECORD_INDEX`
 Example:
 * You accidentally logged Marcus's timing under Sarah's profile
   during the fitness test:
-    * `find n/Sarah Tan`
-    * `viewathlete 1`
-    * `deletetiming 1 1`
+  * `find n/Sarah Tan`
+  * `viewathlete 1`
+  * `deletetiming 1 1`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * `ATHLETE_INDEX` refers to the index number shown in the displayed athlete list.
 * `RECORD_INDEX` refers to the index number shown in the displayed training records.
 * Both `ATHLETE_INDEX` and `RECORD_INDEX` must be positive integers: `1, 2, 3, …`
 </div>
 
-<div markdown="span" class="alert alert-warning">
+<div markdown="block" class="alert alert-warning">
+
 * Make sure you check the athlete profile with `viewathlete` first so that you delete the correct timing record.
 * Deleting a timing record may affect the athlete’s visible performance history.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
-* A success message confirming that the selected timing record was deleted.
+
+A success message confirming that the selected timing record was deleted.
 </div>
 
 ---
@@ -465,19 +484,22 @@ Format: `clear`
 Example:
 * At the start of a new season, you are onboarding a completely
   new squad and need to wipe the previous cohort's data:
-    * `clear`
+  * `clear`
 
-<div markdown="span" class="alert alert-danger">
+<div markdown="block" class="alert alert-danger">
+
 * This removes all athletes currently stored in the app.
 * Use this only if you are sure you want to wipe the current dataset.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Avoid using `clear` if you only want to remove one athlete. Use `deleteathlete` instead.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
+
 * All athletes are removed from the list.
 </div>
 
@@ -489,13 +511,15 @@ Opens the help window.
 
 Format: `help`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
-* Use `help` whenever you forget a command format instead of guessing the prefixes.
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
+Use `help` whenever you forget a command format instead of guessing the prefixes.
 </div>
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
-* A help window opens with a summary of available commands.
+
+A help window opens with a summary of available commands.
 </div>
 ---
 
@@ -506,12 +530,14 @@ Exits the program.
 
 Format: `exit`
 
-<div markdown="span" class="alert alert-success">
+<div markdown="block" class="alert alert-success">
 **Expected output**:
-* The application closes.
+
+The application closes.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * There is no need to save manually before exiting because Pacebook saves automatically after successful changes.
 </div>
 ---
@@ -522,7 +548,8 @@ Format: `exit`
 Pacebook saves your data automatically whenever a command changes it, so you do not need to save manually.
 * No separate save confirmation may be shown, but your data will be written to the data file after successful commands.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Close the application normally using `exit` to reduce the risk of interrupting the file saving process.
 </div>
 ---
@@ -531,12 +558,14 @@ Pacebook saves your data automatically whenever a command changes it, so you do 
 
 Pacebook stores its data as a JSON file at `[JAR file location]/data/addressbook.json`. Advanced users can edit this file directly if needed.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="block" class="alert alert-warning">:exclamation: **Caution:**
+
 If your changes corrupt the data file, Pacebook may discard unreadable data or fail to load it correctly the next time it runs. It is strongly recommended to back up the file before editing it manually.
 Furthermore, certain edits can cause Pacebook to behave in unexpected ways if values are outside the accepted format. Edit the data file only if you are confident that you can update it correctly.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**
+<div markdown="block" class="alert alert-primary">:bulb: **Tips:**
+
 * Manual file editing is meant for advanced users only. Most users should use the app commands instead.
 </div>
 --------------------------------------------------------------------------------------------------------------------
@@ -570,4 +599,4 @@ Furthermore, certain edits can cause Pacebook to behave in unexpected ways if va
 | **DeleteTiming**  | `deletetiming ATHLETE_INDEX RECORD_INDEX`<br> e.g., `deletetiming 2 2`                                                                                                                                                                        |
 | **Clear**         | `clear`                                                                                                                                                                                                                                       |
 | **Help**          | `help`                                                                                                                                                                                                                                        |
-| **Exit**          | `exit`   
+| **Exit**          | `exit`                                                                                                                                                                                                                                        |
