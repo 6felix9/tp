@@ -281,11 +281,7 @@ They care about speed, clarity, and reliability more than visual aesthetics.
 **Value proposition**:
 
 Pacebook builds on AB3’s structured contact management system to help running coaches better organise athlete information and monitor performance over time. By turning athlete records into performance trends, the platform supports informed coaching decisions, improves training effectiveness, and reduces administrative workload, allowing coaches to focus on athlete growth.
-
-
-
 ### User stories
-
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a                                 | I want to                                       | So that I can                                                     |

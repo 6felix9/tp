@@ -26,7 +26,7 @@ Pacebook runs on Java, a free software platform required to run the app.
 You do not need to know how to program — just install it once using the links provided below
 
 1. Ensure that Java `17` or above is installed on your computer.<br>
-<div markdown="block" class="alert alert-info"> 
+<div markdown="block" class="alert alert-info">
 **Checking if you have Java installed** <br>
 1. Open a command terminal
 2. Type the following command and press enter:
@@ -35,7 +35,7 @@ You do not need to know how to program — just install it once using the links 
   ```
   If Java has been installed properly, you will see the Java version will be printed. <br>
   For example:
-  
+
   ```
   openjdk version "17.0.12" 2024-07-16
   ```
@@ -43,7 +43,7 @@ You do not need to know how to program — just install it once using the links 
   ```
   java version "17.0.9" 2023-10-17 LTS
   ```
-  
+
   If Java is not installed, you may see something like:
   ```
   'java' is not recognized as an internal or external command
@@ -53,12 +53,11 @@ You do not need to know how to program — just install it once using the links 
   command not found: java
   ```
   </div>
-  
+
   If you do not have Java installed, follow the installation guide for your operating system:
-  <ul>
-    <li>**Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).</li>
-    <li>**Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).</li>
-    <li>**Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).</li>
+  - **Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+  - **Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+  - **Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
   </ul>
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W14-4/tp/releases).
 
@@ -172,7 +171,7 @@ Format: `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [t/TAG]… [av
 Example:
 * A new sprinter joins your team A after the open trial session:
   * `add n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com 
-      ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA`
+ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA`
 
 <div markdown="block" class="alert alert-primary">:bulb: **Tips:**
 
