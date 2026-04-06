@@ -47,7 +47,7 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddAthleteCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
@@ -58,8 +58,8 @@ import seedu.address.model.person.StartDate;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandParserTest {
-    private AddCommandParser parser = new AddCommandParser();
+public class AddAthleteCommandParserTest {
+    private AddAthleteCommandParser parser = new AddAthleteCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
@@ -69,7 +69,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB
                 + AGE_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + START_DATE_DESC_BOB
-                + TAG_DESC_FRIEND + AVAILABLE_DAY_DESC_BOB, new AddCommand(expectedPerson));
+                + TAG_DESC_FRIEND + AVAILABLE_DAY_DESC_BOB, new AddAthleteCommand(expectedPerson));
 
 
         // multiple tags - all accepted
@@ -79,7 +79,7 @@ public class AddCommandParserTest {
                 NAME_DESC_BOB + AGE_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + START_DATE_DESC_BOB
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + AVAILABLE_DAY_DESC_BOB,
-                new AddCommand(expectedPersonMultipleTags));
+                new AddAthleteCommand(expectedPersonMultipleTags));
     }
 
     @Test
@@ -179,12 +179,12 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder(AMY).withTags().withAvailableDays().build();
         assertParseSuccess(parser, NAME_DESC_AMY + AGE_DESC_AMY + PHONE_DESC_AMY
                         + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + START_DATE_DESC_AMY,
-                new AddCommand(expectedPerson));
+                new AddAthleteCommand(expectedPerson));
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAthleteCommand.MESSAGE_USAGE);
 
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_BOB + AGE_DESC_BOB + PHONE_DESC_BOB
@@ -268,6 +268,6 @@ public class AddCommandParserTest {
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + AGE_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + START_DATE_DESC_BOB
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAthleteCommand.MESSAGE_USAGE));
     }
 }

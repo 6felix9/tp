@@ -272,7 +272,6 @@ Their primary needs include:
 
 - Consistent logging of timings and results
 - Quick comparisons between athletes
-- Easy tracking of trends and improvements
 - Simple and fast data entry during or after training sessions
 - Clean overview of their entire squad
 
@@ -280,7 +279,13 @@ They care about speed, clarity, and reliability more than visual aesthetics.
 
 **Value proposition**:
 
-Pacebook builds on AB3’s structured contact management system to help running coaches better organise athlete information and monitor performance over time. By turning athlete records into performance trends, the platform supports informed coaching decisions, improves training effectiveness, and reduces administrative workload, allowing coaches to focus on athlete growth.
+Pacebook builds on AB3’s structured contact management system to help running coaches 
+better organise athlete information in a way that suits their unique workflow. 
+By consolidating decentralised athlete information into a single platform, 
+Pacebook empowers coaches to make more informed decisions, enhances training effectiveness, 
+and reduces the administrative burden. This streamlined approach allows coaches 
+to focus more on fostering athlete development 
+rather than dealing with time-consuming administrative tasks.
 
 
 
@@ -288,28 +293,29 @@ Pacebook builds on AB3’s structured contact management system to help running 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a                                 | I want to                                       | So that I can                                                     |
-|----------|--------------------------------------|-------------------------------------------------|-------------------------------------------------------------------|
-| `* * *`  | running coach                        | add athlete profiles                            | keep track of my students’ personal and performance information   |
-| `* * *`  | running coach                        | view an athlete’s profile                       | quickly recall their performance details during training sessions |
-| `* * *`  | running coach                        | view a list of all my athletes                  | get an overview of my squad                                       |
-| `* * *`  | running coach                        | log running timings for an athlete              | track their performance over time                                 |
-| `* *`    | running coach                        | update athlete profile details                  | ensure their information stays accurate over time                 |
-| `* *`    | running coach                        | delete athlete profiles                         | remove students who are no longer under my coaching               |
-| `* *`    | running coach                        | search athletes using keywords or tags          | quickly locate specific students                                  |
-| `* *`    | running coach                        | view athletes' average times and personal bests | quickly assess their current performance level                    |
-| `* *`    | running coach                        | see week-to-week improvement indicators         | determine whether an athlete is progressing                       |
-| `*`      | running coach onboarding a new squad | import athlete profiles from a CSV file         | avoid adding them one by one                                      |
-| `*`      | running coach                        | export athlete profiles to a CSV file           | back up data or use it in other systems                           |
-| `*`      | running coach                        | view performance charts                         | visually spot trends over time                                    |
-| `*`      | running coach                        | see when an athlete achieves a personal best    | recognise improvement and motivate them                           |
+| Priority | As a                                 | I want to                                    | So that I can                                                             |
+|----------|--------------------------------------|----------------------------------------------|---------------------------------------------------------------------------|
+| `* * *`  | running coach                        | add athlete profiles                         | keep track of my students’ personal and performance information           |
+| `* * *`  | running coach                        | view an athlete’s profile                    | quickly recall their performance details during training sessions         |
+| `* * *`  | running coach                        | view a list of all my athletes               | get an overview of my squad                                               |
+| `* * *`  | running coach                        | log running timings for an athlete           | track their performance over time                                         |
+| `* *`    | running coach                        | update athlete profile details               | ensure their information stays accurate over time                         |
+| `* *`    | running coach                        | delete athlete profiles                      | remove athletes who are no longer under my coaching                       |
+| `* *`    | running coach                        | search athletes using keywords or tags       | quickly locate specific students                                          |
+| `* *`    | running coach                        | view athletes' personal bests                | quickly assess their current performance level                            |
+| `* *`    | running coach                        | see when an athlete achieves a personal best | recognise improvement and motivate them                                   |
+| `* *`    | running coach                        | sort athletes by personal best               | rank athletes based on their performance for analysis                     |
+| `* *`    | running coach                        | find athletes by name or phone number        | locate specific athletes based on identifiable information                |
+| `* *`    | running coach                        | find athletes by tags or availability        | plan and assign training schedules based on athlete type and availability |
+| `*`      | running coach onboarding a new squad | import athlete profiles from a CSV file      | avoid adding them one by one                                              |
+| `*`      | running coach                        | export athlete profiles to a CSV file        | back up data or use it in other systems                                   |
 
 ### Use cases
 
 **UC1 - Add Athlete Profile**
 
-System: Pacebook  
-Use case: UC1 - Add Athlete Profile  
+System: Pacebook <br>
+Use case: UC1 - Add Athlete Profile <br>
 Actor: Coach
 
 MSS:
@@ -497,6 +503,51 @@ Extensions:
    - **1a2.** Coach enters new index(es).
    - Steps 1a1-1a2 are repeated until the index(es) entered are correct.
    - Use case resumes from step 2.
+
+**UC8 - Find Athlete by Name, Phone Number, Tag or Available Day**
+
+System: Pacebook
+Use Case: UC8 - Find Athlete by Tags or Availability
+Actor: Coach
+
+MSS:
+1. Coach specifies tags or availability to find athletes:
+2. Pacebook checks if the parameters are valid inputs.
+3. Pacebook displays the number of matching athletes found in a success message.
+4. Pacebook retrieves and displays all athlete entries that match the specified keywords in the main window.<br>
+Use case ends.
+
+Extensions:
+
+2a. Pacebook detects invalid find parameters.<br>
+   2a1. Pacebook displays an error message indicating the invalid parameter(s).<br>
+   2a2. Coach enters new data.<br>
+   Steps 2a1-2a2 are repeated until the parameters are correct.<br>
+Use case resumes from step 3.<br><br>
+
+3a. No matching athlete entries found.<br>
+   3a1. Pacebook displays a message indicating no matching results and no athletes will be listed.<br>
+
+**UC9 - Sort Athletes by Personal Best or Name**
+
+System: Pacebook<br>
+Use Case: UC9 - Sort Athletes by Personal Best or Name<br>
+Actor: Coach
+
+MSS:
+1. Coach specifies the field and order for sorting.
+2. Pacebook checks if the specified sorting criteria are valid 
+3. Pacebook sorts the displayed athlete list based on the specified criteria.
+4. Pacebook displays the sorted athlete list in the main window.<br>
+Use case ends.
+
+Extensions:
+
+2a. Pacebook detects invalid sorting parameters. <br>
+   2a1. Pacebook displays an error message indicating the invalid sorting field or order. <br>
+   2a2. Coach enters new data. <br>
+   Steps 2a1-2a2 are repeated until the sorting parameters are correct. <br>
+Use case resumes from step 2.
 
 ### Non-Functional Requirements
 
