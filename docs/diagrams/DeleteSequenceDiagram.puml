@@ -1,6 +1,11 @@
 @startuml
 !include style.puml
 skinparam ArrowFontStyle plain
+skinparam defaultFontSize 20
+skinparam sequenceMessageFontSize 20
+skinparam sequenceParticipantFontSize 20
+skinparam sequenceGroupFontSize 20
+skinparam dpi 180
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
