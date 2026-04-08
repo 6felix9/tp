@@ -517,14 +517,14 @@ Use case ends.
 
 Extensions:
 
-2a. Pacebook detects invalid find parameters.<br>
-   2a1. Pacebook displays an error message indicating the invalid parameter(s).<br>
-   2a2. Coach enters new data.<br>
-   Steps 2a1-2a2 are repeated until the parameters are correct.<br>
+- 2a. Pacebook detects invalid find parameters.<br>
+   - **2a1.** Pacebook displays an error message indicating the invalid parameter(s).<br>
+   - **2a2.** Coach enters new data.<br>
+   - Steps 2a1-2a2 are repeated until the parameters are correct.<br>
 Use case resumes from step 3.<br><br>
 
-3a. No matching athlete entries found.<br>
-   3a1. Pacebook displays a message indicating no matching results and no athletes will be listed.<br>
+- 3a. No matching athlete entries found.<br>
+   - **3a1.** Pacebook displays a message indicating no matching results and no athletes will be listed.<br>
 
 **UC9 - Sort Athletes by Personal Best or Name**
 
@@ -541,9 +541,9 @@ Use case ends.
 
 Extensions:
 
-2a. Pacebook detects invalid sorting parameters. <br>
-   2a1. Pacebook displays an error message indicating the invalid sorting field or order. <br>
-   2a2. Coach enters new data. <br>
+- 2a. Pacebook detects invalid sorting parameters. <br>
+   - **2a1.** Pacebook displays an error message indicating the invalid sorting field or order. <br>
+   - **2a2.** Coach enters new data. <br>
    Steps 2a1-2a2 are repeated until the sorting parameters are correct. <br>
 Use case resumes from step 2.
 
