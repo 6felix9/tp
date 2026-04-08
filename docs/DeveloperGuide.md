@@ -287,10 +287,7 @@ and reduces the administrative burden. This streamlined approach allows coaches
 to focus more on fostering athlete development 
 rather than dealing with time-consuming administrative tasks.
 
-
-
 ### User stories
-
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a                                 | I want to                                    | So that I can                                                             |

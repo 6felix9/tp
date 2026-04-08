@@ -42,9 +42,9 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
         map.verifyNoDuplicatePrefixesFor(PREFIX_DISTANCE, PREFIX_MIN, PREFIX_SEC);
 
         // Check missing required fields
-        if (map.getValue(PREFIX_DISTANCE).isEmpty()
-                || map.getValue(PREFIX_MIN).isEmpty()
-                || map.getValue(PREFIX_SEC).isEmpty()) {
+        if (map.getValue(PREFIX_DISTANCE).map(String::isBlank).orElse(true)
+                || map.getValue(PREFIX_MIN).map(String::isBlank).orElse(true)
+                || map.getValue(PREFIX_SEC).map(String::isBlank).orElse(true)) {
             throw new ParseException("Missing required fields: dist/DISTANCE min/MINUTES sec/SECONDS");
         }
 

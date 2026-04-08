@@ -35,19 +35,22 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same phone, all other attributes different -> returns true
-        Person editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB)
-                .withPhone(ALICE.getPhone().value)
+        // same name and phone, all other attributes different -> returns true
+        Person editedAlice = new PersonBuilder(ALICE)
                 .withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // different phone, all other attributes same -> returns false
+        // same name, different phone -> returns false
         editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // phone differs, all other attributes same -> returns false
+        // same phone, different name -> returns false
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
+
+        // different name and phone -> returns false
         Person editedBob = new PersonBuilder(BOB).withPhone(VALID_PHONE_AMY).build();
         assertFalse(BOB.isSamePerson(editedBob));
     }

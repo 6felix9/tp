@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABLE_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
@@ -30,6 +31,7 @@ public class AddAthleteCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_EMERGENCY_CONTACT + "EMERGENCY_CONTACT "
             + PREFIX_START_DATE + "START DATE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "[" + PREFIX_AVAILABLE_DAY + "AVAILABLE DAY]...\n"
@@ -39,6 +41,7 @@ public class AddAthleteCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_EMERGENCY_CONTACT + "Jane Doe 91234567 "
             + PREFIX_START_DATE + "06/03/2026 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney "

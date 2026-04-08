@@ -12,7 +12,7 @@ contacts. It also allows you to find your athletes easily and monitor their impr
 So, whether you manage a competitive squad or a casual running group, **let Pacebook match your pace**.
 
 ### What is Pacebook?
-Pacebook is a **desktop application designed for running coaches to manage runners, training plans,
+Pacebook is a **desktop application designed for running coaches to manage runners, run timings,
 and essential contact information efficiently**. It is optimised for use via a **Command Line Interface (CLI)**, enabling fast interaction while still providing a simple graphical interface.
 
 * Table of Contents
@@ -26,7 +26,7 @@ Pacebook runs on Java, a free software platform required to run the app.
 You do not need to know how to program — just install it once using the links provided below
 
 1. Ensure that Java `17` or above is installed on your computer.<br>
-<div markdown="block" class="alert alert-info"> 
+<div markdown="block" class="alert alert-info">
 **Checking if you have Java installed** <br>
 
 1. Open a command terminal
@@ -63,10 +63,9 @@ You do not need to know how to program — just install it once using the links 
    ```
   
   If you do not have Java installed, follow the installation guide for your operating system:
-  <ul>
-    <li>**Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).</li>
-    <li>**Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).</li>
-    <li>**Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).</li>
+  - **Windows:** [Java installation guide for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+  - **Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+  - **Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
   </ul>
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W14-4/tp/releases).
 
@@ -175,24 +174,25 @@ These needs are built around the pace and demands of a real club coaching workfl
 
 Adds a new athlete to Pacebook.
 
-Format: `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [t/TAG]… [av/AVAILABLE_DAY]…​`
+Format: `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​`
 
 Example:
 * A new sprinter joins your team A after the open trial session:
   * `add n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com 
-      ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA`
+ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA`
 
 <div markdown="block" class="alert alert-primary">:bulb: **Tips:**
 
 - All compulsory fields (i.e. not in square brackets) must be provided.
 - `AGE` must be a number between 10-99.
-- `PHONE_NUMBER` must be a valid Singapore phone number (i.e. 8 digits, starts with 8 or 9).
+- `PHONE` must be a valid Singapore phone number (i.e. 8 digits, starts with 8 or 9).
 - `EMAIL` must be a valid email, i.e. email@domain.
+- `EMERGENCY_CONTACT` can be any non-blank text, e.g. a name and number like `Jane Doe 91234567`. If omitted, it defaults to `N/A`.
 - Avoid using vague names such as `John` if you coach multiple athletes with similar names.
 </div>
 
 <div markdown="block" class="alert alert-warning">:exclamation: **Caution:**
-Duplicate athletes may be rejected if an athlete with the **same phone number** already exists in Pacebook.
+Duplicate athletes may be rejected if an athlete with the **same name and phone number** already exists in Pacebook.
 </div>
 
 <div markdown="block" class="alert alert-success">✅ **Expected output:**
@@ -206,7 +206,7 @@ Duplicate athletes may be rejected if an athlete with the **same phone number** 
 
 Updates an existing athlete's details.
 
-Format: `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [t/TAG]… [av/AVAILABLE_DAY]…​`
+Format: `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​`
 Edits the athlete at the specified `INDEX`.
 
 Example:
@@ -378,7 +378,7 @@ Example:
 <div markdown="block" class="alert alert-success">✅ **Expected output:**
 
 * The selected athlete’s profile is shown.
-* Any stored run timings or training records for that athlete are shown below the profile details.
+* Any stored run timings for that athlete are shown below the profile details.
 </div>
 
 ---
@@ -418,7 +418,7 @@ Examples:
 <div markdown="block" class="alert alert-success">✅ **Expected output:**
 
 * A success message confirming that the timing was added.
-* If the new timing is the athlete’s fastest timing so far, a **new personal best** message is also shown.
+* If the new timing is the athlete’s fastest recorded timing for that distance, a **new personal best** message is also shown.
 </div>
 
 ---
@@ -598,14 +598,14 @@ Furthermore, certain edits can cause Pacebook to behave in unexpected ways if va
 
 | Action             | Format, Examples                                                                                                                                                                                                                       |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Athlete**    | `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [t/TAG]… [av/AVAILABLE_DAY]…​` <br> e.g., `addathlete n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA` |
-| **Edit**           | `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [t/TAG]… [av/AVAILABLE_DAY]…​`<br> e.g., `edit 1 n/Marcus Lim e/marcus@email.com`                                                                         |
+| **Add Athlete**    | `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​` <br> e.g., `add n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 t/sprinter t/teamA` |
+| **Edit**           | `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​`<br> e.g., `edit 1 n/Marcus Lim e/marcus@email.com`                                                   |
 | **Find**           | `find [n/NAME] [p/PHONE] [t/TAG] [av/AVAILABLE_DAY]`<br> e.g., `find n/Sarah t/sprinter`                                                                                                                                               |
 | **List**           | `list`                                                                                                                                                                                                                                 |
 | **Sort**           | `sort by/FIELD [dist/DISTANCE] [ord/ORDER]` <br> e.g., `sort by/pb dist/400m ord/desc`                                                                                                                                                |
 | **View Athlete**   | `view INDEX`<br> e.g., `view 3`                                                                                                                                                                                                        |
 | **Add Timing**     | `addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS`<br> e.g., `addtime 2 dist/400m min/10 sec/30`                                                                                                                                    |
-| **Delete Athlete** | `del INDEX`<br> e.g., `deleteathlete 3`                                                                                                                                                                                                |
+| **Delete Athlete** | `del INDEX`<br> e.g., `del 3`                                                                                                                                                                                                          |
 | **Delete Timing**  | `deltime ATHLETE_INDEX RECORD_INDEX`<br> e.g., `deltime 2 2`                                                                                                                                                                           |
 | **Clear**          | `clear`                                                                                                                                                                                                                                |
 | **Help**           | `help`                                                                                                                                                                                                                                 |

@@ -8,9 +8,11 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.AGE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.AVAILABLE_DAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_CONTACT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_CONTACT_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.CARL;
@@ -190,9 +192,10 @@ public class LogicManagerTest {
 
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddAthleteCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + AGE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + START_DATE_DESC_AMY
-                + AVAILABLE_DAY_DESC_AMY;
-        Person expectedPerson = new PersonBuilder(AMY).withTags().withAvailableDays("Mon").build();
+                + AGE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + EMERGENCY_CONTACT_DESC_AMY
+                + START_DATE_DESC_AMY + AVAILABLE_DAY_DESC_AMY;
+        Person expectedPerson = new PersonBuilder(AMY).withTags().withAvailableDays("Mon")
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY).build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

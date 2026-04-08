@@ -3,10 +3,8 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
-
 /**
- * Tests that the person's phone number matches the phone number specified by the user in the command
+ * Tests that the person's phone number contains the keyword specified by the user in the command
  */
 public class PhoneContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
@@ -21,7 +19,6 @@ public class PhoneContainsKeywordsPredicate implements Predicate<Person> {
             return true;
         }
         return keywords.stream()
-            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
-                person.getPhone().toString(), keyword));
+            .anyMatch(keyword -> person.getPhone().value.contains(keyword));
     }
 }

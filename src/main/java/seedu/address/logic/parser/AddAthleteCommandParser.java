@@ -45,13 +45,13 @@ public class AddAthleteCommandParser implements Parser<AddAthleteCommand> {
                         PREFIX_EMERGENCY_CONTACT, PREFIX_START_DATE, PREFIX_TAG, PREFIX_AVAILABLE_DAY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_AGE, PREFIX_ADDRESS,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_START_DATE)
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EMERGENCY_CONTACT, PREFIX_START_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAthleteCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_AGE, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_START_DATE);
+                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_EMERGENCY_CONTACT, PREFIX_START_DATE);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
@@ -61,13 +61,8 @@ public class AddAthleteCommandParser implements Parser<AddAthleteCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<AvailableDay> availableDays = ParserUtil.parseAvailableDays(argMultimap
                 .getAllValues(PREFIX_AVAILABLE_DAY));
-        EmergencyContact emergencyContact;
-
-        if (argMultimap.getValue(PREFIX_EMERGENCY_CONTACT).isPresent()) {
-            emergencyContact = new EmergencyContact(argMultimap.getValue(PREFIX_EMERGENCY_CONTACT).get());
-        } else {
-            emergencyContact = new EmergencyContact("N/A");
-        }
+        EmergencyContact emergencyContact = ParserUtil.parseEmergencyContact(
+                argMultimap.getValue(PREFIX_EMERGENCY_CONTACT).get());
 
         Person person = new Person(name, age, phone, email, address,
                 emergencyContact, startDate, tagList, availableDays);
