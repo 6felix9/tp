@@ -595,6 +595,54 @@ Given below are instructions to test the app manually.
 <div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
 
+**Note:** The contact list of Pacebook will be written to the hard disk inside the folder called "data" within the directory in which the pacebook.jar file is placed. For convenience, the term "addressbook.json" in this manual test instruction section will refer to this file that contains the contact list stored by Pacebook.
+
+**Note:** For standardised testing that require multiple athletes to be recorded in Pacebook as a prerequisite, the tester is free is to use their own list of athletes or use the sample below for convenience, by copying the sample and overwriting their addressbook.json with the sample:
+
+```json
+{
+  "persons": [
+    {
+      "name": "Irfan Ibrahim",
+      "age": "20",
+      "phone": "92492021",
+      "email": "irfan@example.com",
+      "address": "Blk 47 Tampines Street 20, #17-35",
+      "emergencyContact": "Uncle 95678901",
+      "startDate": "05/05/2005",
+      "tags": ["classmates"],
+      "availableDays": ["Thu"],
+      "timings": []
+    },
+    {
+      "name": "Roy Balakrishnan",
+      "age": "29",
+      "phone": "92624417",
+      "email": "royb@example.com",
+      "address": "Blk 45 Aljunied Street 85, #11-31",
+      "emergencyContact": "Aunt 96789012",
+      "startDate": "06/06/2006",
+      "tags": ["colleagues"],
+      "availableDays": ["Fri"],
+      "timings": []
+    },
+    {
+      "name": "Lucas Wong",
+      "age": "20",
+      "phone": "93579135",
+      "email": "lucas.wong@example.com",
+      "address": "27 Serangoon North Ave 4",
+      "emergencyContact": "N/A",
+      "startDate": "30/01/2024",
+      "tags": ["teamC"],
+      "availableDays": [],
+      "timings": []
+    }
+  ]
+}
+```
+
+
 </div>
 
 ### Launch and shutdown
@@ -615,29 +663,184 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases …​ }_
 
 ### Listing all athletes
-1. Viewing all the athletes in the 
+1. Viewing all the athletes in Pacebook while the address book is empty:
+
+    1. Prerequisites: The file data/addressbook.json should contain an empty list
+
+    1. Test case: `list`
+       Expected: Nothing should be shown in the person list panel
+
+2. Viewing all the athletes in Pacebook while the address book contains multiple athletes
+
+    1. Prerequisites: The file data/addressbook.json should contain multiple athletes.
+
+    1. Test case: `list`
+       Expected: The information of all 3 athletes should be displayed in the person list panel with their information correctly represented as described in the json file. If following the sample addressbook.json for multiple athletes, the following should be displayed in the person list panel:
+       ![Multiple Athletes Display](images/multiple_athletes_display.png)
 
 ### Adding an athlete
-1. Adding a valid athlete while all persons are being shown
+1. Adding a valid athlete while all athletes are being shown and there are multiple athletes in Pacebook
 
-    1. Prerequisites: List all persons using the 'list' command.
+    1. Prerequisites: List all athletes using the `list` command.
 
-### Deleting a person
+    1. Test case: `addathlete n/Muhammad Irfan a/24 p/92345678 e/irfan24@example.com ad/45 Tampines Street 81, #10-22 d/30/06/2023 ec/Father 93456789 t/marathon av/Sat`
+       
+       Expected: The following success message is shown in the result display:
+       `New person added: Muhammad Irfan; Age: 24; Phone: 92345678; Email: irfan24@example.com; Address: 45 Tampines Street 81, #10-22; Emergency Contact: Father 93456789; Start Date: 30/06/2023; Tags: [marathon]`
+       
+       Expected: The athlete's information should be displayed in the last row of the person list panel as follows (note that the index of the new athlete depends on how many athletes there were previously. In this example, 6 athletes are present before the new athlete Lucas Wong is added):
+       ![Add athlete result in person list panel](images/add_athlete_result_in_person_list_panel.png)
+       
+       Expected: The athlete's information should be displayed as the last athlete in the addressbook.json list as follows:
+       
+       `}, {
+       11     "name" : "Lucas Wong",
+       10     "age" : "20",
+       9     "phone" : "93579135",
+       8     "email" : "lucas.wong@example.com",
+       7     "address" : "27 Serangoon North Ave 4",
+       6     "emergencyContact" : "N/A",
+       5     "startDate" : "30/01/2024",
+       4     "tags" : [ "teamC" ],
+       3     "availableDays" : [ ],
+       2     "timings" : [ ]`
 
-1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+2. Adding a valid athlete while only several out of all the athletes are being shown after a find command.
 
-   1. Test case: `del 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Prerequisites: There are multiple athletes in the addressbook.json.
+   
+    1. Prerequisites: Use the find command to display a filtered list of athletes, such that the number of athletes in the person list panel is less than the number of athletes in the address book. Refer to the guide on using the find command for detailed instructions on how to use the find instruction. For convenience, here is a sample find command that can be used if using the sample addressbook.json above:
+        `find n/Roy`   
 
-   1. Test case: `del 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: Follow the instructions for the first test case in the "Adding a valid athlete while all athletes are being shown and there are multiple athletes in Pacebook" above.
+       
+       Expected: The expected result is identical to the expected result for the first test case in the "Adding a valid athlete while all athletes are being shown and there are multiple athletes in Pacebook" above.
 
-   1. Other incorrect delete commands to try: `del`, `del x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+3. Adding an invalid athlete while all athletes are being shown.
+
+    1. Prerequisites: List all athlete using the `list` command before starting each test case.
+
+    1. Test case: `addathlete n/Chloe Ong n/Chris Ryan a/17 p/96543210 e/chloe.ong@example.com ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
+       
+        Expected: The following should be displayed in the result display in red text colour:
+       `Multiple values specified for the following single-valued field(s): n/`
+   
+    1. Test case: `addathlete n/Chloe Ong a/17 p/965432100 e/chloe.ong@example.com ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
+       
+       Expected: The following should be displayed in the result display in red text colour:
+       `Phone number must be exactly 8 digits and start with 8 or 9 (e.g. 91234567).`
+
+    1. Test case: `addathlete n/Chloe Ong a/17 p/96543210 e/chloe.ong@ ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
+       
+       Expected: The following should be displayed in the result display in red text colour:
+       ```text 
+        Emails should be of the format local-part@domain and adhere to the following constraints:
+        1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+        2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+        The domain name must:
+        - end with a domain label at least 2 characters long
+        - have each domain label start and end with alphanumeric characters
+        - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+       ```
+
+### Editing an athlete
+
+1. Editing an athlete at a valid index with valid format when all persons are being shown
+    1. Prerequisites: List all athlete using the `list` command before starting each test case.
+   
+    1. Test case: `edit 3 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
+       
+       Expected: The following should be displayed in the result panel:
+       ```Edited Person: Muhammad Irfan Khan; Age: 25; Phone: 92345678; Email: muhammad.irfan.khan@example.com; Address: 12 Tampines Street 82, #11-03; Emergency Contact: Mother 91234567; Start Date: 01/07/2023; Tags: [marathon][teamB]```
+
+
+1. Editing an athlete at a valid index with valid format when only one person is being shown
+    1. Prerequisites: Find a single athlete to display on the person list panel using the find command. If using the addressbook.json sample above, run `find n/Lucas`
+        
+    1. Test case: `edit 1 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
+
+       Expected: The following should be displayed in the result panel:
+       `Edited Person: Lucas Tan; Age: 21; Phone: 91234567; Email: lucas.tan@example.com; Address: 31 Serangoon North Ave 4; Emergency Contact: Father 92345678; Start Date: 15/02/2024; Tags: [teamB]`
+
+       Expected: The changes should be reflected and updated information should be displayed in the person list panel as follows:
+       ![Edited Lucas result](images/edited_lucas_result.png)
+
+
+2. Editing an athlete with invalid format when all athletes are displayed
+   1. Prerequisites: List all athlete using the `list` command
+
+   1. Test case: `edit 1 n/Lucas Tan a/21 p/9123 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
+
+      Expected: The following should be displayed in the result panel:
+      `Phone number must be exactly 8 digits and start with 8 or 9 (e.g. 91234567).`
+
+
+3. Editing an athlete with invalid index when all athletes are displayed
+    1. Prerequisites: List all athletes using the 'list' command.
+    
+    1. Test case: Enter a negative index:
+       `edit -1 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
+
+       Expected: The following error message should be displayed in the result display:
+       ```
+       Invalid command format! 
+       edit: Edits the details of the person identified by the index number used in the displayed person list. Existing values will be overwritten by the input values.
+       parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [ec/EMERGENCY_CONTACT] [t/TAG]...
+       Example: edit 1 p/91234567 e/johndoe@example.com
+       ```
+
+    1. Test case: Enter an index larger than the index of the last athlete in the person display list. If using the addressbook.json sample:
+       `edit 4 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
+
+       Expected: The following error message should be displayed in the result display:
+       ```
+       The person index provided is invalid
+       ```
+
+
+### Deleting an athlete
+
+1. Deleting an athlete while all athletes are being shown
+
+    1. Prerequisites: List all athletes using the `list`command. Multiple athletes in the list.
+
+    1. Test case: `deleteathlete 1`<br>
+       Expected: The first contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. When using the addressbook.json sample, the following is displayed on the result display:
+       `Deleted athlete profile: Irfan Ibrahim; Age: 20; Phone: 92492021; Email: irfan@example.com; Address: Blk 47 Tampines Street 20, #17-35; Emergency Contact: Uncle 95678901; Start Date: 05/05/2005; Tags: [classmates]`
+
+1. Deleting an athlete while only one athlete is being shown
+
+    1. Prerequisites: Find a single athlete to display on the person list panel using the find command. If using the addressbook.json sample above, run `find n/Lucas`
+
+    1. Test case: `deleteathlete 1`
+       Expected: The contact in the first index of the displayed person list is deleted. The following message should appear in the result display:
+       `Deleted athlete profile: Lucas Wong; Age: 20; Phone: 93579135; Email: lucas.wong@example.com; Address: 27 Serangoon North Ave 4; Emergency Contact: N/A; Start Date: 30/01/2024; Tags: [teamC]`
+       When running `list` command, that contact should no longer appear on the person list panel
+       
+
+1. Deleting an athlete with invalid index while all athletes are being shown
+    
+    1. Prerequisites: List all athletes using the `list`command. Multiple athletes in the list.
+    
+    1. Test case: Enter a negative index to delete:
+       `deleteathlete -1`
+       Expected: The following error message should be displayed in the result display:
+       ```
+       Invalid command format! 
+       deleteathlete: Deletes the athlete profile identified by the index number used in the displayed athlete profile list.
+       Parameters: INDEX (must be a positive integer)
+       Example: deleteathlete 1
+       ```
+       
+    1. Test case: Enter an index larger than the index of the last athlete in the person display list. If using the addressbook.json sample:
+       `deleteathlete 3`
+       Expected: The following error message should be displayed in the result display:
+       `The person index provided is invalid`
+       
+### Find athletes
+
 
 ### Saving data
 
