@@ -55,6 +55,14 @@ public class ArgumentMultimap {
         return new ArrayList<>(argMultimap.get(prefix));
     }
 
+    public ArrayList<Prefix> getAllPrefixes() {
+        ArrayList<Prefix> prefixList = new ArrayList<>();
+        for (Prefix prefix : argMultimap.keySet()) {
+            prefixList.add(prefix);
+        }
+        return prefixList;
+    }
+
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
