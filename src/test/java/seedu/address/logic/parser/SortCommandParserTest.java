@@ -30,21 +30,19 @@ public class SortCommandParserTest {
     @Test
     public void parse_missingDistanceForPb_failure() {
         assertParseFailure(parser, " by/pb",
-                String.format(seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                        SortCommand.MESSAGE_USAGE));
+                SortCommandParser.MESSAGE_MISSING_DISTANCE_FOR_PB);
     }
 
     @Test
     public void parse_distanceProvidedForName_failure() {
         assertParseFailure(parser, " by/name dist/400m",
-                String.format(seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                        SortCommand.MESSAGE_USAGE));
+                SortCommandParser.MESSAGE_UNEXPECTED_DISTANCE);
     }
 
     @Test
     public void parse_invalidDistance_failure() {
         assertParseFailure(parser, " by/pb dist/5km",
-                SortCommand.MESSAGE_USAGE);
+                SortCommandParser.MESSAGE_INVALID_DISTANCE_VALUE);
     }
 
     @Test

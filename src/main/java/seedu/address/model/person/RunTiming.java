@@ -33,6 +33,9 @@ public class RunTiming {
      */
     public RunTiming(String distance, int minutes, double seconds) {
         requireNonNull(distance);
+        if (!isValidDistance(distance)) {
+            throw new IllegalArgumentException(MESSAGE_DISTANCE_CONSTRAINTS);
+        }
 
         this.distance = distance;
         this.minutes = minutes;

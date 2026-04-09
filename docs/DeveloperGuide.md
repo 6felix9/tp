@@ -5,7 +5,7 @@ toc: true
 ---
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 ## **Acknowledgements**
 
@@ -600,11 +600,11 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: List all athletes using the `list` command.
 
     1. Test case: `add n/Muhammad Irfan a/24 p/92345678 e/irfan24@example.com ad/45 Tampines Street 81, #10-22 d/30/06/2023 ec/Father 93456789 t/marathon av/Sat`
-       
+
        Expected: The following success message is shown in the result display:
        ```
-       New person added: 
-        - Muhammad Irfan 
+       New person added:
+        - Muhammad Irfan
         - Age: 24
         - Phone: 92345678
         - Email: irfan24@example.com
@@ -613,12 +613,12 @@ testers are expected to do more *exploratory* testing.
         - Start Date: 30/06/2023
         - Tags: [marathon]
        ```
-       
+
        Expected: The athlete's information should be displayed in the last row of the person list panel as follows (note that the index of the new athlete depends on how many athletes there were previously. In this example, 6 athletes are present before the new athlete Lucas Wong is added):
        ![Add athlete result in person list panel](images/add_athlete_result_in_person_list_panel.png)
-       
+
        Expected: The athlete's information should be displayed as the last athlete in the addressbook.json list as follows:
-       
+
        `}, {
        11     "name" : "Lucas Wong",
        10     "age" : "20",
@@ -635,12 +635,12 @@ testers are expected to do more *exploratory* testing.
 2. Adding a valid athlete while only several out of all the athletes are being shown after a find command.
 
     1. Prerequisites: There are multiple athletes in the addressbook.json.
-   
+
     1. Prerequisites: Use the find command to display a filtered list of athletes, such that the number of athletes in the person list panel is less than the number of athletes in the address book. Refer to the guide on using the find command for detailed instructions on how to use the find instruction. For convenience, here is a sample find command that can be used if using the sample addressbook.json above:
-        `find n/Roy`   
+        `find n/Roy`
 
     1. Test case: Follow the instructions for the first test case in the "Adding a valid athlete while all athletes are being shown and there are multiple athletes in Pacebook" above.
-       
+
        Expected: The expected result is identical to the expected result for the first test case in the "Adding a valid athlete while all athletes are being shown and there are multiple athletes in Pacebook" above.
 
 
@@ -649,19 +649,19 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: List all athlete using the `list` command before starting each test case.
 
     1. Test case: `add n/Chloe Ong n/Chris Ryan a/17 p/96543210 e/chloe.ong@example.com ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
-       
+
         Expected: The following should be displayed in the result display in red text colour:
        `Multiple values specified for the following single-valued field(s): n/`
-   
+
     1. Test case: `add n/Chloe Ong a/17 p/965432100 e/chloe.ong@example.com ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
-       
+
        Expected: The following should be displayed in the result display in red text colour:
        `Phone number must be exactly 8 digits and start with 8 or 9 (e.g. 91234567).`
 
     1. Test case: `add n/Chloe Ong a/17 p/96543210 e/chloe.ong@ ad/9 Pasir Ris Drive 6, #07-44 d/08/04/2026 t/relay t/school av/Fri`
-       
+
        Expected: The following should be displayed in the result display in red text colour:
-       ```text 
+       ```text
         Emails should be of the format local-part@domain and adhere to the following constraints:
         1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
         2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
@@ -675,16 +675,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing an athlete at a valid index with valid format when all persons are being shown
     1. Prerequisites: List all athlete using the `list` command before starting each test case.
-   
+
     1. Test case: `edit 3 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
-       
+
        Expected: The following should be displayed in the result panel:
        ```Edited Person: Muhammad Irfan Khan; Age: 25; Phone: 92345678; Email: muhammad.irfan.khan@example.com; Address: 12 Tampines Street 82, #11-03; Emergency Contact: Mother 91234567; Start Date: 01/07/2023; Tags: [marathon][teamB]```
 
 
 1. Editing an athlete at a valid index with valid format when only one person is being shown
     1. Prerequisites: Find a single athlete to display on the person list panel using the find command. If using the addressbook.json sample above, run `find n/Lucas`
-        
+
     1. Test case: `edit 1 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
 
        Expected: The following should be displayed in the result panel:
@@ -705,13 +705,13 @@ testers are expected to do more *exploratory* testing.
 
 3. Editing an athlete with invalid index when all athletes are displayed
     1. Prerequisites: List all athletes using the 'list' command.
-    
+
     1. Test case: Enter a negative index:
        `edit -1 n/Lucas Tan a/21 p/91234567 e/lucas.tan@example.com ad/31 Serangoon North Ave 4 ec/Father 92345678 d/15/02/2024 t/teamB`
 
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format! 
+       Invalid command format!
        edit: Edits the details of the person identified by the index number used in the displayed person list. Existing values will be overwritten by the input values.
        parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [ec/EMERGENCY_CONTACT] [t/TAG]...
        Example: edit 1 p/91234567 e/johndoe@example.com
@@ -744,29 +744,29 @@ testers are expected to do more *exploratory* testing.
        Expected: The contact in the first index of the displayed person list is deleted. The following message should appear in the result display:
        `Deleted athlete profile: Lucas Wong; Age: 20; Phone: 93579135; Email: lucas.wong@example.com; Address: 27 Serangoon North Ave 4; Emergency Contact: N/A; Start Date: 30/01/2024; Tags: [teamC]`
        When running `list` command, that contact should no longer appear on the person list panel
-       
+
 
 1. Deleting an athlete with invalid index while all athletes are being shown
-    
+
     1. Prerequisites: List all athletes using the `list`command. Multiple athletes in the list.
-    
+
     1. Test case: Enter a negative index to delete:
        `del -1`
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format! 
+       Invalid command format!
        del: Deletes the athlete profile identified by the index number used in the displayed athlete profile list.
        Parameters: INDEX (must be a positive integer)
        Example: del 1
        ```
-       
+
     1. Test case: Enter an index larger than the index of the last athlete in the person display list. If using the addressbook.json sample:
        `del 3`
        Expected: The following error message should be displayed in the result display:
        `The person index provided is invalid`
-       
+
 ### Find athletes
-***Note:*** 
+***Note:***
 Find athlete commands are meant to be done to pick out a smaller subset of athletes from a larger subset.
 
 Thus, all the find athlete tests have the following common prerequisite:
@@ -791,12 +791,12 @@ Expected: The result display should display number of persons listed.
 
     1. Find athlete by partial phone number
        Test case: `find p/92` if using sample addressbook.json or `find p/x`, where x is any partial phone number
-       Expected: All athletes whose phone number contains `x` as a substring, and only these athletes, should appear in the person list panel. 
+       Expected: All athletes whose phone number contains `x` as a substring, and only these athletes, should appear in the person list panel.
 
 
 1. Find athlete by a tag
-    
-    1. Finding athlete using an all-lowercase tag in the command 
+
+    1. Finding athlete using an all-lowercase tag in the command
        Test case: `find t/classmates` if using sample addressbook.json or `find t/TAG`, where TAG could be any tag keyword.
        Expected: All athletes that have the specified tag, and no other athlete besides these, should appear in the contact list.
 
@@ -828,7 +828,7 @@ Expected: The result display should display number of persons listed.
     1. Test case: `find q/Irfan`
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format! 
+       Invalid command format!
        find: Finds all persons whose names contain any of the specified name keywords (case-insensitive), whose tags contain any of the specified tag keywords (case-insensitive), or whose phone numbers contain any of the specified phone numbers and displays them as a list with index numbers.
        Parameters: n/KEYWORD p/PHONE_NUMBER t/TAG t/ANOTHER_TAG t/ANOTHER_TAG av/AVAILABLE_DAY ...
        Example: find n/jessy p/91234567 t/captain t/sprinter av/Mon
@@ -838,7 +838,7 @@ Expected: The result display should display number of persons listed.
 ***Note***: There has to be at least one valid contact in the address book before running the tests
 
 1. Add a valid timing to a valid index for various distances
-    
+
     1. Add a valid timing to a valid index for 2.4km distance
        Test case: `addtime 1 dist/2.4km min/10 sec/10`
        Expected: The following success message should be displayed in the result display if using the addressbook.json sample above:
@@ -866,7 +866,7 @@ Expected: The result display should display number of persons listed.
       ```
 
 1. Add an invalid timing to a valid index for 2.4km distance
-    
+
     1. Use a negative number as the minutes
        Test case: `addtime 1 dist/2.4km min/-1 sec/0`
        Expected: The following error message should be displayed in the result display:
@@ -880,7 +880,7 @@ Expected: The result display should display number of persons listed.
 1. Add a valid timing to an invalid index for 2.4km distance
 
     1. Use a negative athlete index
-       Test case: `addtime -1 dist/10km min/45 sec/30` 
+       Test case: `addtime -1 dist/10km min/45 sec/30`
 
     1. Use an athlete index that is larger than the number of athletes stored in Pacebook
        Test case: `addtime x dist/10km min/45 sec/30`, where x is greater than the number of athletes in Pacebook
@@ -952,11 +952,11 @@ Expected: The result display should display number of persons listed.
 
 1. Delete a valid run record index for a valid athlete index
     1. Test case: `deltime x 1`, where x is a valid athlete index
-   
+
        Expected: The following success message should be displayed in the result display, if using the addressbook.json sample:
        `Deleted timing for Irfan Ibrahim: 10km in 45min 30.0s`
-   
-       Expected: Run the following command: `view x`, where x is the index that was previously entered. The run timings should include all the previous run timings after index `x` shifted up in the records by 1 position, and the run timing that corresponds to the index specified in the delete command should no longer appear in the list. 
+
+       Expected: Run the following command: `view x`, where x is the index that was previously entered. The run timings should include all the previous run timings after index `x` shifted up in the records by 1 position, and the run timing that corresponds to the index specified in the delete command should no longer appear in the list.
 
 1. Delete a valid run record index for an invalid athlete index
     1. Use an athlete index that is greater than the number of athletes stored in Pacebook
@@ -1006,16 +1006,16 @@ Expected: The result display should display number of persons listed.
 1. View the profile of an athlete at a valid index when only one athlete is on the person list panel
     1. Prerequisites: Run the command `p/x`, where x is a valid full phone number of any athlete. This will output only
        one athlete in the person list panel as no duplicate phone numbers are allowed.
-    
+
     1. Test case: `view 1`
        Expected: The full profile of the athlete should be shown in the result display. This includes their run timing records
-       
+
 1. View the profile of an athlete at an invalid index
-    1. Choose a negative index 
+    1. Choose a negative index
        Test case: `view -1`
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format! 
+       Invalid command format!
        view: Views the athlete identified by the index number used in the displayed person list.
        Parameters: INDEX (must be a positive integer)
        Example: view 1
@@ -1029,7 +1029,7 @@ Expected: The result display should display number of persons listed.
 ### Sorting athletes
 ***Note***: All the tests below have the following common prerequisites:
 1. Multiple athletes exist in the addressbook.json
-2. Each distance has to contain several athletes that run those distances, 
+2. Each distance has to contain several athletes that run those distances,
 e.g. 3 different athletes have a 2.4km time recorded, 5 different athletes have a 10km time recorded, etc.
 Testers may use the following addressbook.json that fulfills the above prerequisites for convenience:
 
@@ -1254,8 +1254,8 @@ Testers may use the following addressbook.json that fulfills the above prerequis
 
 2. Sorting by PB (Personal Best)
     1. Sort ascending
-       Test case: 
-       Expected: 
+       Test case:
+       Expected:
 
     2. Sort descending
        Test case:
@@ -1263,18 +1263,18 @@ Testers may use the following addressbook.json that fulfills the above prerequis
 
 
 2. Sorting using invalid distance field
-    1. Test case: 
+    1. Test case:
        Expected:
 
 2. Sorting using invalid order field
     1. Test case: `sort by/pb ord/asdf`
-       Expected: 
+       Expected:
 
 
 ### Clear Pacebook's address book
 1. Clearing when there are no athletes in addressbook.json
    1. Prerequisites: addressbook.json is empty
-   
+
    2. Test case: `clear`
       Expected: The following success message should be displayed in the result display:
       `Address book has been cleared!`
@@ -1283,7 +1283,7 @@ Testers may use the following addressbook.json that fulfills the above prerequis
 
 2. Clearing when there are multiple athletes in addressbook.json
     1. Prerequisites: addressbook.json contains multiple athletes. Use any of the addressbook.json samples above for convenience:
-   
+
     1. Test case: `clear`
        Expected: The following success message should be displayed in the result display:
        `Address book has been cleared!`
@@ -1314,16 +1314,16 @@ Testers may use the following addressbook.json that fulfills the above prerequis
        ```
        <br>
        There should be no changes to the person list panel
-    
-    
+
+
 ### Exit
 1. Exiting the programme after no changes are made to the addressbook
    1. Test case: `exit`
       Expected: The programme window closes, and all modifications done to the addressbook should be reflected in addressbook.json
-       
+
 
 1. Exiting the programme after adding a new athlete to the address book with run times
-   1. Prerequisites: 
+   1. Prerequisites:
       Run the following commands in order:
       ```
       add n/Aryan Lim a/19 p/91827364 e/aryan.lim@example.com ad/18 Bedok North Street 3, #09-12 ec/Mother 91239876 d/12/03/2025 t/sprinter t/school av/Tue av/Thu
@@ -1331,7 +1331,7 @@ Testers may use the following addressbook.json that fulfills the above prerequis
       addtime 4 dist/2.4km min/9 sec/41.85
       addtime 4 dist/10km min/43 sec/27.50
       ```
-   
+
    1. Test case: `exit`
       Expected: The addressbook.json should have Aryan Lim in it, with his personal information and 3 run records
 

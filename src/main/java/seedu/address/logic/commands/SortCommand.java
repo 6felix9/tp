@@ -80,15 +80,19 @@ public class SortCommand extends Command {
             return sortOrder == SortOrder.DESC ? nameComparator.reversed() : nameComparator;
 
         case PB:
-            if (sortOrder == SortOrder.ASC) {
-                return Comparator
-                        .comparing((Person person) -> !hasTimingForDistance(person))
-                        .thenComparingDouble(this::getSortTimeForDistance);
-            } else {
-                return Comparator
-                        .comparing((Person person) -> !hasTimingForDistance(person))
-                        .thenComparing(Comparator.comparingDouble(this::getSortTimeForDistance).reversed());
-            }
+            Comparator<Person> pbComparator = Comparator
+                    .comparing((Person person) -> person.getBestTimeForDistance(distance) == Double.MAX_VALUE)
+                    .thenComparingDouble(person -> person.getBestTimeForDistance(distance))
+                    .thenComparing(person -> person.getName().toString().toLowerCase());
+
+            return sortOrder == SortOrder.DESC
+                    ? Comparator
+                    .comparing((Person person) -> person.getBestTimeForDistance(distance) == Double.MAX_VALUE)
+                    .thenComparing(
+                            Comparator.comparingDouble((Person person) -> person.getBestTimeForDistance(distance))
+                                    .reversed())
+                    .thenComparing(person -> person.getName().toString().toLowerCase())
+                    : pbComparator;
 
         default:
             throw new CommandException("Unsupported sort field: " + sortField);

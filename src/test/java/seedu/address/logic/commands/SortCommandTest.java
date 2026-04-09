@@ -52,6 +52,25 @@ public class SortCommandTest {
     }
 
     @Test
+    public void execute_sortByPbAscending_doesNotUseOverallFastestTime() throws Exception {
+        Person amelia = createPersonWithTimings("Amelia",
+                new RunTiming("400m", 1, 0.0),
+                new RunTiming("2.4km", 10, 0.0),
+                new RunTiming("10km", 40, 0.0));
+
+        Person jack = createPersonWithTimings("Jack",
+                new RunTiming("400m", 0, 55.0),
+                new RunTiming("2.4km", 20, 0.0),
+                new RunTiming("10km", 180, 0.0));
+
+        ModelStubWithPersons model = new ModelStubWithPersons(jack, amelia);
+
+        new SortCommand(SortCommand.SortField.PB, "2.4km", SortCommand.SortOrder.ASC).execute(model);
+
+        assertEquals(List.of(amelia, jack), model.getFilteredPersonList());
+    }
+
+    @Test
     public void execute_sortByNameAscending_ignoresDistance() throws Exception {
         Person charlie = createPersonWithTimings("Charlie", new RunTiming("400m", 0, 50.0));
         Person alpha = createPersonWithTimings("Alpha", new RunTiming("2.4km", 10, 0.0));
