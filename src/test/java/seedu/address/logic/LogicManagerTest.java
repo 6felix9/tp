@@ -2,25 +2,33 @@ package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.AGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.AVAILABLE_DAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_CONTACT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_CONTACT_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddAthleteCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -62,7 +70,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "deleteathlete 9";
+        String deleteCommand = "del 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -70,6 +78,22 @@ public class LogicManagerTest {
     public void execute_validCommand_success() throws Exception {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_findNameWithMultipleKeywordsInSinglePrefix_success() throws Exception {
+        initializeLogicWithTypicalPersons();
+
+        assertCommandSuccess("find n/Carl Elle", String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2), model);
+        assertEquals(Arrays.asList(CARL, ELLE), logic.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_findPhoneWithMultipleKeywordsInSinglePrefix_success() throws Exception {
+        initializeLogicWithTypicalPersons();
+
+        assertCommandSuccess("find p/95352563 94828224", String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2), model);
+        assertEquals(Arrays.asList(CARL, ELLE), logic.getFilteredPersonList());
     }
 
     @Test
@@ -167,11 +191,23 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Triggers the saveAddressBook method by executing an add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + AGE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + START_DATE_DESC_AMY;
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        String addCommand = AddAthleteCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + AGE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + EMERGENCY_CONTACT_DESC_AMY
+                + START_DATE_DESC_AMY + AVAILABLE_DAY_DESC_AMY;
+        Person expectedPerson = new PersonBuilder(AMY).withTags().withAvailableDays("Mon")
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY).build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
+    }
+
+    private void initializeLogicWithTypicalPersons() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        JsonAddressBookStorage addressBookStorage =
+                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
+        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        logic = new LogicManager(model, storage);
     }
 }

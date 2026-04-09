@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SEC;
 
@@ -17,7 +18,7 @@ import seedu.address.model.person.RunTiming;
  *
  * <p>Expected command format:</p>
  * <pre>
- * addtiming INDEX min/MINUTES sec/SECONDS
+ * addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS
  * </pre>
  */
 public class AddTimingCommandParser implements Parser<AddTimingCommand> {
@@ -35,67 +36,64 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
     public AddTimingCommand parse(String args) throws ParseException {
 
         ArgumentMultimap map = ArgumentTokenizer.tokenize(args,
-                PREFIX_MIN,
-                PREFIX_SEC);
+                PREFIX_DISTANCE, PREFIX_MIN, PREFIX_SEC);
 
         // Check duplicate fields
-        map.verifyNoDuplicatePrefixesFor(PREFIX_MIN, PREFIX_SEC);
+        map.verifyNoDuplicatePrefixesFor(PREFIX_DISTANCE, PREFIX_MIN, PREFIX_SEC);
 
         // Check missing required fields
-        if (map.getValue(PREFIX_MIN).isEmpty() || map.getValue(PREFIX_SEC).isEmpty()) {
-            throw new ParseException("Missing required fields: min/ sec/");
+        if (map.getValue(PREFIX_DISTANCE).map(String::isBlank).orElse(true)
+                || map.getValue(PREFIX_MIN).map(String::isBlank).orElse(true)
+                || map.getValue(PREFIX_SEC).map(String::isBlank).orElse(true)) {
+            throw new ParseException("Missing required fields: dist/DISTANCE min/MINUTES sec/SECONDS");
         }
 
         Index index;
+        String distance;
         int minutes;
         double seconds;
 
         try {
             index = ParserUtil.parseIndex(map.getPreamble());
+            distance = map.getValue(PREFIX_DISTANCE).get();
             minutes = Integer.parseInt(map.getValue(PREFIX_MIN).get());
             seconds = Double.parseDouble(map.getValue(PREFIX_SEC).get());
         } catch (Exception e) {
             throw new ParseException(
-                    "Invalid command format: addtiming INDEX min/MINUTES sec/SECONDS");
+                    "Invalid command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
         }
 
-        RunTiming timing = getRunTiming(minutes, seconds);
+        RunTiming timing = getRunTiming(distance, minutes, seconds);
 
         return new AddTimingCommand(index, timing);
     }
 
     /**
-     * Validates the provided timing values and creates a {@link RunTiming} object.
+     * Validates timing fields and constructs a {@code RunTiming}.
      *
-     * <p>This method ensures that:</p>
-     * <ul>
-     *     <li>Minutes are non-negative</li>
-     *     <li>Seconds are within the range {@code [0, 60)}</li>
-     *     <li>Total timing is greater than zero</li>
-     * </ul>
-     *
-     * @param minutes The minutes component of the run timing.
-     * @param seconds The seconds component of the run timing.
-     * @return A valid {@code RunTiming} object.
-     * @throws ParseException If any validation constraint is violated.
+     * @param distance Race distance.
+     * @param minutes Minutes component.
+     * @param seconds Seconds component.
+     * @return Valid run timing.
+     * @throws ParseException If any field is invalid.
      */
-    private static RunTiming getRunTiming(int minutes, double seconds) throws ParseException {
+    private static RunTiming getRunTiming(String distance, int minutes, double seconds)
+            throws ParseException {
+        if (!RunTiming.isValidDistance(distance)) {
+            throw new ParseException(RunTiming.MESSAGE_DISTANCE_CONSTRAINTS);
+        }
 
-        // Prevent negative values
         if (minutes < 0) {
             throw new ParseException("Invalid minutes: must be a non-negative integer");
         }
 
-        // Ensure seconds fall within a valid range
         if (seconds < 0 || seconds >= 60) {
             throw new ParseException("Invalid seconds: must be between 0 and 59.99");
         }
 
-        // Prevent zero timing
         if (minutes == 0 && seconds == 0) {
             throw new ParseException("Invalid timing: total time must be greater than 0");
         }
-
-        return new RunTiming(minutes, seconds);
+        return new RunTiming(distance, minutes, seconds);
     }
 }

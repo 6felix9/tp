@@ -1,0 +1,175 @@
+1:package seedu.address.storage;
+2:
+3:import java.util.ArrayList;
+4:import java.util.HashSet;
+5:import java.util.List;
+6:import java.util.Set;
+7:import java.util.stream.Collectors;
+8:
+9:import com.fasterxml.jackson.annotation.JsonCreator;
+10:import com.fasterxml.jackson.annotation.JsonProperty;
+11:
+12:import seedu.address.commons.exceptions.IllegalValueException;
+13:import seedu.address.model.person.Address;
+14:import seedu.address.model.person.Age;
+15:import seedu.address.model.person.Email;
+16:import seedu.address.model.person.Name;
+17:import seedu.address.model.person.Person;
+18:import seedu.address.model.person.Phone;
+19:import seedu.address.model.person.EmergencyContact;
+20:import seedu.address.model.person.RunTiming;
+21:import seedu.address.model.person.StartDate;
+22:import seedu.address.model.tag.Tag;
+23:
+24:/**
+25: * Jackson-friendly version of {@link Person}.
+26: */
+27:class JsonAdaptedPerson {
+28:
+29:    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+30:
+31:    private final String name;
+32:    private final String age;
+33:    private final String phone;
+34:    private final String email;
+35:    private final String address;
+36:    private final String emergencyContact;
+37:    private final String startDate;
+38:
+39:    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+40:    private final List<JsonAdaptedRunTiming> timings = new ArrayList<>();
+41:
+42:    @JsonCreator
+43:    public JsonAdaptedPerson(
+44:            @JsonProperty("name") String name,
+45:            @JsonProperty("age") String age,
+46:            @JsonProperty("phone") String phone,
+47:            @JsonProperty("email") String email,
+48:            @JsonProperty("address") String address,
+49:            @JsonProperty("emergencyContact") String emergencyContact,
+50:            @JsonProperty("startDate") String startDate,
+51:            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+52:            @JsonProperty("timings") List<JsonAdaptedRunTiming> timings) {
+53:        this.name = name;
+54:        this.age = age;
+55:        this.phone = phone;
+56:        this.email = email;
+57:        this.address = address;
+58:        this.emergencyContact = emergencyContact;
+59:        this.startDate = startDate;
+60:
+61:        if (tags != null) {
+62:            this.tags.addAll(tags);
+63:        }
+64:
+65:        if (timings != null) {
+66:            this.timings.addAll(timings);
+67:        }
+68:    }
+69:
+70:    /**
+71:     * Converts a given {@code Person} into this class for Jackson use.
+72:     */
+73:    public JsonAdaptedPerson(Person source) {
+74:        name = source.getName().fullName;
+75:        age = source.getAge().value;
+76:        phone = source.getPhone().value;
+77:        email = source.getEmail().value;
+78:        address = source.getAddress().value;
+79:        emergencyContact = source.getEmergencyContact().value;
+80:        startDate = source.getStartDate().value;
+81:
+82:        tags.addAll(source.getTags().stream()
+83:                .map(JsonAdaptedTag::new)
+84:                .collect(Collectors.toList()));
+85:
+86:        timings.addAll(source.getRunTimings().stream()
+87:                .map(JsonAdaptedRunTiming::new)
+88:                .collect(Collectors.toList()));
+89:    }
+90:
+91:    /**
+92:     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+93:     */
+94:    public Person toModelType() throws IllegalValueException {
+95:
+96:        final List<Tag> personTags = new ArrayList<>();
+97:        for (JsonAdaptedTag tag : tags) {
+98:            personTags.add(tag.toModelType());
+99:        }
+100:
+101:        if (name == null) {
+102:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+103:                    Name.class.getSimpleName()));
+104:        }
+105:        if (!Name.isValidName(name)) {
+106:            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+107:        }
+108:        final Name modelName = new Name(name);
+109:
+110:        if (age == null) {
+111:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+112:                    Age.class.getSimpleName()));
+113:        }
+114:        if (!Age.isValidAge(age)) {
+115:            throw new IllegalValueException(Age.MESSAGE_CONSTRAINTS);
+116:        }
+117:        final Age modelAge = new Age(age);
+118:
+119:        if (phone == null) {
+120:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+121:                    Phone.class.getSimpleName()));
+122:        }
+123:        if (!Phone.isValidPhone(phone)) {
+124:            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+125:        }
+126:        final Phone modelPhone = new Phone(phone);
+127:
+128:        if (email == null) {
+129:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+130:                    Email.class.getSimpleName()));
+131:        }
+132:        if (!Email.isValidEmail(email)) {
+133:            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+134:        }
+135:        final Email modelEmail = new Email(email);
+136:
+137:        if (address == null) {
+138:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+139:                    Address.class.getSimpleName()));
+140:        }
+141:        if (!Address.isValidAddress(address)) {
+142:            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+143:        }
+144:        final Address modelAddress = new Address(address);
+145:        if (emergencyContact == null) {
+146:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+147:                    EmergencyContact.class.getSimpleName()));
+148:        }
+149:        if (!EmergencyContact.isValidEmergencyContact(emergencyContact)) {
+150:            throw new IllegalValueException(EmergencyContact.MESSAGE_CONSTRAINTS);
+151:        }
+152:        final EmergencyContact modelEmergencyContact = new EmergencyContact(emergencyContact);
+153:
+154:        if (startDate == null) {
+155:            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+156:                    StartDate.class.getSimpleName()));
+157:        }
+158:        if (!StartDate.isValidStartDate(startDate)) {
+159:            throw new IllegalValueException(StartDate.MESSAGE_CONSTRAINTS);
+160:        }
+161:        final StartDate modelStartDate = new StartDate(startDate);
+162:
+163:        final Set<Tag> modelTags = new HashSet<>(personTags);
+164:
+165:        final List<RunTiming> personTimings = new ArrayList<>();
+166:        for (JsonAdaptedRunTiming timing : timings) {
+167:            personTimings.add(timing.toModelType());
+168:        }
+169:
+170:        Person person = new Person(modelName, modelAge, modelPhone, modelEmail,
+171:                modelAddress, modelEmergencyContact, modelStartDate, modelTags);
+172:        person.setRunTimings(personTimings);
+173:        return person;
+174:    }
+175:}

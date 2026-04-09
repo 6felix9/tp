@@ -33,6 +33,8 @@ public class NameTest {
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
+        assertTrue(Name.isValidName("Ravi s/o Kumar")); // s/o in name
+        assertTrue(Name.isValidName("Priya d/o Nair")); // d/o in name
     }
 
     @Test

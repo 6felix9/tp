@@ -23,7 +23,7 @@ public class DeleteTimingCommandTest {
     public void execute_validIndices_success() throws Exception {
         // First add a timing so there's something to delete
         Person athlete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RunTiming timing = new RunTiming(10, 30.0);
+        RunTiming timing = new RunTiming("2.4km", 10, 30.0);
         athlete.addRunTiming(timing);
 
         DeleteTimingCommand command = new DeleteTimingCommand(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON);

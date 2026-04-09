@@ -8,10 +8,12 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -39,8 +41,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setEmergencyContact(person.getEmergencyContact());
         descriptor.setStartDate(person.getStartDate());
         descriptor.setTags(person.getTags());
+        descriptor.setAvailableDays(person.getAvailableDays());
     }
 
     /**
@@ -84,6 +88,14 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code EmergencyContact} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContact(String emergencyContact) {
+        descriptor.setEmergencyContact(new EmergencyContact(emergencyContact));
+        return this;
+    }
+
+    /**
      * Sets the {@code Start Date} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withStartDate(String startDate) {
@@ -98,6 +110,18 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code availableDays} into a {@code Set<AvailableDay>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withAvailableDays(String... availableDays) {
+        Set<AvailableDay> availableDaysSet = Stream.of(availableDays)
+                .map(AvailableDay::new)
+                .collect(Collectors.toSet());
+        descriptor.setAvailableDays(availableDaysSet);
         return this;
     }
 

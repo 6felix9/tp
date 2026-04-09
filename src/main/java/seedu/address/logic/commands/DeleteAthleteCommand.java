@@ -16,7 +16,7 @@ import seedu.address.model.person.Person;
  */
 public class DeleteAthleteCommand extends Command {
 
-    public static final String COMMAND_WORD = "deleteathlete";
+    public static final String COMMAND_WORD = "del";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the athlete profile identified by the index number used "

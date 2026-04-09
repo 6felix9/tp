@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABLE_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
@@ -42,6 +44,10 @@ public class CommandTestUtil {
     public static final String VALID_START_DATE_BOB = "02/02/2002";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_EMERGENCY_CONTACT_AMY = "AmyMom 91112222";
+    public static final String VALID_EMERGENCY_CONTACT_BOB = "BobDad 93334444";
+    public static final String VALID_AVAILABLE_DAY_AMY = "Mon";
+    public static final String VALID_AVAILABLE_DAY_BOB = "Wed";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -57,14 +63,23 @@ public class CommandTestUtil {
     public static final String START_DATE_DESC_BOB = " " + PREFIX_START_DATE + VALID_START_DATE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String EMERGENCY_CONTACT_DESC_AMY =
+            " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_AMY;
+    public static final String EMERGENCY_CONTACT_DESC_BOB =
+            " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_BOB;
+    public static final String AVAILABLE_DAY_DESC_AMY = " " + PREFIX_AVAILABLE_DAY + VALID_AVAILABLE_DAY_AMY;
+    public static final String AVAILABLE_DAY_DESC_BOB = " " + PREFIX_AVAILABLE_DAY + VALID_AVAILABLE_DAY_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_AGE_DESC = " " + PREFIX_AGE + "7"; // must be an integer between 10 and 99
+    public static final String INVALID_AGE_DESC = " " + PREFIX_AGE + "0"; // must be an integer between 1 and 99
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "12345678"; // must start with 8 or 9
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_START_DATE_DESC = " " + PREFIX_START_DATE + "30/02/2025"; // must be a real date
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_EMERGENCY_CONTACT_DESC = " " + PREFIX_EMERGENCY_CONTACT + " ";
+    public static final String INVALID_AVAILABLE_DAY_DESC = " "
+            + PREFIX_AVAILABLE_DAY + "Day"; // must be a valid day of the week
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -76,12 +91,16 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withAge(VALID_AGE_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withStartDate(VALID_START_DATE_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY)
+                .withStartDate(VALID_START_DATE_AMY).withTags(VALID_TAG_FRIEND)
+                .withAvailableDays(VALID_AVAILABLE_DAY_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withAge(VALID_AGE_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB)
                 .withStartDate(VALID_START_DATE_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withAvailableDays(VALID_AVAILABLE_DAY_BOB).build();
     }
 
     /**

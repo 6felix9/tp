@@ -1,64 +1,86 @@
 @startuml
 !include style.puml
+top to bottom direction
+scale 1.5
+
 skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
-Package Model as ModelPackage <<Rectangle>>{
-Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
-Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
-Class "<<interface>>\nModel" as Model
-Class AddressBook
-Class ModelManager
-Class UserPrefs
+Package Model as ModelPackage <<Rectangle>> {
+    Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
+    Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
+    Class "<<interface>>\nModel" as Model
+    Class AddressBook
+    Class ModelManager
+    Class UserPrefs
 
-Class UniquePersonList
-Class Person
-Class Address
-Class Age
-Class Email
-Class Name
-Class Phone
-Class RunTiming
-Class StartDate
-Class Tag
+    Class UniquePersonList
+    Class Person
+    Class Address
+    Class Age
+    Class Email
+    Class Name
+    Class Phone
+    Class EmergencyContact
+    Class RunTiming {
+        distance
+        minutes
+        seconds
+    }
+    Class StartDate
+    Class Tag
+    Class AvailableDay
 
-Class I #FFFFFF
+    Class NameContainsKeywordsPredicate
+    Class PhoneContainsKeywordsPredicate
+    Class TagContainsKeywordsPredicate
+    Class AvailableDayContainsKeywordsPredicate
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
 AddressBook .up.|> ReadOnlyAddressBook
-
 ModelManager .up.|> Model
-Model .right.> ReadOnlyUserPrefs
-Model .left.> ReadOnlyAddressBook
-ModelManager -left-> "1" AddressBook
-ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
+Model .left.> ReadOnlyAddressBook
+Model .right.> ReadOnlyUserPrefs
+
+ModelManager --> "1" AddressBook
+ModelManager --> "1" UserPrefs
 AddressBook *--> "1" UniquePersonList
-UniquePersonList --> "~* all" Person
+UniquePersonList --> "all" Person
+ModelManager --> "filtered" Person
+
 Person *--> Name
 Person *--> Age
 Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> StartDate
+Person *--> EmergencyContact
 Person *--> "*" Tag
-Person *--> "*" RunTiming
+Person *--> "*" AvailableDay
+Person *--> "*" RunTiming : stores
 
-Person -[hidden]up--> I
-UniquePersonList -[hidden]right-> I
+NameContainsKeywordsPredicate ..> Person
+PhoneContainsKeywordsPredicate ..> Person
+TagContainsKeywordsPredicate ..> Person
+AvailableDayContainsKeywordsPredicate ..> Person
+
+NameContainsKeywordsPredicate -[hidden]down-> PhoneContainsKeywordsPredicate
+PhoneContainsKeywordsPredicate -[hidden]down-> TagContainsKeywordsPredicate
+TagContainsKeywordsPredicate -[hidden]down-> AvailableDayContainsKeywordsPredicate
 
 Name -[hidden]right-> Age
 Age -[hidden]right-> Phone
-Phone -[hidden]right-> Address
+Phone -[hidden]right-> EmergencyContact
+EmergencyContact -[hidden]right-> Address
 Address -[hidden]right-> Email
 Email -[hidden]right-> StartDate
 StartDate -[hidden]right-> Tag
-Tag -[hidden]right-> RunTiming
-
-ModelManager --> "~* filtered" Person
+Tag -[hidden]right-> AvailableDay
+AvailableDay -[hidden]right-> RunTiming
 @enduml

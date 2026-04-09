@@ -22,7 +22,7 @@ public class AddTimingCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         Person athlete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RunTiming timing = new RunTiming(10, 30.0);
+        RunTiming timing = new RunTiming("2.4km", 10, 30.0);
 
         AddTimingCommand command = new AddTimingCommand(INDEX_FIRST_PERSON, timing);
         CommandResult result = command.execute(model);
@@ -35,7 +35,7 @@ public class AddTimingCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RunTiming timing = new RunTiming(10, 30.0);
+        RunTiming timing = new RunTiming("2.4km", 10, 30.0);
         AddTimingCommand command = new AddTimingCommand(outOfBoundIndex, timing);
 
         assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

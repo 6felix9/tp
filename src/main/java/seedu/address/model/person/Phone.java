@@ -11,8 +11,9 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone number must be exactly 8 digits and start with 8 or 9 (e.g. 91234567).";
-    public static final String VALIDATION_REGEX = "^[89]\\d{7}$";
+            "Phone number must be exactly 8 digits and start with 8 or 9 "
+                    + "(e.g. 91234567 or 9123 4567).";
+    public static final String VALIDATION_REGEX = "^[89]\\d{3}\\s?\\d{4}$";
     public final String value;
 
     /**
@@ -23,7 +24,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        value = phone.replaceAll("\\s+", "");
     }
 
     /**

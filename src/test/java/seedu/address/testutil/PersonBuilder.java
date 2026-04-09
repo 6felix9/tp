@@ -6,10 +6,12 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -32,6 +34,8 @@ public class PersonBuilder {
     private Address address;
     private StartDate startDate;
     private Set<Tag> tags;
+    private Set<AvailableDay> availableDays;
+    private EmergencyContact emergencyContact;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +48,8 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         startDate = new StartDate(DEFAULT_START_DATE);
         tags = new HashSet<>();
+        emergencyContact = new EmergencyContact("N/A");
+        availableDays = new HashSet<>();
     }
 
     /**
@@ -57,6 +63,8 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         startDate = personToCopy.getStartDate();
         tags = new HashSet<>(personToCopy.getTags());
+        emergencyContact = personToCopy.getEmergencyContact();
+        availableDays = personToCopy.getAvailableDays();
     }
 
     /**
@@ -80,6 +88,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withAvailableDays(String ... availableDays) {
+        this.availableDays = SampleDataUtil.getAvailableDaySet(availableDays);
         return this;
     }
 
@@ -108,6 +124,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code EmergencyContact} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmergencyContact(String emergencyContact) {
+        this.emergencyContact = new EmergencyContact(emergencyContact);
+        return this;
+    }
+
+    /**
      * Sets the {@code StartDate} of the {@code Person} that we are building.
      */
     public PersonBuilder withStartDate(String startDate) {
@@ -116,7 +140,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, age, phone, email, address, startDate, tags);
+        return new Person(name, age, phone, email, address, emergencyContact, startDate, tags, availableDays);
     }
 
 }

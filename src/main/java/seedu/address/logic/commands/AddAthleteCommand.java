@@ -3,14 +3,15 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABLE_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -18,9 +19,9 @@ import seedu.address.model.person.Person;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class AddAthleteCommand extends Command {
 
-    public static final String COMMAND_WORD = "addathlete";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -29,27 +30,31 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_EMERGENCY_CONTACT + "EMERGENCY_CONTACT "
             + PREFIX_START_DATE + "START DATE "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_AVAILABLE_DAY + "AVAILABLE DAY]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_AGE + "18 "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_EMERGENCY_CONTACT + "Jane Doe 91234567 "
             + PREFIX_START_DATE + "06/03/2026 "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney "
+            + PREFIX_AVAILABLE_DAY + "Mon "
+            + PREFIX_AVAILABLE_DAY + "Wed";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddAthleteCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public AddAthleteCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
     }
@@ -63,7 +68,40 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(formatAthleteAddedMessage(toAdd));
+    }
+
+    /**
+     * Returns a formatted success message for the specified {@code Person}.
+     *
+     * @param athlete The athlete whose details are to be included in the success message.
+     * @return A formatted success message containing the athlete's details.
+     */
+    public static String formatAthleteAddedMessage(Person athlete) {
+        String tags = athlete.getTags().isEmpty() ? "-" : athlete.getTags().toString();
+        String availableDays = athlete.getAvailableDays().isEmpty() ? "-" : athlete.getAvailableDays().toString();
+
+        return String.format(
+                "New athlete added:%n"
+                        + "  Name: %s%n"
+                        + "  Age: %s%n"
+                        + "  Phone: %s%n"
+                        + "  Email: %s%n"
+                        + "  Address: %s%n"
+                        + "  Emergency Contact: %s%n"
+                        + "  Start Date: %s%n"
+                        + "  Tags: %s%n"
+                        + "  Available Days: %s",
+                athlete.getName(),
+                athlete.getAge(),
+                athlete.getPhone(),
+                athlete.getEmail(),
+                athlete.getAddress(),
+                athlete.getEmergencyContact(),
+                athlete.getStartDate(),
+                tags,
+                availableDays
+        );
     }
 
     @Override
@@ -73,11 +111,11 @@ public class AddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
+        if (!(other instanceof AddAthleteCommand)) {
             return false;
         }
 
-        AddCommand otherAddCommand = (AddCommand) other;
+        AddAthleteCommand otherAddCommand = (AddAthleteCommand) other;
         return toAdd.equals(otherAddCommand.toAdd);
     }
 

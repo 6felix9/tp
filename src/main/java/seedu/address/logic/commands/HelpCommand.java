@@ -15,20 +15,22 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE =
             "Commands summary:\n"
-            + "------------------------------------------------------\n"
-            + "addathlete  n/NAME ag/AGE p/PHONE e/EMAIL a/ADDRESS sd/START_DATE [t/TAG]...\n"
-            + "addtiming   INDEX min/MINUTES sec/SECONDS\n"
-            + "deleteathlete  INDEX\n"
-            + "deletetiming   ATHLETE_INDEX TIMING_INDEX\n"
-            + "edit        INDEX [n/NAME] [ag/AGE] [p/PHONE] [e/EMAIL] [a/ADDRESS] [sd/START_DATE] [t/TAG]...\n"
-            + "find        KEYWORD [MORE_KEYWORDS]...\n"
-            + "sort        by/FIELD [order/ORDER]   (fields: name, pb  |  orders: asc, desc)\n"
-            + "viewathlete INDEX\n"
-            + "list\n"
-            + "clear\n"
-            + "exit\n"
-            + "------------------------------------------------------\n"
-            + "For full details: " + HelpWindow.USERGUIDE_URL;
+                    + "------------------------------------------------------\n"
+                    + "add           n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE "
+                    + "ec/EMERGENCY_CONTACT [t/TAG]... [av/AVAILABLE_DAY]...\n"
+                    + "addtime       INDEX dist/DISTANCE min/MINUTES sec/SECONDS\n"
+                    + "del           INDEX\n"
+                    + "deltime       ATHLETE_INDEX TIMING_INDEX\n"
+                    + "edit          INDEX [n/NAME] [a/AGE] [p/PHONE] "
+                    + "[e/EMAIL] [ad/ADDRESS] [d/START_DATE] [t/TAG]...\n"
+                    + "find          KEYWORD [n/NAME] [p/PHONE] [t/TAG]... [av/AVAILABLE_DAY]...\n"
+                    + "sort          by/FIELD [ord/ORDER]   (fields: name, pb  |  orders: asc, desc)\n"
+                    + "view          INDEX\n"
+                    + "list\n"
+                    + "clear\n"
+                    + "exit\n"
+                    + "------------------------------------------------------\n"
+                    + "For full details: " + HelpWindow.USERGUIDE_URL;
 
     @Override
     public CommandResult execute(Model model) {

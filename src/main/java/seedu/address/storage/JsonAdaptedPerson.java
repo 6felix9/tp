@@ -13,11 +13,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.RunTiming;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,9 +34,11 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String emergencyContact;
     private final String startDate;
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedAvailableDay> availableDays = new ArrayList<>();
     private final List<JsonAdaptedRunTiming> timings = new ArrayList<>();
 
     @JsonCreator
@@ -44,19 +48,25 @@ class JsonAdaptedPerson {
             @JsonProperty("phone") String phone,
             @JsonProperty("email") String email,
             @JsonProperty("address") String address,
+            @JsonProperty("emergencyContact") String emergencyContact,
             @JsonProperty("startDate") String startDate,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("availableDays") List<JsonAdaptedAvailableDay> availableDays,
             @JsonProperty("timings") List<JsonAdaptedRunTiming> timings) {
-
         this.name = name;
         this.age = age;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.emergencyContact = emergencyContact;
         this.startDate = startDate;
 
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+
+        if (availableDays != null) {
+            this.availableDays.addAll(availableDays);
         }
 
         if (timings != null) {
@@ -73,11 +83,17 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        emergencyContact = source.getEmergencyContact().value;
         startDate = source.getStartDate().value;
 
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+
+        availableDays.addAll(source.getAvailableDays().stream()
+                        .map(JsonAdaptedAvailableDay::new)
+                        .collect(Collectors.toList()));
+
 
         timings.addAll(source.getRunTimings().stream()
                 .map(JsonAdaptedRunTiming::new)
@@ -92,6 +108,10 @@ class JsonAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+        final List<AvailableDay> personAvailableDays = new ArrayList<>();
+        for (JsonAdaptedAvailableDay availableDay : availableDays) {
+            personAvailableDays.add(availableDay.toModelType());
         }
 
         if (name == null) {
@@ -138,6 +158,14 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
+        if (emergencyContact == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    EmergencyContact.class.getSimpleName()));
+        }
+        if (!EmergencyContact.isValidEmergencyContact(emergencyContact)) {
+            throw new IllegalValueException(EmergencyContact.MESSAGE_CONSTRAINTS);
+        }
+        final EmergencyContact modelEmergencyContact = new EmergencyContact(emergencyContact);
 
         if (startDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -150,13 +178,15 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
+        final Set<AvailableDay> modelAvailableDays = new HashSet<>(personAvailableDays);
+
         final List<RunTiming> personTimings = new ArrayList<>();
         for (JsonAdaptedRunTiming timing : timings) {
             personTimings.add(timing.toModelType());
         }
 
         Person person = new Person(modelName, modelAge, modelPhone, modelEmail,
-                modelAddress, modelStartDate, modelTags);
+                modelAddress, modelEmergencyContact, modelStartDate, modelTags, modelAvailableDays);
         person.setRunTimings(personTimings);
         return person;
     }

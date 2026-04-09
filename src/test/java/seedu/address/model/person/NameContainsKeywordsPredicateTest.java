@@ -31,18 +31,29 @@ public class NameContainsKeywordsPredicateTest {
 
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
+        // Full name match
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
+        // Any keyword matches
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
 
+        // Case-insensitive match
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
+        // Partial / substring match
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Han"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Hans").build()));
+
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("ali"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Empty keywords list matches everyone
         predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
     }

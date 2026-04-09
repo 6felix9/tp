@@ -1,0 +1,261 @@
+1:package seedu.address.logic.commands;
+2:
+3:import static java.util.Objects.requireNonNull;
+4:import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+5:import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+6:import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+7:import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+8:import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+9:import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
+10:import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+11:
+12:import java.util.Collections;
+13:import java.util.HashSet;
+14:import java.util.List;
+15:import java.util.Objects;
+16:import java.util.Optional;
+17:import java.util.Set;
+18:
+19:import seedu.address.commons.core.index.Index;
+20:import seedu.address.commons.util.CollectionUtil;
+21:import seedu.address.commons.util.ToStringBuilder;
+22:import seedu.address.logic.Messages;
+23:import seedu.address.logic.commands.exceptions.CommandException;
+24:import seedu.address.model.Model;
+25:import seedu.address.model.person.Address;
+26:import seedu.address.model.person.Email;
+27:import seedu.address.model.person.Name;
+28:import seedu.address.model.person.Person;
+29:import seedu.address.model.person.Phone;
+30:import seedu.address.model.person.EmergencyContact;
+31:import seedu.address.model.tag.Tag;
+32:
+33:/**
+34: * Edits the details of an existing person in the address book.
+35: */
+36:public class EditCommand extends Command {
+37:
+38:    public static final String COMMAND_WORD = "edit";
+39:
+40:    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+41:            + "by the index number used in the displayed person list. "
+42:            + "Existing values will be overwritten by the input values.\n"
+43:            + "Parameters: INDEX (must be a positive integer) "
+44:            + "[" + PREFIX_NAME + "NAME] "
+45:            + "[" + PREFIX_PHONE + "PHONE] "
+46:            + "[" + PREFIX_EMAIL + "EMAIL] "
+47:            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+48:            + "[" + PREFIX_EMERGENCY_CONTACT + "EMERGENCY_CONTACT] "
+49:            + "[" + PREFIX_TAG + "TAG]...\n"
+50:            + "Example: " + COMMAND_WORD + " 1 "
+51:            + PREFIX_PHONE + "91234567 "
+52:            + PREFIX_EMAIL + "johndoe@example.com";
+53:
+54:    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+55:    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+56:    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+57:
+58:    private final Index index;
+59:    private final EditPersonDescriptor editPersonDescriptor;
+60:
+61:    /**
+62:     * @param index of the person in the filtered person list to edit
+63:     * @param editPersonDescriptor details to edit the person with
+64:     */
+65:    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+66:        requireNonNull(index);
+67:        requireNonNull(editPersonDescriptor);
+68:
+69:        this.index = index;
+70:        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+71:    }
+72:
+73:    @Override
+74:    public CommandResult execute(Model model) throws CommandException {
+75:        requireNonNull(model);
+76:        List<Person> lastShownList = model.getFilteredPersonList();
+77:
+78:        if (index.getZeroBased() >= lastShownList.size()) {
+79:            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+80:        }
+81:
+82:        Person personToEdit = lastShownList.get(index.getZeroBased());
+83:        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+84:
+85:        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+86:            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+87:        }
+88:
+89:        model.setPerson(personToEdit, editedPerson);
+90:        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+91:        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+92:    }
+93:
+94:    /**
+95:     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+96:     * edited with {@code editPersonDescriptor}.
+97:     */
+98:    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+99:        assert personToEdit != null;
+100:
+101:        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+102:        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+103:        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+104:        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+105:        EmergencyContact updatedEmergencyContact =
+106:                editPersonDescriptor.getEmergencyContact().orElse(personToEdit.getEmergencyContact());
+107:        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+108:
+109:        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedEmergencyContact,
+110:                updatedTags);
+111:    }
+112:
+113:    @Override
+114:    public boolean equals(Object other) {
+115:        if (other == this) {
+116:            return true;
+117:        }
+118:
+119:        // instanceof handles nulls
+120:        if (!(other instanceof EditCommand)) {
+121:            return false;
+122:        }
+123:
+124:        EditCommand otherEditCommand = (EditCommand) other;
+125:        return index.equals(otherEditCommand.index)
+126:                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+127:    }
+128:
+129:    @Override
+130:    public String toString() {
+131:        return new ToStringBuilder(this)
+132:                .add("index", index)
+133:                .add("editPersonDescriptor", editPersonDescriptor)
+134:                .toString();
+135:    }
+136:
+137:    /**
+138:     * Stores the details to edit the person with. Each non-empty field value will replace the
+139:     * corresponding field value of the person.
+140:     */
+141:    public static class EditPersonDescriptor {
+142:        private Name name;
+143:        private Phone phone;
+144:        private Email email;
+145:        private Address address;
+146:        private EmergencyContact emergencyContact;
+147:        private Set<Tag> tags;
+148:
+149:        public EditPersonDescriptor() {}
+150:
+151:        /**
+152:         * Copy constructor.
+153:         * A defensive copy of {@code tags} is used internally.
+154:         */
+155:        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+156:            setName(toCopy.name);
+157:            setPhone(toCopy.phone);
+158:            setEmail(toCopy.email);
+159:            setAddress(toCopy.address);
+160:            setEmergencyContact(toCopy.emergencyContact);
+161:            setTags(toCopy.tags);
+162:        }
+163:
+164:        /**
+165:         * Returns true if at least one field is edited.
+166:         */
+167:        public boolean isAnyFieldEdited() {
+168:            return CollectionUtil.isAnyNonNull(name, phone, email, address,
+169:                     emergencyContact, tags);
+170:        }
+171:
+172:        public void setName(Name name) {
+173:            this.name = name;
+174:        }
+175:
+176:        public Optional<Name> getName() {
+177:            return Optional.ofNullable(name);
+178:        }
+179:
+180:        public void setPhone(Phone phone) {
+181:            this.phone = phone;
+182:        }
+183:
+184:        public Optional<Phone> getPhone() {
+185:            return Optional.ofNullable(phone);
+186:        }
+187:
+188:        public void setEmail(Email email) {
+189:            this.email = email;
+190:        }
+191:
+192:        public Optional<Email> getEmail() {
+193:            return Optional.ofNullable(email);
+194:        }
+195:
+196:        public void setAddress(Address address) {
+197:            this.address = address;
+198:        }
+199:
+200:        public Optional<Address> getAddress() {
+201:            return Optional.ofNullable(address);
+202:        }
+203:
+204:        public void setEmergencyContact(EmergencyContact emergencyContact) {
+205:            this.emergencyContact = emergencyContact;
+206:        }
+207:
+208:        public Optional<EmergencyContact> getEmergencyContact() {
+209:            return Optional.ofNullable(emergencyContact);
+210:        }
+211:
+212:        /**
+213:         * Sets {@code tags} to this object's {@code tags}.
+214:         * A defensive copy of {@code tags} is used internally.
+215:         */
+216:        public void setTags(Set<Tag> tags) {
+217:            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+218:        }
+219:
+220:        /**
+221:         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+222:         * if modification is attempted.
+223:         * Returns {@code Optional#empty()} if {@code tags} is null.
+224:         */
+225:        public Optional<Set<Tag>> getTags() {
+226:            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+227:        }
+228:
+229:        @Override
+230:        public boolean equals(Object other) {
+231:            if (other == this) {
+232:                return true;
+233:            }
+234:
+235:            // instanceof handles nulls
+236:            if (!(other instanceof EditPersonDescriptor)) {
+237:                return false;
+238:            }
+239:
+240:            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
+241:            return Objects.equals(name, otherEditPersonDescriptor.name)
+242:                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
+243:                    && Objects.equals(email, otherEditPersonDescriptor.email)
+244:                    && Objects.equals(address, otherEditPersonDescriptor.address)
+245:                    && Objects.equals(emergencyContact, otherEditPersonDescriptor.emergencyContact)
+246:                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+247:        }
+248:
+249:        @Override
+250:        public String toString() {
+251:            return new ToStringBuilder(this)
+252:                    .add("name", name)
+253:                    .add("phone", phone)
+254:                    .add("email", email)
+255:                    .add("address", address)
+256:                    .add("emergencyContact", emergencyContact)
+257:                    .add("tags", tags)
+258:                    .toString();
+259:        }
+260:    }
+261:}

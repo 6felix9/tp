@@ -4,10 +4,12 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.AGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.AVAILABLE_DAY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_AGE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_AVAILABLE_DAY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -21,6 +23,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAILABLE_DAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
@@ -100,6 +103,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 " + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1 " + INVALID_START_DATE_DESC, StartDate.MESSAGE_CONSTRAINTS); // invalid start date
         assertParseFailure(parser, "1 " + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, "1 " + INVALID_AVAILABLE_DAY_DESC,
+                seedu.address.model.person.availableday.AvailableDay.MESSAGE_CONSTRAINTS); // invalid available day
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1 " + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
@@ -188,12 +193,32 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+
+        // available days
+        userInput = targetIndex.getOneBased() + " " + AVAILABLE_DAY_DESC_BOB;
+        descriptor = new EditPersonDescriptorBuilder().withAvailableDays(VALID_AVAILABLE_DAY_BOB).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_availableDayAfterAddress_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + ADDRESS_DESC_AMY + AVAILABLE_DAY_DESC_BOB;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withAddress(VALID_ADDRESS_AMY)
+                .withAvailableDays(VALID_AVAILABLE_DAY_BOB)
+                .build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_multipleRepeatedFields_failure() {
         // More extensive testing of duplicate parameter detections is done in
-        // AddCommandParserTest#parse_repeatedNonTagValue_failure()
+        // AddAthleteCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
         Index targetIndex = INDEX_FIRST_PERSON;

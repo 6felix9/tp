@@ -15,9 +15,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.RunTiming;
 import seedu.address.model.person.StartDate;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -116,6 +119,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code emergencyContact} is invalid.
+     */
+    public static EmergencyContact parseEmergencyContact(String emergencyContact) throws ParseException {
+        requireNonNull(emergencyContact);
+        String trimmedEc = emergencyContact.trim();
+        if (!EmergencyContact.isValidEmergencyContact(trimmedEc)) {
+            throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+        }
+        return new EmergencyContact(trimmedEc);
+    }
+
+    /**
      * Parses a {@code String startDate} into a {@code StartDate}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -158,6 +176,38 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String availableday} into an {@code AvailableDay}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code availableday} is invalid.
+     */
+    public static AvailableDay parseAvailableDay(String availableDay) throws ParseException {
+        requireNonNull(availableDay);
+        String trimmedAvailableDay = availableDay.trim();
+        if (!AvailableDay.isValidDay(trimmedAvailableDay)) {
+            throw new ParseException(AvailableDay.MESSAGE_CONSTRAINTS);
+        }
+        return new AvailableDay(trimmedAvailableDay);
+    }
+
+    /**
+     * Parses {@code Collection<String> availableDays} into a {@code Set<AvailableDay>}.
+     */
+    public static Set<AvailableDay> parseAvailableDays(Collection<String> days) throws ParseException {
+        requireNonNull(days);
+        final Set<AvailableDay> availableDays = new HashSet<>();
+        for (String day : days) {
+            AvailableDay availableDay = parseAvailableDay(day);
+            if (availableDays.contains(availableDay)) {
+                throw new ParseException(AvailableDay.MESSAGE_DUPLICATE_AVAILABLE_DAYS);
+            }
+
+            availableDays.add(availableDay);
+        }
+        return availableDays;
+    }
+
+    /**
      * Parses a {@code String sortField} into a {@code SortField}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -165,14 +215,16 @@ public class ParserUtil {
      */
     public static SortField parseBy(String sortField) throws ParseException {
         requireNonNull(sortField);
-        String trimmedSortField = sortField.trim().toLowerCase();
-        switch (trimmedSortField) {
+        String trimmedBy = sortField.trim().toLowerCase();
+
+        switch (trimmedBy) {
         case "name":
             return SortCommand.SortField.NAME;
         case "pb":
             return SortCommand.SortField.PB;
         default:
-            throw new ParseException(SortCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(
+                    SortCommand.MESSAGE_INVALID_SORT_FIELD, sortField));
         }
     }
 
@@ -184,14 +236,31 @@ public class ParserUtil {
      */
     public static SortOrder parseOrder(String sortOrder) throws ParseException {
         requireNonNull(sortOrder);
-        String trimmedSortOrder = sortOrder.trim().toLowerCase();
-        switch (trimmedSortOrder) {
+        String trimmedOrder = sortOrder.trim().toLowerCase();
+
+        switch (trimmedOrder) {
         case "asc":
             return SortCommand.SortOrder.ASC;
         case "desc":
             return SortCommand.SortOrder.DESC;
         default:
+            throw new ParseException(String.format(
+                    SortCommand.MESSAGE_INVALID_SORT_ORDER, sortOrder));
+        }
+    }
+
+    /**
+     * Parses a {@code String distance} into a supported run distance.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code distance} is invalid.
+     */
+    public static String parseDistance(String distance) throws ParseException {
+        requireNonNull(distance);
+        String trimmedDistance = distance.trim();
+        if (!RunTiming.isValidDistance(trimmedDistance)) {
             throw new ParseException(SortCommand.MESSAGE_USAGE);
         }
+        return trimmedDistance;
     }
 }

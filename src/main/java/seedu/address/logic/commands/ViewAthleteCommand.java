@@ -17,7 +17,7 @@ import seedu.address.model.person.RunTiming;
  */
 public class ViewAthleteCommand extends Command {
 
-    public static final String COMMAND_WORD = "viewathlete";
+    public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Views the athlete identified by the index number used in the displayed person list.\n"
@@ -25,13 +25,15 @@ public class ViewAthleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_VIEW_ATHLETE_SUCCESS = "Athlete Details:\n"
-            + "Name:      %1$s\n"
-            + "Age:       %2$s\n"
-            + "Phone:     %3$s\n"
-            + "Email:     %4$s\n"
-            + "Address:   %5$s\n"
-            + "StartDate: %6$s\n"
-            + "Tags:      %7$s\n";
+            + "Name:                 %1$s\n"
+            + "Age:                  %2$s\n"
+            + "Phone:                %3$s\n"
+            + "Email:                %4$s\n"
+            + "Emergency Contact:    %5$s\n"
+            + "Address:              %6$s\n"
+            + "StartDate:            %7$s\n"
+            + "Tags:                 %8$s\n"
+            + "Available Days:       %9$s\n";
 
     private final Index targetIndex;
 
@@ -55,14 +57,21 @@ public class ViewAthleteCommand extends Command {
                 .reduce("", (a, b) -> a + " " + b)
                 .strip();
 
+        String availableDays = athlete.getAvailableDays().stream()
+                .map(day -> "[" + day.availableDay + "]")
+                .reduce("", (a, b) -> a + " " + b)
+                .strip();
+
         String baseDetails = String.format(MESSAGE_VIEW_ATHLETE_SUCCESS,
                 athlete.getName(),
                 athlete.getAge(),
                 athlete.getPhone(),
                 athlete.getEmail(),
+                athlete.getEmergencyContact(),
                 athlete.getAddress(),
                 athlete.getStartDate(),
-                tags.isEmpty() ? "-" : tags);
+                tags.isEmpty() ? "-" : tags,
+                availableDays.isEmpty() ? "-" : availableDays);
 
         StringBuilder result = new StringBuilder(baseDetails);
 

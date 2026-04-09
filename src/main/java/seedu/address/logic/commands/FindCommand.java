@@ -21,8 +21,8 @@ public class FindCommand extends Command {
             + "the specified name keywords (case-insensitive), whose tags contain any of the specified tag keywords "
             + "(case-insensitive), or whose phone numbers contain any of the specified phone numbers "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/KEYWORD p/PHONE_NUMBER t/TAG t/ANOTHER_TAG t/ANOTHER_TAG ... \n"
-            + "Example: " + COMMAND_WORD + " n/jessy p/91234567 t/captain t/sprinter";
+            + "Parameters: n/KEYWORD p/PHONE_NUMBER t/TAG t/ANOTHER_TAG t/ANOTHER_TAG av/AVAILABLE_DAY ... \n"
+            + "Example: " + COMMAND_WORD + " n/jessy p/91234567 t/captain t/sprinter av/Mon";
 
     private final Predicate<Person> predicate;
 

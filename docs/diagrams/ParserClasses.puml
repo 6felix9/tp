@@ -35,4 +35,11 @@ XYZCommandParser ..> ParserUtil
 ParserUtil .down.> Prefix
 ArgumentTokenizer .down.> Prefix
 XYZCommand -up-|> Command
+
+note right of XYZCommandParser
+Some parsers may create intermediate
+helper objects (e.g. predicates)
+before creating XYZCommand.
+end note
+
 @enduml

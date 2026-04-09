@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.availableday.AvailableDay;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,6 +38,7 @@ public class Person {
 
     /** Additional data fields */
     private final Address address;
+    private final EmergencyContact emergencyContact;
     private final StartDate startDate;
 
     /** Tags associated with this person. */
@@ -44,6 +46,8 @@ public class Person {
 
     /** List of recorded 2.4km run timings for this athlete. */
     private final List<RunTiming> runTimings = new ArrayList<>();
+
+    private final Set<AvailableDay> availableDays = new HashSet<>();
 
     /**
      * Creates a {@code Person}.
@@ -55,17 +59,22 @@ public class Person {
      * @param address The person's address.
      * @param startDate The person's start date.
      * @param tags Tags associated with the person.
+     * @param availableDays The days the person is available.
      */
-    public Person(Name name, Age age, Phone phone, Email email,
-                  Address address, StartDate startDate, Set<Tag> tags) {
-        requireAllNonNull(name, age, phone, email, address, startDate, tags);
+    public Person(Name name, Age age, Phone phone, Email email, Address address,
+                  EmergencyContact emergencyContact, StartDate startDate, Set<Tag> tags,
+                  Set<AvailableDay> availableDays) {
+        requireAllNonNull(name, age, phone, email, address,
+                emergencyContact, startDate, tags, availableDays);
         this.name = name;
         this.age = age;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.emergencyContact = emergencyContact;
         this.startDate = startDate;
         this.tags.addAll(tags);
+        this.availableDays.addAll(availableDays);
         this.bestTime = Integer.MAX_VALUE;
     }
 
@@ -114,6 +123,10 @@ public class Person {
         return address;
     }
 
+    public EmergencyContact getEmergencyContact() {
+        return emergencyContact;
+    }
+
     /**
      * Returns the person's start date.
      *
@@ -133,6 +146,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<AvailableDay> getAvailableDays() {
+        return Collections.unmodifiableSet(availableDays);
     }
 
     public boolean hasRunTimings() {
@@ -173,12 +190,9 @@ public class Person {
      *         {@code false} otherwise.
      */
     public boolean addRunTiming(RunTiming timing) {
+        double previousBest = getBestTimeForDistance(timing.getDistance());
         runTimings.add(timing);
-        double bestTime = getBestTime();
-        if (bestTime == timing.getTotalSeconds()) {
-            return true;
-        }
-        return false;
+        return timing.getTotalSeconds() < previousBest;
     }
 
     /**
@@ -192,14 +206,15 @@ public class Person {
     }
 
     /**
-     * Computes and returns the fastest run timing recorded for this athlete.
+     * Returns the fastest recorded timing for the given distance.
      *
-     * @return the fastest timing in seconds.
+     * @param distance Distance category.
+     * @return Fastest time in seconds, or {@code Double.MAX_VALUE} if none exists.
      */
-    public double getBestTime() {
+    public double getBestTimeForDistance(String distance) {
         double bestTime = Double.MAX_VALUE;
         for (RunTiming time : runTimings) {
-            if (bestTime > time.getTotalSeconds()) {
+            if (time.getDistance().equals(distance) && time.getTotalSeconds() < bestTime) {
                 bestTime = time.getTotalSeconds();
             }
         }
@@ -207,7 +222,22 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same phone number.
+     * Returns the fastest recorded timing across all stored run timings.
+     *
+     * @return Best time in seconds, or {@code Double.MAX_VALUE} if no timings exist.
+     */
+    public double getBestTime() {
+        double bestTime = Double.MAX_VALUE;
+        for (RunTiming time : runTimings) {
+            if (time.getTotalSeconds() < bestTime) {
+                bestTime = time.getTotalSeconds();
+            }
+        }
+        return bestTime;
+    }
+
+    /**
+     * Returns true if both persons have the same name and phone number.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -216,6 +246,7 @@ public class Person {
         }
 
         return otherPerson != null
+                && otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone());
     }
 
@@ -239,13 +270,16 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && emergencyContact.equals(otherPerson.emergencyContact)
                 && startDate.equals(otherPerson.startDate)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && availableDays.equals(otherPerson.availableDays);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, phone, email, address, startDate, tags);
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(name, age, phone, email, address, emergencyContact, startDate, tags);
     }
 
     /**
@@ -261,8 +295,10 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("emergencyContact", emergencyContact)
                 .add("start date", startDate)
                 .add("tags", tags)
+                .add("availableDays", availableDays)
                 .toString();
     }
 

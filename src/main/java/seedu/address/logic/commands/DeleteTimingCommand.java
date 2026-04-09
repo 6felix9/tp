@@ -16,7 +16,7 @@ import seedu.address.model.person.RunTiming;
  */
 public class DeleteTimingCommand extends Command {
 
-    public static final String COMMAND_WORD = "deletetiming";
+    public static final String COMMAND_WORD = "deltime";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Deletes a 2.4km run timing from the athlete identified by the index number.\n"
