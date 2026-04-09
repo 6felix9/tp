@@ -94,6 +94,12 @@ public class EditCommand extends Command {
         return new CommandResult(formatAthleteMessage(editedPerson));
     }
 
+    /**
+     * Returns a formatted success message for the specified {@code Person}.
+     *
+     * @param athlete The athlete whose details are to be included in the success message.
+     * @return A formatted success message containing the athlete's details.
+     */
     public static String formatAthleteMessage(Person athlete) {
         String tags = athlete.getTags().isEmpty() ? "-" : athlete.getTags().toString();
         String availableDays = athlete.getAvailableDays().isEmpty() ? "-" : athlete.getAvailableDays().toString();
