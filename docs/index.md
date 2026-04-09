@@ -1,6 +1,6 @@
 ---
 layout: page
-title: AddressBook Level-3
+title: Pacebook
 ---
 
 [![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
@@ -8,12 +8,22 @@ title: AddressBook Level-3
 
 ![Ui](images/Ui.png)
 
-**AddressBook is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
+**Pacebook is a desktop application for running coaches to manage athlete information and training performance in one place.**
+It combines a graphical interface with a fast CLI-driven workflow so coaches can update records, review run timings, and
+access key athlete details efficiently.
 
-* If you are interested in using AddressBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
-* If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
+Pacebook is built for coaches who manage multiple athletes across school teams, clubs, academies, or private coaching.
+It helps with:
 
+- maintaining an organised athlete roster
+- storing contact, emergency contact, and availability details
+- logging run timings across supported race distances
+- reviewing personal bests and comparing athletes more quickly
+
+If you want to use Pacebook, start with the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
+If you want to develop or extend Pacebook, start with the [**Developer Guide**](DeveloperGuide.html).
 
 **Acknowledgements**
 
+* Pacebook is adapted from [AddressBook Level-3](https://se-education.org/addressbook-level3/).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
