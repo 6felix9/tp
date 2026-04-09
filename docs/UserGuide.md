@@ -174,7 +174,7 @@ Duplicate athletes may be rejected if an athlete with the **same name and phone 
 
 Updates an existing athlete's details.
 
-Format: `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​`
+Format: `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [ta/TAG_TO_ADD] [td/TAG_TO_DELETE]… [av/AVAILABLE_DAY]…​`
 Edits the athlete at the specified `INDEX`.
 
 Example:
@@ -183,7 +183,10 @@ Example:
   * `edit 1 p/98765432`
 * After promoting a runner to your competitive team mid-season:
   * `find n/Marcus Lim`
-  * `edit 1 t/teamA t/competitive`
+  * `edit 1 ta/teamA t/competitive`
+* After a runner steps down as team captain
+  * `find n/Johnny Bravo`
+  * `edit 1 td/captain`
 
 <div markdown="block" class="alert alert-primary">:bulb: **Tips:**
 
