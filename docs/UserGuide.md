@@ -36,7 +36,7 @@ You do not need to know how to program — just install it once using the links 
    - **Mac:** [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html)
    - **Linux:** [Java installation guide for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W14-4/tp/releases).
+./g2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W14-4/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for Pacebook.
 
@@ -51,7 +51,7 @@ You do not need to know how to program — just install it once using the links 
 6. Type a command into the command box and press Enter to run it. For example, typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-  * `add n/John Doe a/21 p/98765432 e/johnd@example.com ad/John street, block 123, #01-01 d/01/01/2001` : Adds an athlete named `John Doe` to Pacebook.
+  * `add n/John Doe a/21 p/98765432 e/johnd@example.com ad/John street, block 123, #01-01 d/01/01/2001 ec/98714567` : Adds an athlete named `John Doe` to Pacebook.
 
   * `find n/Alex`: Finds an athlete named Alex.
 
