@@ -13,6 +13,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("ad/");
     public static final Prefix PREFIX_START_DATE = new Prefix("d/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_ADD_TAG = new Prefix("ta/");
+    public static final Prefix PREFIX_DELETE_TAG = new Prefix("td/");
     public static final Prefix PREFIX_EMERGENCY_CONTACT = new Prefix("ec/");
     public static final Prefix PREFIX_DISTANCE = new Prefix("dist/");
     public static final Prefix PREFIX_MIN = new Prefix("min/");

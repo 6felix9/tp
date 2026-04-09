@@ -3,11 +3,13 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABLE_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -63,10 +65,14 @@ public class CommandTestUtil {
     public static final String START_DATE_DESC_BOB = " " + PREFIX_START_DATE + VALID_START_DATE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String ADD_TAG_DESC_FRIEND = " " + PREFIX_ADD_TAG + VALID_TAG_FRIEND;
+    public static final String ADD_TAG_DESC_HUSBAND = " " + PREFIX_ADD_TAG + VALID_TAG_HUSBAND;
+    public static final String DELETE_TAG_DESC_FRIEND = " " + PREFIX_DELETE_TAG + VALID_TAG_FRIEND;
+    public static final String DELETE_TAG_DESC_HUSBAND = " " + PREFIX_DELETE_TAG + VALID_TAG_HUSBAND;
     public static final String EMERGENCY_CONTACT_DESC_AMY =
-            " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_AMY;
+        " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_AMY;
     public static final String EMERGENCY_CONTACT_DESC_BOB =
-            " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_BOB;
+        " " + PREFIX_EMERGENCY_CONTACT + VALID_EMERGENCY_CONTACT_BOB;
     public static final String AVAILABLE_DAY_DESC_AMY = " " + PREFIX_AVAILABLE_DAY + VALID_AVAILABLE_DAY_AMY;
     public static final String AVAILABLE_DAY_DESC_BOB = " " + PREFIX_AVAILABLE_DAY + VALID_AVAILABLE_DAY_BOB;
 
@@ -79,7 +85,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_EMERGENCY_CONTACT_DESC = " " + PREFIX_EMERGENCY_CONTACT + " ";
     public static final String INVALID_AVAILABLE_DAY_DESC = " "
-            + PREFIX_AVAILABLE_DAY + "Day"; // must be a valid day of the week
+        + PREFIX_AVAILABLE_DAY + "Day"; // must be a valid day of the week
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -89,18 +95,18 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withAge(VALID_AGE_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY)
-                .withStartDate(VALID_START_DATE_AMY).withTags(VALID_TAG_FRIEND)
-                .withAvailableDays(VALID_AVAILABLE_DAY_AMY).build();
+            .withAge(VALID_AGE_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY)
+            .withStartDate(VALID_START_DATE_AMY).withTags(VALID_TAG_FRIEND)
+            .withAvailableDays(VALID_AVAILABLE_DAY_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withAge(VALID_AGE_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB)
-                .withStartDate(VALID_START_DATE_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withAvailableDays(VALID_AVAILABLE_DAY_BOB).build();
+            .withAge(VALID_AGE_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB)
+            .withStartDate(VALID_START_DATE_BOB)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withAvailableDays(VALID_AVAILABLE_DAY_BOB).build();
     }
 
     /**
@@ -109,7 +115,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute(actualModel);
             assertEquals(expectedCommandResult, result);
@@ -124,7 +130,7 @@ public class CommandTestUtil {
      * that takes a string {@code expectedMessage}.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
     }

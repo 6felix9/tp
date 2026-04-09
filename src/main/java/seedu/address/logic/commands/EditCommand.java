@@ -142,7 +142,20 @@ public class EditCommand extends Command {
         StartDate updatedStartDate = editPersonDescriptor.getStartDate().orElse(personToEdit.getStartDate());
         EmergencyContact updatedEmergencyContact =
                 editPersonDescriptor.getEmergencyContact().orElse(personToEdit.getEmergencyContact());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
+        // Specially for updating tags, need to get the tag of the edited person first
+        Set<Tag> currentTags = new HashSet<>(personToEdit.getTags());
+        Set<Tag> tagsToAdd = editPersonDescriptor.getTagsToAdd().orElse(Collections.emptySet());
+        Set<Tag> tagsToDelete = editPersonDescriptor.getTagsToDelete().orElse(Collections.emptySet());
+
+        Set<Tag> updatedTags = currentTags;
+        for (Tag tag : tagsToAdd) {
+            updatedTags.add(tag);
+        }
+        for (Tag tag : tagsToDelete) {
+            updatedTags.remove(tag);
+        }
+
         Set<AvailableDay> updatedAvailableDays = editPersonDescriptor.getAvailableDays()
                 .orElse(personToEdit.getAvailableDays());
 
@@ -188,7 +201,8 @@ public class EditCommand extends Command {
         private Address address;
         private StartDate startDate;
         private EmergencyContact emergencyContact;
-        private Set<Tag> tags;
+        private Set<Tag> tagsToAdd;
+        private Set<Tag> tagsToDelete;
         private Set<AvailableDay> availableDays;
 
         public EditPersonDescriptor() {}
@@ -205,7 +219,8 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setStartDate(toCopy.startDate);
             setEmergencyContact(toCopy.emergencyContact);
-            setTags(toCopy.tags);
+            setTagsToAdd(toCopy.tagsToAdd);
+            setTagsToDelete(toCopy.tagsToDelete);
             setAvailableDays(toCopy.availableDays);
         }
 
@@ -213,8 +228,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, age, phone, email, address,
-                    startDate, emergencyContact, tags, availableDays);
+            return CollectionUtil.isAnyNonNull(name, age, phone, email, address, startDate, emergencyContact,
+                tagsToAdd, tagsToDelete, availableDays);
         }
 
         public void setName(Name name) {
@@ -273,12 +288,26 @@ public class EditCommand extends Command {
             return Optional.ofNullable(emergencyContact);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            if (this.tagsToAdd == null) {
+                this.tagsToAdd = new HashSet<Tag>();
+            }
+            if (tagsToAdd != null && !tagsToAdd.isEmpty()) {
+                for (Tag tag : tagsToAdd) {
+                    this.tagsToAdd.add(tag);
+                }
+            }
+        }
+
+        public void setTagsToDelete(Set<Tag> tagsToDelete) {
+            if (this.tagsToDelete == null) {
+                this.tagsToDelete = new HashSet<Tag>();
+            }
+            if (tagsToDelete != null && !tagsToDelete.isEmpty()) {
+                for (Tag tag : tagsToDelete) {
+                    this.tagsToDelete.add(tag);
+                }
+            }
         }
 
         /**
@@ -286,8 +315,12 @@ public class EditCommand extends Command {
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Set<Tag>> getTagsToAdd() {
+            return (tagsToAdd != null) ? Optional.of(Collections.unmodifiableSet(tagsToAdd)) : Optional.empty();
+        }
+
+        public Optional<Set<Tag>> getTagsToDelete() {
+            return (tagsToDelete != null) ? Optional.of(Collections.unmodifiableSet(tagsToDelete)) : Optional.empty();
         }
 
         public void setAvailableDays(Set<AvailableDay> availableDays) {
@@ -317,7 +350,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(startDate, otherEditPersonDescriptor.startDate)
                     && Objects.equals(emergencyContact, otherEditPersonDescriptor.emergencyContact)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(tagsToAdd, otherEditPersonDescriptor.tagsToAdd)
+                    && Objects.equals(tagsToDelete, otherEditPersonDescriptor.tagsToDelete)
                     && Objects.equals(availableDays, otherEditPersonDescriptor.availableDays);
         }
 
@@ -329,7 +363,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("emergencyContact", emergencyContact)
-                    .add("tags", tags)
+                    .add("tagsToAdd", tagsToAdd)
+                    .add("tagsToDelete", tagsToDelete)
                     .add("availableDays", availableDays)
                     .toString();
         }

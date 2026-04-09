@@ -11,6 +11,15 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_CONTA
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAILABLE_DAY_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_CONTACT_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +31,18 @@ public class EditPersonDescriptorTest {
     @Test
     public void equals() {
         // same values -> returns true
-        EditPersonDescriptor descriptorWithSameValues = new EditPersonDescriptor(DESC_AMY);
+        // same values -> returns true
+        EditPersonDescriptor descriptorWithSameValues = new EditPersonDescriptorBuilder()
+            .withName(VALID_NAME_AMY)
+            .withAge(VALID_AGE_AMY)
+            .withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY)
+            .withAddress(VALID_ADDRESS_AMY)
+            .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY)
+            .withStartDate(VALID_START_DATE_AMY)
+            .withTags(VALID_TAG_FRIEND)
+            .withAvailableDays(VALID_AVAILABLE_DAY_AMY)
+            .build();
         assertTrue(DESC_AMY.equals(descriptorWithSameValues));
 
         // same object -> returns true
@@ -55,7 +75,7 @@ public class EditPersonDescriptorTest {
 
         // different emergency contact -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY)
-                .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB).build();
+            .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
@@ -67,8 +87,8 @@ public class EditPersonDescriptorTest {
     public void toStringMethod() {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         String expected = EditPersonDescriptor.class.getCanonicalName()
-                + "{name=null, phone=null, email=null, address=null, "
-                + "emergencyContact=null, tags=null, availableDays=null}";
+            + "{name=null, phone=null, email=null, address=null, "
+            + "emergencyContact=null, tagsToAdd=null, tagsToDelete=null, availableDays=null}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }

@@ -43,7 +43,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setEmergencyContact(person.getEmergencyContact());
         descriptor.setStartDate(person.getStartDate());
-        descriptor.setTags(person.getTags());
+        descriptor.setTagsToAdd(person.getTags());
         descriptor.setAvailableDays(person.getAvailableDays());
     }
 
@@ -108,8 +108,26 @@ public class EditPersonDescriptorBuilder {
      * that we are building.
      */
     public EditPersonDescriptorBuilder withTags(String... tags) {
+        return withTagsToAdd(tags);
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and adds them to the
+     * {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTagsToAdd(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-        descriptor.setTags(tagSet);
+        descriptor.setTagsToAdd(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and marks them for deletion in the
+     * {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTagsToDelete(String... tags) {
+        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
+        descriptor.setTagsToDelete(tagSet);
         return this;
     }
 
@@ -119,8 +137,8 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAvailableDays(String... availableDays) {
         Set<AvailableDay> availableDaysSet = Stream.of(availableDays)
-                .map(AvailableDay::new)
-                .collect(Collectors.toSet());
+            .map(AvailableDay::new)
+            .collect(Collectors.toSet());
         descriptor.setAvailableDays(availableDaysSet);
         return this;
     }

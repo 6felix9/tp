@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAILABLE_DAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -37,8 +38,22 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        Person editedPerson = new PersonBuilder()
+            .withTags(VALID_TAG_HUSBAND)
+            .withAvailableDays(VALID_AVAILABLE_DAY_BOB)
+            .build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+            .withName(editedPerson.getName().fullName)
+            .withAge(editedPerson.getAge().value)
+            .withPhone(editedPerson.getPhone().value)
+            .withEmail(editedPerson.getEmail().value)
+            .withAddress(editedPerson.getAddress().value)
+            .withEmergencyContact(editedPerson.getEmergencyContact().value)
+            .withStartDate(editedPerson.getStartDate().value)
+            .withTagsToAdd(VALID_TAG_HUSBAND)
+            .withTagsToDelete("friends")
+            .withAvailableDays(VALID_AVAILABLE_DAY_BOB)
+            .build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = EditCommand.formatAthleteMessage(editedPerson);
@@ -56,10 +71,10 @@ public class EditCommandTest {
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+            .withTags(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+            .withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
         String expectedMessage = EditCommand.formatAthleteMessage(editedPerson);
@@ -91,7 +106,7 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
         assertEquals(editedPerson.getRunTimings(),
-                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getRunTimings());
+            model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getRunTimings());
     }
 
     @Test
@@ -113,7 +128,7 @@ public class EditCommandTest {
         Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+            new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = EditCommand.formatAthleteMessage(editedPerson);
 
@@ -139,7 +154,7 @@ public class EditCommandTest {
         // edit person in filtered list into a duplicate in address book
         Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder(personInList).build());
+            new EditPersonDescriptorBuilder(personInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
@@ -165,7 +180,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+            new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -200,8 +215,9 @@ public class EditCommandTest {
         Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         EditCommand editCommand = new EditCommand(index, editPersonDescriptor);
+        EditPersonDescriptor copiedDescriptor = new EditPersonDescriptor(editPersonDescriptor);
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
-                + editPersonDescriptor + "}";
+            + copiedDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
 
