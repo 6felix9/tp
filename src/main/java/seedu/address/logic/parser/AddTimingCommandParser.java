@@ -42,8 +42,8 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
             "Invalid timing: total time must be greater than 0\n" + AddTimingCommandParser.COMMAND_FORMAT;
 
     private static final String MESSAGE_DUPLICATE_FIELDS =
-            "Invalid command: each field (dist/, min/, sec/) can only be provided once\n" +
-                    AddTimingCommandParser.COMMAND_FORMAT;
+            "Invalid command: each field (dist/, min/, sec/) can only be provided once\n"
+                    + AddTimingCommandParser.COMMAND_FORMAT;
 
     /**
      * Parses the given {@code String} of arguments in the context of the
