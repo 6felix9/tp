@@ -1,5 +1,5 @@
 title: "Pacebook"
-theme: minima
+theme: jekyll-theme-primer
 
 header_pages:
   - UserGuide.md

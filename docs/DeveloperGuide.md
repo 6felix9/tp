@@ -509,12 +509,13 @@ Extensions:
 
 Given below are instructions to test the app manually.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
+> **Note:** These instructions only provide a starting point for testers to work on. Testers are expected to do more *exploratory* testing.
+>
+> **Note:** The contact list of Pacebook will be written to the hard disk inside the folder called `data` within the directory in which the `pacebook.jar` file is placed. For convenience, the term `addressbook.json` in this manual test instruction section refers to this file that contains the contact list stored by Pacebook.
+>
+> **Note:** For standardised testing that requires multiple athletes to be recorded in Pacebook as a prerequisite, the tester may use their own list of athletes or use the sample below for convenience by copying it and overwriting their `addressbook.json` with it.
 
-**Note:** The contact list of Pacebook will be written to the hard disk inside the folder called "data" within the directory in which the pacebook.jar file is placed. For convenience, the term "addressbook.json" in this manual test instruction section will refer to this file that contains the contact list stored by Pacebook.
-
-**Note:** For standardised testing that require multiple athletes to be recorded in Pacebook as a prerequisite, the tester is free is to use their own list of athletes or use the sample below for convenience, by copying the sample and overwriting their addressbook.json with the sample:
+Sample `addressbook.json`:
 
 ```json
 {
@@ -549,7 +550,7 @@ testers are expected to do more *exploratory* testing.
       "phone": "93579135",
       "email": "lucas.wong@example.com",
       "address": "27 Serangoon North Ave 4",
-      "emergencyContact": "Uncle 95551234",
+      "emergencyContact": "N/A",
       "startDate": "30/01/2024",
       "tags": ["teamC"],
       "availableDays": [],
@@ -558,9 +559,6 @@ testers are expected to do more *exploratory* testing.
   ]
 }
 ```
-
-
-</div>
 
 ### Launch and shutdown
 
