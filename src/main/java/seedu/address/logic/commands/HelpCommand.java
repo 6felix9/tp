@@ -23,7 +23,7 @@ public class HelpCommand extends Command {
                     + "deltime       ATHLETE_INDEX TIMING_INDEX\n"
                     + "edit          INDEX [n/NAME] [a/AGE] [p/PHONE] "
                     + "[e/EMAIL] [ad/ADDRESS] [d/START_DATE] [t/TAG]...\n"
-                    + "find          KEYWORD [n/NAME] [p/PHONE] [t/TAG]... [av/AVAILABLE_DAY]...\n"
+                    + "find          [n/NAME]... [p/PHONE]... [t/TAG]... [av/AVAILABLE_DAY]...\n"
                     + "sort          by/FIELD [ord/ORDER]   (fields: name, pb  |  orders: asc, desc)\n"
                     + "view          INDEX\n"
                     + "list\n"
