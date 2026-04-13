@@ -489,7 +489,7 @@ Example:
 
 ### Viewing help : `help`
 
-Displays a summary of all commands.
+Opens the help window.
 
 Format: `help`
 
