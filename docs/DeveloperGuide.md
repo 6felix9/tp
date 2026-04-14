@@ -999,7 +999,7 @@ Expected: The result display should display number of persons listed.
     1. Prerequisites: View list of all athletes by entering the `list` command.
 
     1. Test case: `view 1`
-       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records below the profile details. Each athlete card in the person list panel also shows run timings inline (or `Run Timings: None` if none are recorded).
+       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records below the profile details.
        Sample of an athlete's full profile:
        ![sample_full_profile](images/sample_full_profile.png)
 
@@ -1008,7 +1008,7 @@ Expected: The result display should display number of persons listed.
        one athlete in the person list panel as no duplicate phone numbers are allowed.
 
     1. Test case: `view 1`
-       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records. The athlete card in the person list panel also shows their run timings inline.
+       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records.
 
 1. View the profile of an athlete at an invalid index
     1. Choose a negative index

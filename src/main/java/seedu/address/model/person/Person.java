@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.availableday.AvailableDay;
@@ -159,20 +158,6 @@ public class Person {
      */
     public List<RunTiming> getRunTimings() {
         return Collections.unmodifiableList(runTimings);
-    }
-
-    /**
-     * Returns a formatted display string of all run timings for use in the UI.
-     *
-     * @return "Run Timings: None" if no timings recorded, otherwise timings joined by " | ".
-     */
-    public String getRunTimingsDisplay() {
-        if (runTimings.isEmpty()) {
-            return "Run Timings: None";
-        }
-        return "Run Timings: " + runTimings.stream()
-                .map(RunTiming::getPrintFormat)
-                .collect(Collectors.joining(" | "));
     }
 
     /**

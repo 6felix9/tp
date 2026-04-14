@@ -35,7 +35,6 @@
       <Label fx:id="emergencyContact" styleClass="cell_small_label" text="\$emergencyContact" />
       <Label fx:id="startDate" styleClass="cell_small_label" text="\$startDate" />
       <Label fx:id="availableDays" styleClass="cell_small_label" text="\$availableDays"/>
-      <Label fx:id="runTimings" styleClass="cell_small_label" text="\$runTimings" wrapText="true"/>
     </VBox>
   </GridPane>
 </HBox>

@@ -355,8 +355,8 @@ Example:
 
 <div markdown="block" class="alert alert-success">✅ **Expected output:**
 
-* The selected athlete’s full profile is shown in the result display, including a `Start Date:` field and all stored run timings below the profile details.
-* Run timings are also visible directly on each athlete’s card in the athlete list panel, so you can compare timings across athletes without needing to `view` each one individually.
+* The selected athlete’s full profile is shown in the result display, including a `Start Date:` field.
+* Any stored run timings for that athlete are shown below the profile details.
 </div>
 
 ---
