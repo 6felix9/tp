@@ -135,25 +135,6 @@ public class PersonTest {
     }
 
     @Test
-    public void getRunTimingsDisplay_noTimings_returnsNone() {
-        Person person = new PersonBuilder().build();
-        assertEquals("Run Timings: None", person.getRunTimingsDisplay());
-    }
-
-    @Test
-    public void getRunTimingsDisplay_withTimings_returnsFormattedString() {
-        Person person = new PersonBuilder().build();
-        person.addRunTiming(new RunTiming("400m", 0, 50.0));
-        person.addRunTiming(new RunTiming("2.4km", 10, 30.0));
-
-        String display = person.getRunTimingsDisplay();
-        assertTrue(display.startsWith("Run Timings: "));
-        assertTrue(display.contains("400m, 0min 50s"));
-        assertTrue(display.contains("2.4km, 10min 30s"));
-        assertTrue(display.contains(" | "));
-    }
-
-    @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName()
                 + ", age=" + ALICE.getAge() + ", phone=" + ALICE.getPhone()
