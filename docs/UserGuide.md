@@ -158,6 +158,7 @@ Example:
 - `EMAIL` must be a valid email, i.e. email@domain.
 - `EMERGENCY_CONTACT` must follow the format `Relationship Phone`, where `Phone` is a valid Singapore phone number.
 - Avoid using vague names such as `John` if you coach multiple athletes with similar names.
+- `TAG` may contain hyphens (e.g. `cross-country`, `u-20`), but must start and end with an alphanumeric character.
 </div>
 
 <div markdown="block" class="alert alert-warning">:exclamation: **Caution:**
@@ -274,7 +275,7 @@ All athletes currently stored in Pacebook are displayed.
 
 <div markdown="block" class="alert alert-primary">:bulb: **Tips:**
 
-Use `list` before commands like `view`, `edit`, and `delete` if you want to confirm the current athlete indices.
+Use `list` before commands like `view`, `edit`, and `del` if you want to confirm the current athlete indices.
 </div>
 
 ---
@@ -354,8 +355,8 @@ Example:
 
 <div markdown="block" class="alert alert-success">✅ **Expected output:**
 
-* The selected athlete’s profile is shown.
-* Any stored run timings for that athlete are shown below the profile details.
+* The selected athlete’s full profile is shown in the result display, including a `Start Date:` field and all stored run timings below the profile details.
+* Run timings are also visible directly on each athlete’s card in the athlete list panel, so you can compare timings across athletes without needing to `view` each one individually.
 </div>
 
 ---

@@ -12,14 +12,14 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.RunTiming;
 
 /**
- * Deletes a 2.4km run timing record from an existing athlete in the address book.
+ * Deletes a run timing record from an existing athlete in the address book.
  */
 public class DeleteTimingCommand extends Command {
 
     public static final String COMMAND_WORD = "deltime";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-        + ": Deletes a 2.4km run timing from the athlete identified by the index number.\n"
+        + ": Deletes a run timing from the athlete identified by the index number.\n"
         + "Parameters: ATHLETE_INDEX TIMING_INDEX\n"
         + "Example: " + COMMAND_WORD + " 1 2";
 

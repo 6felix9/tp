@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -41,7 +42,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         // Handle case when there is no args to use
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                MESSAGE_EMPTY_ARGUMENTS + FindCommand.MESSAGE_USAGE);
+                    MESSAGE_EMPTY_ARGUMENTS + FindCommand.MESSAGE_USAGE);
         }
 
         // Get the hashmap of prefixes to their string list
@@ -77,15 +78,18 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
         }
 
+        List<String> availableDayKeywords =
+                validateAndNormalizeAvailableDays(splitKeywords(argMultimap.getAllValues(PREFIX_AVAILABLE_DAY)));
+
         // Create the predicates
         NameContainsKeywordsPredicate namePredicate =
-            new NameContainsKeywordsPredicate(splitKeywords(argMultimap.getAllValues(PREFIX_NAME)));
+                new NameContainsKeywordsPredicate(splitKeywords(argMultimap.getAllValues(PREFIX_NAME)));
         TagContainsKeywordsPredicate tagPredicate =
-            new TagContainsKeywordsPredicate(argMultimap.getAllValues(PREFIX_TAG));
+                new TagContainsKeywordsPredicate(argMultimap.getAllValues(PREFIX_TAG));
         PhoneContainsKeywordsPredicate phonePredicate =
-            new PhoneContainsKeywordsPredicate(splitKeywords(argMultimap.getAllValues(PREFIX_PHONE)));
+                new PhoneContainsKeywordsPredicate(splitKeywords(argMultimap.getAllValues(PREFIX_PHONE)));
         AvailableDayContainsKeywordsPredicate availableDayPredicate =
-                new AvailableDayContainsKeywordsPredicate(argMultimap.getAllValues(PREFIX_AVAILABLE_DAY));
+                new AvailableDayContainsKeywordsPredicate(availableDayKeywords);
 
         // Compose the predicates
         Predicate<Person> compositePredicate = namePredicate
@@ -116,6 +120,17 @@ public class FindCommandParser implements Parser<FindCommand> {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Validates available day keywords and normalizes them using ParserUtil.
+     */
+    private static List<String> validateAndNormalizeAvailableDays(List<String> values) throws ParseException {
+        List<String> normalizedDays = new ArrayList<>();
+        for (String day : values) {
+            normalizedDays.add(ParserUtil.parseAvailableDay(day).availableDay);
+        }
+        return normalizedDays;
+    }
+
     /***
      * Returns the first prefix that has an empty value in argMultimap. If no such prefix exists,
      * meaning that every prefix has no empty values, it will return null.
@@ -125,7 +140,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private static Prefix getEmptyPrefix(ArgumentMultimap argMultimap) {
         for (Prefix prefix : argMultimap.getAllPrefixes()) {
             if (prefix != PREFIX_NAME && prefix != PREFIX_PHONE && prefix != PREFIX_TAG
-                && prefix != PREFIX_AVAILABLE_DAY) {
+                    && prefix != PREFIX_AVAILABLE_DAY) {
                 continue;
             }
             List<String> values = argMultimap.getAllValues(prefix);

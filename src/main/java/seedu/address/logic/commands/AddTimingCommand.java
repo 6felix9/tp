@@ -84,6 +84,7 @@ public class AddTimingCommand extends Command {
         logger.info("Adding timing to athlete: " + athlete.getName());
 
         boolean fastest = athlete.addRunTiming(timing);
+        model.reapplyCurrentSort();
 
         String resultMessage = checkFastest(athlete, fastest);
         logger.info("AddTimingCommand completed successfully. Result: " + resultMessage.trim());

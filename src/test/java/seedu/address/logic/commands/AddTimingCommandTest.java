@@ -1,10 +1,14 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
@@ -150,5 +154,43 @@ public class AddTimingCommandTest {
         String resultMessage = result.getFeedbackToUser();
         assertTrue(resultMessage.contains("Added timing for " + athlete.getName()));
         assertFalse(resultMessage.contains("New personal best for 2.4km"));
+    }
+
+    /**
+     * Tests that the list order is automatically corrected after {@code addtime}
+     * changes a PB ranking (issue #261).
+     *
+     * <p>Steps:
+     * <ol>
+     *   <li>Give athlete 1 a slow 400m time (1:10) and athlete 2 a slower 400m time (1:20).</li>
+     *   <li>Sort by 400m PB ascending — athlete 1 should be first.</li>
+     *   <li>Add a faster 400m time (0:50) to athlete 2 via {@code AddTimingCommand}.</li>
+     *   <li>Athlete 2 should now appear first in the list without a manual re-sort.</li>
+     * </ol>
+     * </p>
+     */
+    @Test
+    public void execute_addtimeAfterSort_listOrderUpdated() throws Exception {
+        Model model = getModel();
+
+        // Give both athletes 400m timings
+        Person athlete1 = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person athlete2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        athlete1.addRunTiming(new RunTiming("400m", 1, 10.0)); // 70 s
+        athlete2.addRunTiming(new RunTiming("400m", 1, 20.0)); // 80 s
+
+        // Sort by 400m PB ascending — athlete1 first
+        Comparator<Person> pbAsc = Comparator
+                .comparing((Person p) -> p.getBestTimeForDistance("400m") == Double.MAX_VALUE)
+                .thenComparingDouble(p -> p.getBestTimeForDistance("400m"))
+                .thenComparing(p -> p.getName().toString().toLowerCase());
+        model.sortFilteredPersonList(pbAsc);
+        assertEquals(athlete1, model.getFilteredPersonList().get(0));
+
+        // AddTimingCommand gives athlete2 a faster 400m time (50 s)
+        new AddTimingCommand(INDEX_SECOND_PERSON, new RunTiming("400m", 0, 50.0)).execute(model);
+
+        // Athlete2 should now be first without a manual re-sort
+        assertEquals(athlete2, model.getFilteredPersonList().get(0));
     }
 }

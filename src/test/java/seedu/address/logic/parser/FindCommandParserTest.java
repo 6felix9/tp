@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.availableday.AvailableDay;
 
 public class FindCommandParserTest {
 
@@ -51,5 +52,11 @@ public class FindCommandParserTest {
         assertTrue(parser.parse(" " + PREFIX_NAME + "Alice " + PREFIX_PHONE + "91234567") instanceof FindCommand);
         assertTrue(parser.parse(" " + PREFIX_NAME + "Alice " + PREFIX_TAG + "friends") instanceof FindCommand);
         assertTrue(parser.parse(" " + PREFIX_PHONE + "91234567 " + PREFIX_TAG + "friends") instanceof FindCommand);
+    }
+
+    @Test
+    public void parse_invalidAvailableDay_throwsParseException() {
+        assertThrows(ParseException.class,
+                AvailableDay.MESSAGE_CONSTRAINTS, () -> parser.parse(" av/Funday"));
     }
 }

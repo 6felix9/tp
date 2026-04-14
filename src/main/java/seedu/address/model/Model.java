@@ -87,4 +87,10 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     void sortFilteredPersonList(Comparator<Person> comparator);
+
+    /**
+     * Re-applies the most recently used sort comparator, if any.
+     * No-op if no sort has been applied in this session.
+     */
+    void reapplyCurrentSort();
 }
