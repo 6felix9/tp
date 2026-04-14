@@ -532,7 +532,7 @@ Sample `addressbook.json`:
       "phone": "93579135",
       "email": "lucas.wong@example.com",
       "address": "27 Serangoon North Ave 4",
-      "emergencyContact": "N/A",
+      "emergencyContact": "Father 91234567",
       "startDate": "30/01/2024",
       "tags": ["teamC"],
       "availableDays": [],
