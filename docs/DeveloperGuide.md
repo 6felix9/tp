@@ -384,7 +384,6 @@ MSS:
 1. Coach requests to delete a run timing record for an athlete.
 2. Pacebook deletes the run timing record.
 3. Pacebook shows that the run timing record has been deleted.
-4. Pacebook updates and shows the athlete’s personal best if applicable.
    Use case ends.
 
 Extensions:
@@ -968,7 +967,7 @@ Expected: The result display should display number of persons listed.
        Test case: `deltime x 1`, where x is a negative number
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format: deltime: Deletes a 2.4km run timing from the athlete identified by the index number.
+       Invalid command format: deltime: Deletes a run timing from the athlete identified by the index number.
        Parameters: ATHLETE_INDEX TIMING_INDEX
        Example: deltime 1 2
        ```
@@ -980,7 +979,7 @@ Expected: The result display should display number of persons listed.
        Test case: `deltime 1 x`, where x is a negative number
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format: deltime: Deletes a 2.4km run timing from the athlete identified by the index number.
+       Invalid command format: deltime: Deletes a run timing from the athlete identified by the index number.
        Parameters: ATHLETE_INDEX TIMING_INDEX
        Example: deltime 1 2
        ```
