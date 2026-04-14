@@ -31,7 +31,7 @@ public class ViewAthleteCommand extends Command {
             + "Email:                %4$s\n"
             + "Emergency Contact:    %5$s\n"
             + "Address:              %6$s\n"
-            + "StartDate:            %7$s\n"
+            + "Start Date:           %7$s\n"
             + "Tags:                 %8$s\n"
             + "Available Days:       %9$s\n";
 

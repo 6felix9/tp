@@ -103,6 +103,11 @@ public class SortCommandTest {
         }
 
         @Override
+        public void reapplyCurrentSort() {
+            // no-op in test stub
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             return persons;
         }

@@ -163,6 +163,11 @@ public class AddAthleteCommandTest {
         public void sortFilteredPersonList(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void reapplyCurrentSort() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

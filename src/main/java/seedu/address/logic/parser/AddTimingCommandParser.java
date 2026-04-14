@@ -33,7 +33,8 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
             "Invalid index: please provide a positive integer athlete index\n" + AddTimingCommandParser.COMMAND_FORMAT;
 
     private static final String MESSAGE_INVALID_MINUTES =
-            "Invalid minutes: must be a non-negative integer\n" + AddTimingCommandParser.COMMAND_FORMAT;
+            "Invalid minutes: must be a non-negative integer no greater than 999\n"
+                    + AddTimingCommandParser.COMMAND_FORMAT;
 
     private static final String MESSAGE_INVALID_SECONDS =
             "Invalid seconds: must be a number from 0 to 59.99\n" + AddTimingCommandParser.COMMAND_FORMAT;
@@ -145,7 +146,7 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
     private int parseMinutes(String rawMinutes) throws ParseException {
         try {
             int minutes = Integer.parseInt(rawMinutes);
-            if (minutes < 0) {
+            if (minutes < 0 || minutes > 999) {
                 throw new ParseException(MESSAGE_INVALID_MINUTES);
             }
             return minutes;
@@ -162,6 +163,13 @@ public class AddTimingCommandParser implements Parser<AddTimingCommand> {
      * @throws ParseException If seconds are not within the accepted range.
      */
     private double parseSeconds(String rawSeconds) throws ParseException {
+        int dotIndex = rawSeconds.indexOf('.');
+        if (dotIndex >= 0) {
+            String fractional = rawSeconds.substring(dotIndex + 1).replaceAll("0+$", "");
+            if (fractional.length() > 2) {
+                throw new ParseException(MESSAGE_INVALID_SECONDS);
+            }
+        }
         try {
             double seconds = Double.parseDouble(rawSeconds);
             if (seconds < 0 || seconds > 59.99) {

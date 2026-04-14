@@ -122,13 +122,34 @@ public class AddTimingCommandParserTest {
     public void parse_invalidMinutes_failure() {
         // negative minutes
         assertParseFailure(parser, "1 dist/2.4km min/-1 sec/30",
-                "Invalid minutes: must be a non-negative integer\n"
+                "Invalid minutes: must be a non-negative integer no greater than 999\n"
                         + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
 
         // non-numeric minutes
         assertParseFailure(parser, "1 dist/2.4km min/abc sec/30",
-                "Invalid minutes: must be a non-negative integer\n"
+                "Invalid minutes: must be a non-negative integer no greater than 999\n"
                         + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
+
+        // minutes exceed upper bound
+        assertParseFailure(parser, "1 dist/2.4km min/1000 sec/30",
+                "Invalid minutes: must be a non-negative integer no greater than 999\n"
+                        + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
+
+        // extreme value
+        assertParseFailure(parser, "1 dist/2.4km min/9999999 sec/30",
+                "Invalid minutes: must be a non-negative integer no greater than 999\n"
+                        + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
+    }
+
+    /**
+     * Tests that 999 minutes is accepted as the maximum boundary value.
+     */
+    @Test
+    public void parse_minutesBoundary_success() {
+        assertDoesNotThrow(() -> {
+            AddTimingCommand command = parser.parse("1 dist/2.4km min/999 sec/0.01");
+            assertTrue(command instanceof AddTimingCommand);
+        });
     }
 
     /**
@@ -151,19 +172,43 @@ public class AddTimingCommandParserTest {
                 "Invalid seconds: must be a number from 0 to 59.99\n"
                         + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
 
-        // seconds exceed 59.99 (e.g. 59.999)
+        // three decimal places — above 59.99
         assertParseFailure(parser, "1 dist/2.4km min/10 sec/59.999",
+                "Invalid seconds: must be a number from 0 to 59.99\n"
+                        + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
+
+        // three decimal places — below 59.99 but still more than 2dp
+        assertParseFailure(parser, "1 dist/2.4km min/10 sec/59.991",
+                "Invalid seconds: must be a number from 0 to 59.99\n"
+                        + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
+
+        // four decimal places
+        assertParseFailure(parser, "1 dist/2.4km min/10 sec/59.9901",
                 "Invalid seconds: must be a number from 0 to 59.99\n"
                         + "Correct command format: addtime INDEX dist/DISTANCE min/MINUTES sec/SECONDS");
     }
 
     /**
-     * Tests that 59.99 seconds is accepted as the boundary value.
+     * Tests that 59.99 seconds is accepted as the boundary value,
+     * and that trailing zeros do not cause false rejection.
      */
     @Test
     public void parse_secondsBoundary_success() {
+        // exact boundary
         assertDoesNotThrow(() -> {
             AddTimingCommand command = parser.parse("1 dist/2.4km min/10 sec/59.99");
+            assertTrue(command instanceof AddTimingCommand);
+        });
+
+        // trailing zero — equals 59.99, still valid
+        assertDoesNotThrow(() -> {
+            AddTimingCommand command = parser.parse("1 dist/2.4km min/10 sec/59.990");
+            assertTrue(command instanceof AddTimingCommand);
+        });
+
+        // trailing zero on a smaller value — equals 0.1, valid
+        assertDoesNotThrow(() -> {
+            AddTimingCommand command = parser.parse("1 dist/2.4km min/10 sec/0.10");
             assertTrue(command instanceof AddTimingCommand);
         });
     }

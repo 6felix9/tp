@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -29,6 +30,9 @@ public class ViewAthleteCommandTest {
         assertTrue(resultMessage.contains(athlete.getName().toString()));
         assertTrue(resultMessage.contains(athlete.getPhone().toString()));
         assertTrue(resultMessage.contains(athlete.getEmail().toString()));
+        assertTrue(resultMessage.contains("Start Date:"));
+        assertFalse(resultMessage.contains("StartDate:"));
+        assertTrue(resultMessage.contains("Run Timings:"));
     }
 
     @Test

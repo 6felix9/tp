@@ -384,7 +384,6 @@ MSS:
 1. Coach requests to delete a run timing record for an athlete.
 2. Pacebook deletes the run timing record.
 3. Pacebook shows that the run timing record has been deleted.
-4. Pacebook updates and shows the athlete’s personal best if applicable.
    Use case ends.
 
 Extensions:
@@ -714,7 +713,7 @@ Sample `addressbook.json`:
        ```
        Invalid command format!
        edit: Edits the details of the person identified by the index number used in the displayed person list. Existing values will be overwritten by the input values.
-       parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [ec/EMERGENCY_CONTACT] [t/TAG]...
+       Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [ec/EMERGENCY_CONTACT] [ta/TAG]... [td/TAG]... [av/AVAILABLE_DAY]...
        Example: edit 1 p/91234567 e/johndoe@example.com
        ```
 
@@ -968,7 +967,7 @@ Expected: The result display should display number of persons listed.
        Test case: `deltime x 1`, where x is a negative number
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format: deltime: Deletes a 2.4km run timing from the athlete identified by the index number.
+       Invalid command format: deltime: Deletes a run timing from the athlete identified by the index number.
        Parameters: ATHLETE_INDEX TIMING_INDEX
        Example: deltime 1 2
        ```
@@ -980,7 +979,7 @@ Expected: The result display should display number of persons listed.
        Test case: `deltime 1 x`, where x is a negative number
        Expected: The following error message should be displayed in the result display:
        ```
-       Invalid command format: deltime: Deletes a 2.4km run timing from the athlete identified by the index number.
+       Invalid command format: deltime: Deletes a run timing from the athlete identified by the index number.
        Parameters: ATHLETE_INDEX TIMING_INDEX
        Example: deltime 1 2
        ```
@@ -1000,7 +999,7 @@ Expected: The result display should display number of persons listed.
     1. Prerequisites: View list of all athletes by entering the `list` command.
 
     1. Test case: `view 1`
-       Expected: The full profile of the athlete should be shown in the result display. This includes their run timing records
+       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records below the profile details. Each athlete card in the person list panel also shows run timings inline (or `Run Timings: None` if none are recorded).
        Sample of an athlete's full profile:
        ![sample_full_profile](images/sample_full_profile.png)
 
@@ -1009,7 +1008,7 @@ Expected: The result display should display number of persons listed.
        one athlete in the person list panel as no duplicate phone numbers are allowed.
 
     1. Test case: `view 1`
-       Expected: The full profile of the athlete should be shown in the result display. This includes their run timing records
+       Expected: The full profile of the athlete should be shown in the result display. This includes a `Start Date:` field and their run timing records. The athlete card in the person list panel also shows their run timings inline.
 
 1. View the profile of an athlete at an invalid index
     1. Choose a negative index
@@ -1316,9 +1315,9 @@ Expected: The result display should display number of persons listed.
         addtime       INDEX dist/DISTANCE min/MINUTES sec/SECONDS
         del           INDEX
         deltime       ATHLETE_INDEX TIMING_INDEX
-        edit          INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [t/TAG]... [av/AVAILABLE_DAY]...
-        find          [n/KEYWORD] [p/PHONE] [t/TAG]... [av/AVAILABLE_DAY]...
-        sort          by/FIELD [dist/DISTANCE] [ord/ORDER]
+        edit          INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [ec/EMERGENCY_CONTACT] [d/START_DATE] [ta/TAG]... [td/TAG]... [av/AVAILABLE_DAY]...
+        find          [n/NAME]... [p/PHONE]... [t/TAG]... [av/AVAILABLE_DAY]...
+        sort          by/FIELD [ord/ORDER]   (fields: name, pb  |  orders: asc, desc)
         view          INDEX
         list
         clear
