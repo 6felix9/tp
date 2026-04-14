@@ -183,7 +183,7 @@ Example:
   * `edit 1 p/98765432`
 * After promoting a runner to your competitive team mid-season:
   * `find n/Marcus Lim`
-  * `edit 1 ta/teamA t/competitive`
+  * `edit 1 ta/teamA ta/competitive`
 * After a runner steps down as team captain
   * `find n/Johnny Bravo`
   * `edit 1 td/captain`
@@ -194,14 +194,11 @@ Example:
 * The index **must be a positive number**: `1, 2, 3, …`
 * You must provide at least one field to edit.
 * Any field you include will replace the athlete’s current value for that field.
-* If you edit tags, the old tags will be replaced completely.
-* You can remove all the athlete’s tags by typing `t/` without entering anything after it.
 </div>
 
 <div markdown="block" class="alert alert-warning">:exclamation: **Caution:**
 
 * Make sure you are editing the correct athlete index in displayed list, especially after using `find`.
-* Editing tags replaces all existing tags, not just one of them.
 </div>
 
 <div markdown="block" class="alert alert-success">✅**Expected output:**
@@ -270,7 +267,7 @@ All athletes currently stored in Pacebook are displayed.
 
 <div markdown="block" class="alert alert-primary">:bulb: **Tips:**
 
-Use `list` before commands like `viewathlete`, `edit`, and `deleteathlete` if you want to confirm the current athlete indices.
+Use `list` before commands like `view`, `edit`, and `del` if you want to confirm the current athlete indices.
 </div>
 
 ---
@@ -570,7 +567,7 @@ Furthermore, certain edits can cause Pacebook to behave in unexpected ways if va
 | Action             | Format, Examples                                                                                                                                                                                                                       |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Athlete**    | `add n/NAME a/AGE p/PHONE e/EMAIL ad/ADDRESS d/START_DATE ec/EMERGENCY_CONTACT [t/TAG]… [av/AVAILABLE_DAY]…​` <br> e.g., `add n/Sarah Tan a/24 p/91234567 e/sarah.tan@email.com ad/Blk 12 Jurong West Ave 1, #05-12 d/01/04/2025 ec/Mother 91234567 t/sprinter t/teamA` |
-| **Edit**           | `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [t/TAG]… [av/AVAILABLE_DAY]…​`<br> e.g., `edit 1 ec/Father 92345678`                                                   |
+| **Edit**           | `edit INDEX [n/NAME] [a/AGE] [p/PHONE] [e/EMAIL] [ad/ADDRESS] [d/START_DATE] [ec/EMERGENCY_CONTACT] [ta/TAG_TO_ADD]… [td/TAG_TO_DELETE]… [av/AVAILABLE_DAY]…​`<br> e.g., `edit 1 ec/Father 92345678`                                                   |
 | **Find**           | `find [n/NAME] [p/PHONE] [t/TAG] [av/AVAILABLE_DAY]`<br> e.g., `find n/Sarah t/sprinter`                                                                                                                                               |
 | **List**           | `list`                                                                                                                                                                                                                                 |
 | **Sort**           | `sort by/FIELD [dist/DISTANCE] [ord/ORDER]` <br> e.g., `sort by/pb dist/400m ord/desc`                                                                                                                                                |

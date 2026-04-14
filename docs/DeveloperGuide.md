@@ -51,7 +51,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `del 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -235,7 +235,7 @@ Actor: Coach
 MSS:
 
 1. Coach inputs details of athlete to be added: `add n/John Tan a/17 p/91234567 e/johntan@example.com ad/NUS Hall d/02/10/2026 ec/Father 92345678`
-2. Pacebook validates all compulsory fields (name, age, phone, email, address, emergency contact, start date), checks that the phone number is unique, and rejects the command if the emergency contact does not follow the required `Relationship Phone` format.
+2. Pacebook validates all compulsory fields (name, age, phone, email, address, emergency contact, start date), checks that the combination of name and phone number is unique, and rejects the command if the emergency contact does not follow the required `Relationship Phone` format.
 3. Pacebook saves the athlete profile to the data file.
 4. Pacebook displays success message with added athlete details in the message box: Added athlete: John Tan (Age: 17, Phone: 91234567, Email: johntan@example.com, Address: NUS Hall, Emergency Contact: Father 92345678, Start: 02/10/2026)
 5. Athlete details are now visible in the main window.
@@ -249,8 +249,8 @@ Extensions:
     - Steps 1a1-1a2 are repeated until the data entered are correct.
     - Use case resumes from step 2.
 
-- **1b.** Pacebook detects that the phone number already exists.
-    - **1b1.** Pacebook displays an error message indicating the duplicate phone number.
+- **1b.** Pacebook detects that an athlete with the same name and phone number already exists.
+    - **1b1.** Pacebook displays an error message indicating the duplicate athlete.
     - **1b2.** Coach enters new data.
     - Steps 1b1-1b2 are repeated until the data entered are correct.
     - Use case resumes from step 2.
@@ -268,7 +268,7 @@ MSS:
 1. Coach inputs the athlete index to view: `view 1`
 2. Pacebook retrieves the athlete profile corresponding to the index.
 3. Pacebook displays the athlete's profile (name, age, phone, email, address, emergency contact, start date) in the message box.
-4. Pacebook displays personal bests by distance (best time + date), or shows "No training records yet" if there are none.
+4. Pacebook displays recorded run timings, or shows "No training records yet" if there are none.
    Use case ends.
 
 Extensions:
